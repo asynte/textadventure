@@ -1,0 +1,21 @@
+//make username
+class character{
+    public:
+        chae username;
+        char password;
+        int location;
+            void sendusername();
+            void sendpassword();
+}
+
+//put it into textbased file
+VOID CHARACTER::sendusername(){
+    cout<<enteruser;
+    cin<<username;
+}
+
+VOID CHARACTER::sendpassword(){
+    cout<<enteruser;
+    cin<<password;
+}
+
