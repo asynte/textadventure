@@ -1,0 +1,113 @@
+Top High Level Design
+User:
+Person playing the game
+UI:
+User Interface, how user communicates with the game
+Game Engine:
+How it handles the game logic
+Data:
+Saves data, in game data
+Networking:
+Handle communication between Game engine and data.
+
+Class Design Ideas
+
+Server - Marko
+	Saves all data for game (format of the data still to be determined, waiting for the Prof)
+	Any changes to the world that a User makes must be approved by the Server
+-	globalWorld
+-	stores the current state of the game as a World object
+-	every “heartbeat” receives updates from the Users and updates the World if that actions made by the Users are valid
+-	updateWorld()
+-	updates the data the local data of each User
+-	should only send data that the User currently needs to know (most likely just their current LocationTile)
+-	requestUpdate(data)
+-	called by a User that has made a local change to their world
+-	if request is valid then globalWorld is updated, and all Users will have their worlds updated the next time updateWorld() is called
+-	if the request is invalid then do nothing
+Time
+	Represents “game time”
+-	heartbeat()
+-	every 0.1 seconds (maybe faster, depending on how responsive we want the game to be) informs the Server to perform updateWorld()
+
+World - Sonny
+	Represents the overall world of the game (duh…)
+-	locations[]
+-	stores all LocationTiles that represent that world
+-	users[]
+-	stores all the Users and their Characters currently logged into the world
+-	maybe just store Users or Characters?
+-	startLocation
+-	defines where a Character goes when they enter the world for the first time
+
+Interface - Bryan
+	Displays output to the user, and returns input to the main thread.
+	Runs as it’s own thread
+
+LocationTile - Ben, Sunny
+	Represents a location in the game
+-	currentWidgets[]
+-	list of all widgets currently at that location
+-	nearbyLocations[]
+-	list of all LocationTiles that can be visted by the the LocationTile
+-	entryMessage
+-	message that is displayed to the User when it’s character enters the LocationTile
+-	Should probably list all widgets in the currentWidgets List, and any other useful data about the LocationTile
+
+CharacterProfile - Michael
+	Represents the account info associated with each character.
+-	username
+-	password
+-	lastLocation[]
+-	stores all worlds the character has visited and the LocationTile in that world when the character was logged off by the User
+
+Widget - Jason
+	Represents any object in the game.
+-	name
+-	life
+-	usage
+-	defines what function is called when a character interacts with the widget
+-	currentLocation
+-	current LocationTile the widget is in
+	
+Character - Inherits from Widget - Louie
+	Represents the User in the game
+-	inventory[]
+-	lists all Widgets currently being carried by the Character
+	
+Program Startup Design
+
+Possible flow on control for the startup of the program based on the current class design
+Bold represents classes
+Italics represents functions
+
+1.	User starts program (aka ./program_name)
+2.	initialize Interface 
+3.	check if Server is available
+a.	if not then display error to User via Interface and exit program
+4.	ask user to login or createCharacter via Interface
+a.	if createCharacter
+-	ask user to enter name and password via Interface
+-	check with Server if name is already in use
+-	if already in use display error and ask again for name
+-	create CharacterProfile object based on the input from User
+-	store CharacterProfile on Server
+-	perform login 
+b.	if login
+-	ask User for username and password via Interface
+-	check with Server if data is valid
+-	if invalid then display error and ask again
+-	create CharacterProfile object based on data from Server
+5.	get available worlds from the Server
+6.	display list of worlds to the User via Interface
+7.	ask User to select a world via Interface
+a.	if invalid selection then display error and ask again
+8.	get data from the Server for the world selected by the User
+9.	create a World object based on data from Server
+a.	unsure if User should have a complete world object, or only have data that the User currently needs
+10.	create Character object based on CharacterProfile
+11.	place Character in the world
+a.	if first time entering world then place in a defined starting spot in the World
+b.	else place in the same spot as when the User logged out last time they played that character
+12.	run GameLoop
+a.	the main part of the game is performed here.
