@@ -1,0 +1,28 @@
+main{
+    loadWorldFromTextFiles();   //Need to be able to load classes from files
+    setUpServerSocket(serverIP, serverPort);    //user inputted ip address and port that way anyone can set up a server.
+    waitForConnectionRequest();
+    
+    //Must decide if we are going to use a TCP or UDP connection.
+    //In the case of UDP, we will have to know whether the request is from an admin(world editing ability) or regular player
+    //each time a request is received.
+    //In the case of TCP, we will keep a connection open with the person and will only require their login credentials for being
+    //an admin or user once.
+    
+    if (connectionEstablished){
+        while (admin = true && keepPlaying == true){
+            sendAvailableFunctions();
+            string buffer = receivedClientFunctionCallReply();
+            switch (buffer){
+                case (getObjectFunction) :
+                    sendTheObjectBackToTheClient(); //Client wants to know where they are or whats in their surroundings
+                case (setObjectFunction) :          //Client wants to add/remove things in the world, look for the appropriate file and modify it.
+                    modifyTheWorld(object, manipulateObject);
+                    sendAConfirmationBackToTheClent();
+                case (wantsToLogout) :
+                    exitGame();
+            }
+        }
+        //Could have the same type of while loop here for a non admin or could have two different function lists above to send depending
+        //on if its an admin or regular user.
+    
