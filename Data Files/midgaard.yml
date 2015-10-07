@@ -1202,6 +1202,7 @@ ROOMS:
     keywords: []
     to: 3057
   extended_descriptions: []
+
   id: 3005
   name: The Temple Square
 - desc:
@@ -1225,6 +1226,7 @@ ROOMS:
     keywords: []
     to: 3008
   extended_descriptions: []
+
   id: 3006
   name: Entrance to the Grunting Boar Inn
 - desc:

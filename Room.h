@@ -3,29 +3,33 @@
 #include <vector>
 using namespace std;
 
-class locationTile {
+class Room {
 
 	public:
 
-		locationTile();
+		Room();
 
-		locationTile(vector<widget> inputWidgets) {
+		Room(vector<widget> inputWidgets) {
 			widgetArray = inputWidgets;
 		}
 
 		int getTotalWidgets() {
 			return widgetArray.size();
 		}
-        int getLocation(){
-            return locationID;
+        int getRoom(){
+            return roomID;
         }
+        void addDoor();
+        void removeDoor();
+    
 
 	private:
-
-		string locationDescription;
-        
+        vector<Door> doorList;
+        string name;
+		string description;
+    
 		string direction;
-		int locationID;
+		int roomID;
 		//obtain the above information from YAML data
 		vector<widget> widgetArray;
 };
