@@ -11,14 +11,14 @@ class World {
         
         World ();
     
-        World (vector <LocationTile> inputLocationTIles){
+        World (vector <LocationTile> inputLocationTiles){
             locationTileArray = inputLocationTiles;
         }
     
         ~World ();
     
         int getTotalLocationTiles () {
-            return locationTileArray.size();   
+            return locationTileArray.size();
         }
     
     
