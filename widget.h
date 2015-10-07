@@ -5,15 +5,15 @@
 
 // Will have more subclasses to represent all game objects (i.e. creature, item, foliage, etc.)
 
+using namespace std;
+
 class widget {
 	string widget_name; // should be const?
 	locationTile currentLocation;
-	
-	virtual string use() {} // function to interact with object, returns string to send to server
-}
 
-class character: public widget {
-	long playerLevel; // set default level to 1?
-	long playerHealth; // set some default health (i.e. 100)
-	vector <widget> inventory;
+	widget(string name) {
+		widget_name = name;
+	}
+
+	virtual string use() {} // function to interact with object, returns string to send to server
 }
