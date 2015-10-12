@@ -1,4 +1,4 @@
 
 admin adminpass
 
-test test2
+admin2 adminpass
