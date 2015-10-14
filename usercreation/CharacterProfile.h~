@@ -19,6 +19,10 @@ public:
 	cout<<"1:Register\n2:Login\nWhat do you want to do? ";cin>>choice;
 
 
+    if(choice != 2 or choice!=1 ){
+    	cout<<"There's no option "<<choice<<" at the moment sorry!"<<endl;
+    }
+
 	if(choice == 1){
         user1.userRegister();
 	}
