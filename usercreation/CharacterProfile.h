@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <unistd.h>
 using namespace std;
 
 class CharacterProfile {
@@ -10,7 +11,28 @@ public:
     string password;
     string user;
     string pass;
+    int choice;
     
+    void UserAuth(){
+   	CharacterProfile user1;
+    cout<<"\n\nHello there! Welcome to The Game!\n";
+	cout<<"1:Register\n2:Login\nWhat do you want to do? ";cin>>choice;
+
+
+    if(choice != 2 or choice!=1 ){
+    	cout<<"There's no option "<<choice<<" at the moment sorry!"<<endl;
+    }
+
+	if(choice == 1){
+        user1.userRegister();
+	}
+    if(choice == 2){
+        user1.Loggedin();
+    }
+
+    }
+
+
     // User registration
     void userRegisterDo()
     {
@@ -18,12 +40,12 @@ public:
 	file.open("userdata.txt",fstream::app);
 	file<<"\n"<<username<< " " <<password;
 	file.close();
-	cout<<"You are registered! Welcome!\n\n";
+	cout<<"Hi "<<username<<"! You are registered now! Welcome!\n\n";
     }
 
     // Initialize user registration
     void userRegister(){
-        cout << "Enter a new username:\n";
+        cout << "\nEnter a new username:\n";
 	cin >> username;
 	ifstream fin;
 	fin.open("userdata.txt");
@@ -41,7 +63,7 @@ public:
 		}
 	}
 	if(isFound){
-		cout << "Sorry Username already exist!\nTry a different one!\n";
+		cout << "\nSorry Username already exist!\nPlease try a different one!\n";
 	}else{
         	cout << "\nPlease enter a new password:\n";
         	cin >> password;
@@ -51,8 +73,13 @@ public:
 
     bool Loggedin(){
 	string userpass;
-	cout<<"Enter username: "; cin>>user;
-	cout<<"Enter password: "; cin>>pass;
+	cout<<"\nEnter Username: "; cin>>user;
+
+	//hide pass
+    char *pass; // password string pointer
+    pass = getpass("Enter Password: "); // get a password
+
+	//cout<<"Enter password: "; cin>>pass;
 	//search pattern	
 	userpass = user+" "+pass;
 	string line;
@@ -74,8 +101,8 @@ public:
 	}else {
 		cout << "\nIncorrect Username and/or password !\n";
 		return false;
-	}
-      	}
+		}
+    }
 }
 
 };

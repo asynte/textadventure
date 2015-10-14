@@ -1,4 +1,2 @@
 
 admin adminpass
-
-admin2 adminpass
