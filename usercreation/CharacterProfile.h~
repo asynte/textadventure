@@ -19,10 +19,6 @@ public:
 	cout<<"1:Register\n2:Login\nWhat do you want to do? ";cin>>choice;
 
 
-    if(choice != 2 or choice!=1 ){
-    	cout<<"There's no option "<<choice<<" at the moment sorry!"<<endl;
-    }
-
 	if(choice == 1){
         user1.userRegister();
 	}
@@ -41,6 +37,7 @@ public:
 	file<<"\n"<<username<< " " <<password;
 	file.close();
 	cout<<"Hi "<<username<<"! You are registered now! Welcome!\n\n";
+	UserAuth();
     }
 
     // Initialize user registration
@@ -64,6 +61,7 @@ public:
 	}
 	if(isFound){
 		cout << "\nSorry Username already exist!\nPlease try a different one!\n";
+		userRegister();
 	}else{
         	cout << "\nPlease enter a new password:\n";
         	cin >> password;

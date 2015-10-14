@@ -37,6 +37,7 @@ public:
 	file<<"\n"<<username<< " " <<password;
 	file.close();
 	cout<<"Hi "<<username<<"! You are registered now! Welcome!\n\n";
+	UserAuth();
     }
 
     // Initialize user registration
@@ -60,6 +61,7 @@ public:
 	}
 	if(isFound){
 		cout << "\nSorry Username already exist!\nPlease try a different one!\n";
+		userRegister();
 	}else{
         	cout << "\nPlease enter a new password:\n";
         	cin >> password;
@@ -96,6 +98,7 @@ public:
 		cout << "Welcome to the game "<< user << '\n'; 
 	}else {
 		cout << "\nIncorrect Username and/or password !\n";
+		Loggedin();
 		return false;
 		}
     }
