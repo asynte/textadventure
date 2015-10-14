@@ -1,0 +1,3 @@
+#/clientstuff/client
+add_library(Client TCPClient.cpp)
+target_include_directories(Client PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})

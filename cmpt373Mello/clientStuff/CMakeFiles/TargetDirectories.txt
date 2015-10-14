@@ -1,0 +1,3 @@
+/home/mjajalo/Desktop/cmpt373Mello/clientStuff/Client/CMakeFiles/Client.dir
+/home/mjajalo/Desktop/cmpt373Mello/clientStuff/Dataflow/CMakeFiles/Dataflow.dir
+/home/mjajalo/Desktop/cmpt373Mello/clientStuff/CMakeFiles/tcpCodeClient.dir

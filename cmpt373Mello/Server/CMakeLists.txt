@@ -1,0 +1,13 @@
+#/network root/Server
+
+cmake_minimum_required(VERSION 2.8.12)
+
+add_subdirectory(Dataflow)
+
+add_subdirectory(Server)
+add_executable(tcpserver TCPCodeServer.cpp)
+
+target_link_libraries(tcpserver LINK_PUBLIC DataflowServer)
+
+target_link_libraries(tcpserver LINK_PUBLIC Server)
+

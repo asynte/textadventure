@@ -1,0 +1,42 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/mjajalo/Desktop/cmpt373Mello/Server/TCPCodeServer.cpp
+iostream
+-
+stdio.h
+-
+stdlib.h
+-
+TCPDataflow.h
+/home/mjajalo/Desktop/cmpt373Mello/Server/TCPDataflow.h
+TCPServer.h
+/home/mjajalo/Desktop/cmpt373Mello/Server/TCPServer.h
+sstream
+-
+string
+-
+
+Server/Dataflow/TCPDataflow.h
+sys/types.h
+-
+unistd.h
+-
+sys/socket.h
+-
+iostream
+-
+string
+-
+
+Server/Server/TCPServer.h
+netinet/in.h
+-
+../Dataflow/TCPDataflow.h
+Server/Dataflow/TCPDataflow.h
+

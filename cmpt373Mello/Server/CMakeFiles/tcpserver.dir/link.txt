@@ -1,0 +1,1 @@
+/usr/bin/c++    -std=c++11    CMakeFiles/tcpserver.dir/TCPCodeServer.cpp.o  -o ../bin/tcpserver -rdynamic ../lib/libDataflowServer.a ../lib/libServer.a 

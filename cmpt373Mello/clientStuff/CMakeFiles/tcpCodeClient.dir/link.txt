@@ -1,0 +1,1 @@
+/usr/bin/c++    -std=c++11    CMakeFiles/tcpCodeClient.dir/TCPCodeClient.cpp.o  -o ../bin/tcpCodeClient -rdynamic ../lib/libDataflowClient.a ../lib/libClient.a 
