@@ -6,6 +6,7 @@ cmake_minimum_required(VERSION 2.8.9)
 
 add_subdirectory(npcDataInterface)
 add_subdirectory(objDataInterface)
+add_subdirectory(roomDataInterface)
 add_subdirectory(gameEngine)
 add_subdirectory(userAccount)
 add_subdirectory(networkingInterface)
