@@ -15,6 +15,7 @@ target_link_libraries(alphaversion ${CMAKE_SOURCE_DIR}/lib/networkinglibrary/lib
 #dataInterace Libraries
 target_link_libraries(alphaversion npcDataInterface)
 target_link_libraries(alphaversion objDataInterface)
+target_link_libraries(alphaversion roomDataInterface)
 
 #gameEngine Libraries
 target_link_libraries(alphaversion Character)
