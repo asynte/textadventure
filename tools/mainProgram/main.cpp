@@ -1,6 +1,4 @@
-#include "dataInterfaceHeaders/npcDataInterface.h"
-#include "dataInterfaceHeaders/objDataInterface.h"
-#include "dataInterfaceHeaders/roomDataInterface.h"
+#include "dataInterfaceHeaders/dataInterfaceBase.h"
 #include "gameEngineHeaders/Character.h"
 #include "gameEngineHeaders/Door.h"
 #include "gameEngineHeaders/Monster.h"
@@ -28,10 +26,28 @@
 
 using namespace std;
 
+void npcDataInterfaceTest1() {
+	npcDataInterface npc{"midgaard.yml"};
+	npc.loadAll();
+	npc.printAll();
+}
+
+void objDataInterfaceTest1() {
+	objDataInterface object{"midgaard.yml"};
+	object.loadAll();
+	object.printAll();
+}
+
 void roomDataInterfaceTest1() {
-	roomDataInterface ROOM{"midgaard.yml"};
-	ROOM.loadAll();
-	ROOM.printAll();
+	roomDataInterface room{"midgaard.yml"};
+	room.loadAll();
+	room.printAll();
+}
+
+void resetDataInterfaceTest1() {
+	resetDataInterface reset{"midgaard.yml"};
+	reset.loadAll();
+	reset.printAll();
 }
 
 void roomDataInterfaceTest2() {
@@ -90,9 +106,13 @@ void roomDataInterfaceTest2() {
 
 }
 
+
 int main() {
 
+	npcDataInterfaceTest1();
+	objDataInterfaceTest1();
 	roomDataInterfaceTest1();
-	roomDataInterfaceTest2();
+	resetDataInterfaceTest1();
+
 	return 0;
 }	
