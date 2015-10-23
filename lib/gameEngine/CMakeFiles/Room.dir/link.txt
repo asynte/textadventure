@@ -1,0 +1,2 @@
+/usr/bin/ar cr ../libRoom.a  CMakeFiles/Room.dir/Room.cpp.o
+/usr/bin/ranlib ../libRoom.a

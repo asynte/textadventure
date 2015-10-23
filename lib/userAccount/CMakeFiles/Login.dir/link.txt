@@ -1,0 +1,2 @@
+/usr/bin/ar cr ../libLogin.a  CMakeFiles/Login.dir/login.cpp.o
+/usr/bin/ranlib ../libLogin.a

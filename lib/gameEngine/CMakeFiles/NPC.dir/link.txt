@@ -1,0 +1,2 @@
+/usr/bin/ar cr ../libNPC.a  CMakeFiles/NPC.dir/NPC.cpp.o
+/usr/bin/ranlib ../libNPC.a

@@ -28,6 +28,8 @@
 using namespace std;
 
 int main() {
+	Login test;
+	test.init();
 	UserInterface_create();
 	pthread_join(UserInterface_getThreadId(), NULL);
 
