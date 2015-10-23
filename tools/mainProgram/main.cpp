@@ -25,11 +25,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "../tests/uiTest.cpp"
+
 using namespace std;
+
 
 int main() {
 	UserInterface_create();
-	pthread_join(UserInterface_getThreadId(), NULL);
+	//TEST_UI_startTest();
 
+	pthread_join(UserInterface_getThreadId(), NULL);
 	return 0;
 }	
