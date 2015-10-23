@@ -48,6 +48,8 @@ if(CMAKE_THREAD_LIBS_INIT)
   target_link_libraries(alphaversion "${CMAKE_THREAD_LIBS_INIT}")
 endif()
 
-
+find_package(Curses REQUIRED)
+include_directories(${CURSES_INCLUDE_DIR})
+target_link_libraries(alphaversion ${CURSES_LIBRARIES})
 
 

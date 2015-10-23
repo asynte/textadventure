@@ -84,7 +84,7 @@ static void help(void){
 }
 
 static void dummyCommand(void){ 
-	UserInterface_println("null command");
+	//UserInterface_println("null command");
 }
 
 static void help(const string &str){
@@ -125,7 +125,8 @@ void Commands_initiate() {
     functionMapVoid["list"] = list;
     functionMapVoid["help"] = help;
     functionMapVoid["move"] = move;
-    functionMapVoid["login"] = move;
+    functionMapVoid["login"] = dummyCommand;
+    functionMapVoid["register"] = dummyCommand;
 
 	//single arguement functions
     functionMapString["help"] = help;

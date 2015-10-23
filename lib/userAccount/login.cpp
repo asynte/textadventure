@@ -3,6 +3,9 @@
 #ifndef login_CPP
 #define login_CPP
 
+#include <stdio.h>
+#include <string.h>
+
 
 class InterfaceObserver : public Observer {
     public:
@@ -13,11 +16,11 @@ class InterfaceObserver : public Observer {
 
         	//cout << "input: " << userInput << endl;
 
-
-        	if(userInput == "login") {
+        	if(userInput == "register") {
         		login.UserAuth(1);
         	}
-        	if(userInput == "register") {
+
+        	if(userInput == "login") {
         		login.UserAuth(2);
         	}
         }
@@ -49,27 +52,30 @@ void Login::UserAuth(int choice){
  // User registration
 void Login::userRegisterDo(){
 	ofstream file;
-	file.open("../data/userdata.txt",fstream::app);
+	file.open("data/userdata.txt",fstream::app);
 	if(file.is_open()){
 		file<<"\n"<<username<< " " <<password;
 		file.close();
-		cout<<"Hi "<<username<<"! You are registered now! Welcome!\n\n";
+			UserInterface_println("Enter Password:");
+		UserInterface_println("Hi" + username);
+		UserInterface_println("! You are registered now! Welcome!");
 		UserAuth(0);
 	}
 	else{
-		cout<< "File not found" <<endl;
+			UserInterface_println("File Not Found");
 	}
 }
 
 // Initialize user registration
 void Login::userRegister(){
-    cout << "\nEnter a new username:\n";
-	cin >> username;
-	//username = UserInterface_getUserInput();
-
+    
+	UserInterface_println("Enter a new username:");
+	username = UserInterface_getUserInput();
 	ifstream fin;
-	fin.open("../data/userdata.txt");
+	fin.open("data/userdata.txt");
 	bool isFound=0;
+
+
 	while(!fin.eof()){
 		string temp = "";
 		getline(fin,temp);
@@ -83,33 +89,40 @@ void Login::userRegister(){
 		}
 	}
 	if(isFound){
-		cout << "\nSorry Username already exist!\nPlease try a different one!\n";
-		userRegister();
+	UserInterface_println("Sorry Username already exist!");
+	UserInterface_println("Please try a different one!");
+	userRegister();
 	}else{
-        cout << "\nPlease enter a new password:\n";
-        cin >> password;
-        //password = UserInterface_getUserInput();
-		userRegisterDo();	
-		}
+
+	UserInterface_println("Please enter a new password:");
+    password = UserInterface_getUserInput();
+	userRegisterDo();	
+	}
 }
 
 
 bool Login::Loggedin(){
 	string userpass;
-	cout<<"\nEnter Username: "; 
-	cin>>user;
+	UserInterface_println("Enter Username:");
+	user = UserInterface_getUserInput();
 	//user = UserInterface_getUserInput();
 	//hide pass
-    char *pass; // password string pointer
-    pass = getpass("Enter Password: "); // get a password
 
-	//cout<<"Enter password: "; cin>>pass;
+    //char *pass; // password string pointer
+    //pass = getpass("Enter Password: "); // get a password
+
+	UserInterface_println("Enter Password:");
+	pass = UserInterface_getUserInput();
+
 	//search pattern	
 	userpass = user+" "+pass;
 	string line;
     ifstream usersFile;
-    usersFile.open ("../data/userdata.txt"); 
+    //system("ls");
+    usersFile.open ("data/userdata.txt"); 
+    //system("ls");
 	bool found = false;
+
      	if(usersFile.is_open()) {
 		while(getline(usersFile,line) && !found) {
 			//match any strings
@@ -121,9 +134,10 @@ bool Login::Loggedin(){
 	usersFile.close(); 
 	if(found) {
 		//link it to our game server
-		cout << "Welcome to the game "<< user << '\n'; 
+		UserInterface_println("Welcome to the game "+user);
+		//cout << "Welcome to the game "<< user << '\n'; 
 	}else {
-		cout << "\nIncorrect Username and/or password !\n";
+		UserInterface_println("Incorrect Username and/or password !");
 		Loggedin();
 		return false;
 		}
