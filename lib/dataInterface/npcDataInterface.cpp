@@ -92,11 +92,11 @@ using namespace std;
 
 		// go through all NPC nodes in npcVector
 		int i = 0;
-		while (id != npcNode[i]["id"].as<int>()) {
+		while (id != npcVector[i].id) {
 			i++;
 		}	
 
-		if (i < npcNode.size()) {
+		if (i < npcVector.size()) {
 			printAtIndex(i);
 		}
 	
@@ -106,7 +106,7 @@ using namespace std;
 	void npcDataInterface::printAll () {
 
 		// go through all NPC nodes in NPCS sequence
-		for (int i = 0; i < npcNode.size(); i++) {
+		for (int i = 0; i < npcVector.size(); i++) {
 			printAtIndex(i);
 		}		
 	}
@@ -160,6 +160,8 @@ using namespace std;
 	// push node with specified "id" into npcVector
 	void npcDataInterface::loadFromID(const int& id) {
 
+
+		// std::find_if (npcNode.begin(), npcNode.end(), id = npcNode[i]["id"].as<int>());
 		int i = 0;
 		while (id != npcNode[i]["id"].as<int>()) {
 			i++;
@@ -175,24 +177,20 @@ using namespace std;
 	// push node with specified "id" into npcVector
 	void npcDataInterface::loadFromID(const vector<int>& id) {
 
+
 		// loop id.size() times
 		for (int count = 0; count < id.size(); count++) {
 		
-			int i = 0;
-			while (id[count] != npcNode[i]["id"].as<int>()) {
-				i++;
-			}	
-
-			if (i < npcNode.size()) {
-				// push current NPC node to vector	
-				push(i);
-			}	
+			loadFromID(id[count]);
 		}
 	}
 
 
 	// push all NPC nodes into npcVector
 	void npcDataInterface::loadAll() {
+
+		// copy (npcNode, npcNode.size(), npcVector)
+
 
 		// go through all NPC nodes in NPC sequence
 		for (int i = 0; i < npcNode.size(); i++) {

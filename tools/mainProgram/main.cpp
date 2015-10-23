@@ -27,25 +27,31 @@
 using namespace std;
 
 void npcDataInterfaceTest1() {
-	npcDataInterface npc{"midgaard.yml"};
+	npcDataInterface npc{"smurf.yml"};
 	npc.loadAll();
 	npc.printAll();
 }
 
+void npcDataInterfaceTest2() {
+	npcDataInterface npc{"smurf.yml"};
+	npc.loadFromID({101, 102, 103});
+	npc.printAll();
+}
+
 void objDataInterfaceTest1() {
-	objDataInterface object{"midgaard.yml"};
+	objDataInterface object{"smurf.yml"};
 	object.loadAll();
 	object.printAll();
 }
 
 void roomDataInterfaceTest1() {
-	roomDataInterface room{"midgaard.yml"};
+	roomDataInterface room{"smurf.yml"};
 	room.loadAll();
 	room.printAll();
 }
 
 void resetDataInterfaceTest1() {
-	resetDataInterface reset{"midgaard.yml"};
+	resetDataInterface reset{"smurf.yml"};
 	reset.loadAll();
 	reset.printAll();
 }
@@ -106,13 +112,49 @@ void roomDataInterfaceTest2() {
 
 }
 
+void testSwitch() {
 
+	int i = 0;
+	bool loop = true;
+
+	while (loop)
+	{
+		cout << "Command: ";
+		cin >> i;
+		switch(i) {
+			case 1:
+				cout << "\n";
+				npcDataInterfaceTest1();
+				break;
+			case 2:
+				cout << "\n";
+				objDataInterfaceTest1();
+				break;
+			case 3:
+				cout << "\n";
+				roomDataInterfaceTest1();
+				break;
+			case 4:
+				cout << "\n";
+				resetDataInterfaceTest1();
+				break;
+			case 5:
+				cout << "\n";
+				npcDataInterfaceTest2();
+				break;
+			default:
+				cout << "\nWrong numba, Psych!\n";
+				break;
+			case -1:
+				loop = false;
+				break;
+		}
+	}
+
+}
 int main() {
 
-	npcDataInterfaceTest1();
-	objDataInterfaceTest1();
-	roomDataInterfaceTest1();
-	resetDataInterfaceTest1();
+	testSwitch();
 
 	return 0;
 }	

@@ -175,11 +175,11 @@ using namespace std;
 
 		// go through all ROOM nodes in roomVector
 		int i = 0;
-		while (id != roomNode[i]["id"].as<int>()) {
+		while (id != roomVector[i].id) {
 			i++;
 		}	
 
-		if (i < roomNode.size()) {
+		if (i < roomVector.size()) {
 			printAtIndex(i);
 		}
 	
@@ -189,7 +189,7 @@ using namespace std;
 	void roomDataInterface::printAll () {
 
 		// go through all ROOM nodes in ROOMS sequence
-		for (int i = 0; i < roomNode.size(); i++) {
+		for (int i = 0; i < roomVector.size(); i++) {
 			printAtIndex(i);
 		}		
 	}
@@ -201,38 +201,35 @@ using namespace std;
 	// push ROOM node to ROOM struct vector
 	void roomDataInterface::push (const int& index) {
 
-	vector<DOOR> doorVector;
+		vector<DOOR> doorVector;
+		
+		for (int i = 0; i < roomNode[index]["doors"].size(); i++){
+			doorVector.push_back(DOOR{
+				roomNode[index]["doors"][i]["desc"].as<vector<string>>(),
+				roomNode[index]["doors"][i]["dir"].as<string>(),
+				roomNode[index]["doors"][i]["keywords"].as<vector<string>>(),
+				roomNode[index]["doors"][i]["to"].as<int>()
+			});
+		}
+
+		vector<EXTENDED> extendedVector;
+
+		for (int i = 0; i < roomNode[index]["extended_descriptions"].size(); i++){
+			extendedVector.push_back(EXTENDED{
+				roomNode[index]["extended_descriptions"][i]["desc"].as<vector<string>>(),
+				roomNode[index]["extended_descriptions"][i]["keywords"].as<vector<string>>()
+			});
+		}
 
 
-	for (int i = 0; i < roomNode[index]["doors"].size(); i++){
-		doorVector.push_back(DOOR{
-			roomNode[index]["doors"][i]["desc"].as<vector<string>>(),
-			roomNode[index]["doors"][i]["dir"].as<string>(),
-			roomNode[index]["doors"][i]["keywords"].as<vector<string>>(),
-			roomNode[index]["doors"][i]["to"].as<int>()
+		roomVector.push_back(ROOM{
+			roomNode[index]["desc"].as<vector<string>>(),
+			doorVector,
+			extendedVector,
+			roomNode[index]["id"].as<int>(),
+			roomNode[index]["name"].as<string>()
+
 		});
-	}
-
-	vector<EXTENDED> extendedVector;
-
-	for (int i = 0; i < roomNode[index]["extended_descriptions"].size(); i++){
-		extendedVector.push_back(EXTENDED{
-			roomNode[index]["extended_descriptions"][i]["desc"].as<vector<string>>(),
-			roomNode[index]["extended_descriptions"][i]["keywords"].as<vector<string>>()
-		});
-	}
-
-
-	roomVector.push_back(ROOM{
-		roomNode[index]["desc"].as<vector<string>>(),
-		doorVector,
-		extendedVector,
-		roomNode[index]["id"].as<int>(),
-		roomNode[index]["name"].as<string>()
-
-	});
-
-
 	}
 
 	// push "count" amount of nodes into roomVector
@@ -275,21 +272,13 @@ using namespace std;
 	}
 
 
-	// push node with specified "id" into roomVector
+	// push node with specified "ids" into roomVector
 	void roomDataInterface::loadFromID(const vector<int>& id) {
 
 		// loop id.size() times
 		for (int count = 0; count < id.size(); count++) {
 		
-			int i = 0;
-			while (id[count] != roomNode[i]["id"].as<int>()) {
-				i++;
-			}	
-
-			if (i < roomNode.size()) {
-				// push current ROOM node to vector	
-				push(i);
-			}	
+			loadFromID(id[count]);
 		}
 	}
 

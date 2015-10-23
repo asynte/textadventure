@@ -93,11 +93,11 @@ using namespace std;
 
 		// go through all RESET nodes in resetVector
 		int i = 0;
-		while (id != resetNode[i]["id"].as<int>()) {
+		while (id != resetVector[i].id) {
 			i++;
 		}	
 
-		if (i < resetNode.size()) {
+		if (i < resetVector.size()) {
 			printAtIndex(i);
 		}
 	
@@ -107,7 +107,7 @@ using namespace std;
 	void resetDataInterface::printAll () {
 
 		// go through all RESET nodes in RESETS sequence
-		for (int i = 0; i < resetNode.size(); i++) {
+		for (int i = 0; i < resetVector.size(); i++) {
 			printAtIndex(i);
 		}		
 	}
@@ -201,16 +201,8 @@ using namespace std;
 
 		// loop id.size() times
 		for (int count = 0; count < id.size(); count++) {
-		
-			int i = 0;
-			while (id[count] != resetNode[i]["id"].as<int>()) {
-				i++;
-			}	
-
-			if (i < resetNode.size()) {
-				// push current RESET node to vector	
-				push(i);
-			}	
+			
+			loadFromID(id[count]);
 		}
 	}
 

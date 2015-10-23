@@ -123,11 +123,11 @@ using namespace std;
 
 		// go through all OBJECT nodes in objVector
 		int i = 0;
-		while (id != objNode[i]["id"].as<int>()) {
+		while (id != objVector[i].id) {
 			i++;
 		}	
 
-		if (i < objNode.size()) {
+		if (i < objVector.size()) {
 			printAtIndex(i);
 		}
 	
@@ -137,7 +137,7 @@ using namespace std;
 	void objDataInterface::printAll () {
 
 		// go through all OBJECT nodes in OBJECTS sequence
-		for (int i = 0; i < objNode.size(); i++) {
+		for (int i = 0; i < objVector.size(); i++) {
 			printAtIndex(i);
 		}		
 	}
@@ -219,15 +219,7 @@ using namespace std;
 		// loop id.size() times
 		for (int count = 0; count < id.size(); count++) {
 		
-			int i = 0;
-			while (id[count] != objNode[i]["id"].as<int>()) {
-				i++;
-			}	
-
-			if (i < objNode.size()) {
-				// push current OBJECT node to vector	
-				push(i);
-			}	
+			loadFromID(id[count]);
 		}
 	}
 
