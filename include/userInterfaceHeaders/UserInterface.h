@@ -8,6 +8,9 @@ using namespace std;
 #include <algorithm>
 #include <vector>
 #include <map>
+#include <sstream>
+#include <curses.h>
+#include <unistd.h>
 #include "pthread.h"
 #include "assert.h"
 #include "Commands.h"
@@ -25,5 +28,12 @@ void UserInterface_ignoreNext(void);
 void UserInterface_addListener(Observer *obs);
 void UserInterface_notifyListeners(const string &);
 void UserInterface_notifyListeners(const vector<string> &);
+
+void UserInterface_printError(const string &value);
+void UserInterface_print(const string &value);
+void UserInterface_println(const string &value);
+void UserInterface_printTop(const string &value);
+
+string UserInterface_getUserInput(void);
 
 #endif

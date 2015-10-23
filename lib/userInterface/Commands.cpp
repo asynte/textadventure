@@ -54,47 +54,46 @@ bool isMenuCommand(const string &str) {
 }
 
 static void move(const string &str) {
-	cout << "move" << endl;
+	UserInterface_println("move");
 }
 
 static void move(void) {
-	cout << "requires a direction to move to!" << endl
-		 << SPACER << "\"move <direction>\"" << endl
-		 << SPACER <<  "use \"help move\" "
-		 << "to see more details" << endl;
+	UserInterface_println("requires a direction to move to!");
+	UserInterface_println(SPACER + "\"move <direction>\"");
+	UserInterface_println(SPACER + "use \"help move\" to see more details");
 }
 
 static void quit(void){
 	string result;
 
-	cout << "quit game?" << endl;
-	cout << SPACER << "y/n" << endl;
+	UserInterface_println("quit game?");
+	UserInterface_println(SPACER +"y/n");
 
-	UserInterface_ignoreNext();
-	cin >> result;
+	//UserInterface_ignoreNext();
+	//cin >> result;
+	result = UserInterface_getUserInput();
 
 	if ((result == "y") == true) {
-		cout << "quitting" << endl;
+		UserInterface_println("quitting");
 		UserInterface_quit();
 	}
 }
 
 static void help(void){ 
-	cout << "use \"help <command>\" "
-		 << "to see details about a command" << endl;
+	UserInterface_println("use \"help <command>\" to see details about a command");
 }
 
 static void dummyCommand(void){ 
-	cout << "null command" << endl;
+	UserInterface_println("null command");
 }
 
 static void help(const string &str){
 	if (Commands_isValidToken(str)) {
-		cout << str << ":" << endl;
+		UserInterface_println(str + ":");
 		if (isMenuCommand(str)) {
-			cout << SPACER << menuCommands.at(str) << endl;
+			UserInterface_println(SPACER + menuCommands.at(str));
 		} else if (isGameCommand(str)) {
-			cout << SPACER << gameCommands.at(str) << endl;
+			UserInterface_println(SPACER + gameCommands.at(str));
 		} else {
 
 		}
@@ -104,14 +103,15 @@ static void help(const string &str){
 }
 
 static void list(void){ 
-	cout << "Menu Commands:" << endl;
+	UserInterface_println("Menu Commands:");
 	for(auto itr = menuCommands.begin(); itr != menuCommands.end(); ++itr) {
-		cout << SPACER << itr->first << endl;
+		UserInterface_println(SPACER + itr->first);// endl;
 	}
 
-	cout << "\npossible Game Commands:" << endl;
+	UserInterface_println("");
+	UserInterface_println("Possible Game Commands:");
 	for(auto itr = gameCommands.begin(); itr != gameCommands.end(); ++itr) {
-		cout << SPACER << itr->first << endl;
+		UserInterface_println(SPACER + itr->first);
 	}
 }
 
@@ -125,6 +125,7 @@ void Commands_initiate() {
     functionMapVoid["list"] = list;
     functionMapVoid["help"] = help;
     functionMapVoid["move"] = move;
+    functionMapVoid["login"] = move;
 
 	//single arguement functions
     functionMapString["help"] = help;
@@ -134,6 +135,8 @@ void Commands_initiate() {
 	menuCommands["quit"] = "prompts to exits the game";
 	menuCommands["list"] = "displays all menuCommands that are currently available";
 	menuCommands["help"] = "displays additional info about a command\n"
+		 + SPACER +"help <command>";
+	menuCommands["login"] = "displays additional info about a command\n"
 		 + SPACER +"help <command>";
 
 	//game command helper descriptions
@@ -147,12 +150,16 @@ void Commands_initiate() {
 		 + SPACER + SPACER + "\"up\"\n"
 		 + SPACER + SPACER + "\"down\"";
 
-	for(auto itr = menuCommands.begin(); itr != menuCommands.end(); ++itr) {
+	for(auto itr = functionMapVoid.begin(); itr != functionMapVoid.end(); ++itr) {
+		options.push_back(itr->first);
+	}
+
+	/*for(auto itr = menuCommands.begin(); itr != menuCommands.end(); ++itr) {
 		options.push_back(itr->first);
 	}
 	for(auto itr = gameCommands.begin(); itr != gameCommands.end(); ++itr) {
 		options.push_back(itr->first);
-	}
+	}*/
 
 
 	sort(options.begin(), options.end());
