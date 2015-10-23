@@ -1,12 +1,26 @@
+#ifndef WORLD_CPP
+#define WORLD_CPP
 #include <iostream>
 #include <fstream>
 #include <string>
 #include <vector>
 #include "gameEngineHeaders/World.h"
 #include "yaml-cpp/yaml.h"
+#include "userInterfaceHeaders/UserInterface.h"
 
-#ifndef WORLD_CPP
-#define WORLD_CPP
+class InterfaceObserver : public Observer {
+    public:
+		InterfaceObserver()	{}
+
+		void notify(const string &userInput) {
+			//call functions with userInput as arguement
+			UserInterface_println(userInput);
+		}
+		void notify(const vector<string> &userInput) {
+			//do more stuff with the parsed strings
+			//like call a function with arguements...
+		}
+};
 
 World::World(){
 	name="";
@@ -15,6 +29,7 @@ World::World(string name){
 	this->name=name;
 	build(name);
 }
+/*
 void World::build(string name){
 	string fileName="./data/"+name+".yml";
 	YAML::Node baseNode = YAML::LoadFile(fileName);
@@ -62,11 +77,19 @@ void World::build(string name){
 		
 	}
 }
+*/
+/*
+void World::InitializeWorld(){
+function to replace the commented build() function,
+this is to call all of louie's yaml parsing
+}
+*/
+
 string World::getName(){
 	return name;
 }
 void World::getInformation(int currentLocation){
-	cout<<getName()<<endl;
+	UserInterface_println(getName());
 	roomsVector[currentLocation].getInformation();
 }
 vector<Room> World:: getRoomsVector(){
@@ -95,5 +118,25 @@ void World::getNowRoomInformation(int currentLocation){
 void World::addRoom(Room room){
 	//can not do
 }
+/*
+//This function is equivalent to old function
+//vector<string> getAllWorld(vector<string> vstring)
+//Just renamed
+vector<string> CreateWorld(vector<string> vstring){
+	vector<string> filenames;
 
+	InterfaceObserver *observer = new InterfaceObserver();
+
+	for(int i=0;i<vstring.size();i++){
+		string temp=getYAMLFileName(vstring[i]);
+		if(temp.compare("")!=0){
+			filenames.push_back(temp);
+		}
+	}
+
+	UserInterface_addListener(observer);
+	
+	return filenames;
+}
+*/
 #endif

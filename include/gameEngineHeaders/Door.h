@@ -1,8 +1,9 @@
-#include <iostream>
+
 using namespace std;
 
 #ifndef DOOR_H
 #define DOOR_H
+#include <iostream>
 
 class Door{
 public:

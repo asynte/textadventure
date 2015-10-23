@@ -1,9 +1,9 @@
-#include "Room.h"
-#include "Door.h"
 using namespace std;
 
 #ifndef WORLD_H
 #define WORLD_H
+#include "Room.h"
+#include "Door.h"
 
 class World{
 public:

@@ -1,7 +1,7 @@
-#include "gameEngineHeaders/Door.h"
-
 #ifndef DOOR_CPP
 #define DOOR_CPP
+#include "gameEngineHeaders/Door.h"
+#include "userInterfaceHeaders/UserInterface.h"
 //1 for North, 2 for South, 3 for West, 4 for East, 5 for Up, 6 for Down
 Door::Door(){ 
 	description="";
@@ -44,10 +44,11 @@ int Door::getToID(){
 }
 void Door::getInformation(){
 	if(getToID()!=0){
-		cout<<"You will go to Room: "<<getToID()<<endl;
-		cout<<"Its description: "<<getDescription()<<endl;
-		cout<<"Its direction: "<<getDirection()<<endl;
-		cout<<"Its keywords: "<<getKeywords()<<endl<<endl;
+
+		UserInterface_println("You will go to Room: " + I2S(getToID()) );
+		UserInterface_println("Its description: " + getDescription());
+		UserInterface_println("Its direction: " + getDirection());
+		UserInterface_println("Its keywords: " + getKeywords());
 	}
 
 }

@@ -300,7 +300,7 @@ static void initNCurses(void) {
 }
 
 
-static string C2S(const char c) {
+string C2S(const char c) {
 	stringstream ss;
 	string s;
 	ss << c;
@@ -308,7 +308,7 @@ static string C2S(const char c) {
 	return s;
 }
 
-static string I2S(const int i) {
+string I2S(const int i) {
 	stringstream ss;
 	string s;
 	ss << i;

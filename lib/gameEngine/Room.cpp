@@ -1,7 +1,7 @@
-#include "gameEngineHeaders/Room.h"
-
 #ifndef ROOM_CPP
 #define ROOM_CPP
+#include "gameEngineHeaders/Room.h"
+#include "userInterfaceHeaders/UserInterface.h"
 
 Room::Room(){
 	description = "";
@@ -29,21 +29,23 @@ int Room::getID(){
 	return ID;
 }
 void Room::getInformation(){
-	cout<<"You are in Room "<<getID()<<endl;
-	cout<<"Its name is "<<getName()<<endl;
-	cout<<"Description: "<<getDescription()<<endl;
+	UserInterface_println("You are in Room " + I2S(getID()) );
+	UserInterface_println("Its name is " + getName());
+	UserInterface_println("Description: " + getDescription());
 	if(doorsList.size()==1){
-		cout<<"There is "<<doorsList.size()<<" door"<<endl;
+		UserInterface_println("There is " + I2S(doorsList.size()) + " door");
 	}else if(doorsList.size()>1){
-		cout<<"There are "<<doorsList.size()<<" doors"<<endl;
+		UserInterface_println("There are " + I2S(doorsList.size()) + " doors");
 	}
 	
-	cout<<"Direction: ";
+	UserInterface_println("Direction: ");
 	for(int i=0;i<doorsList.size();i++){
-		cout<<doorsList[i].getDirection()<<" ";
+		UserInterface_println(doorsList[i].getDirection()+" ");
 
 	}
-	cout<<endl<<endl<<endl; 
+	UserInterface_println(" ");
+	UserInterface_println(" ");
+	UserInterface_println(" ");
 }
 vector<Widget> Room::getWidgetVector() {
     return this->widgetVector;
@@ -58,7 +60,7 @@ bool Room::isRoomAvailable(int direction){
 			return true;
 		}
 	}
-	cout<<"You cannot go in this direction because this direction does not exist"<<endl;
+	UserInterface_println("You cannot go in this direction because this direction does not exist");
 	return false;
 }
 Door Room::getDoorWantToGo(int direction){

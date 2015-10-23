@@ -36,5 +36,9 @@ void UserInterface_notifyListeners(const vector<string> &);
 
 	//get user input
 	string UserInterface_getUserInput(void);
+	
+	//String Conversion
+	string C2S(const char c);
+	string I2S(const int i);
 
 #endif

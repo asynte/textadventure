@@ -126,6 +126,7 @@ void Commands_initiate() {
     functionMapVoid["help"] = help;
     functionMapVoid["move"] = move;
     functionMapVoid["login"] = move;
+    functionMapVoid["testworld"] = dummyCommand;
 
 	//single arguement functions
     functionMapString["help"] = help;

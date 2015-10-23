@@ -1,10 +1,10 @@
-#include <iostream>
-#include "Door.h"
-#include "Widget.h"
 using namespace std;
 
 #ifndef ROOM_H
 #define ROOM_H
+#include <iostream>
+#include "Door.h"
+#include "Widget.h"
 
 class Room{
 public:
