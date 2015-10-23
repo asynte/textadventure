@@ -26,7 +26,33 @@ static ObserverList observers;
 static bool IS_RUNNING;
 static bool IGNORE;
 static pthread_t INTERFACE_THREAD;
+static WINDOW *DISPLAY_WINDOW;
+static const int BUFFER_LENGTH = 128;
 
+static int interface_row;
+static int interface_col;
+
+
+
+void UserInterface_print(const string &value) {
+	mvprintw(interface_row, 0, "%s", value.c_str());
+	++interface_row;
+	refresh();
+}
+
+void UserInterface_println(const string &value) {
+	UserInterface_print(value + "\n");
+}
+
+void UserInterface_printTop(const string &value) {
+	mvprintw(0, 0, "%s\n", value.c_str());
+	refresh();
+}
+
+static void UserInterface_printRow(const string &value, const int row) {
+	mvprintw(row, 0, "%s\n", value.c_str());
+	refresh();
+}
 
 void UserInterface_addListener(Observer *obs) {
 	observers.addObserver(obs);
@@ -40,19 +66,27 @@ void UserInterface_notifyListeners(const vector<string> &str) {
 }
 
 void UserInterface_invalidInput(const string &str) {
+	UserInterface_println("\"" + str + "\" does not match any commands...\nuse \"list\" to see available commands\nuse \"help <command>\" to see details about a command");
+
+
+
+	/*
 	cout << "\"" << str << "\" does not match any commands..." << endl
 		 << "use \"list\" to see available commands" << endl
 		 << "use \"help <command>\" to see details about a command" << endl;
+	*/
 }
 
 
+
+
+
 static void displayMatches(const vector<string> &matches, const string &input) {
-	cout << "what command did you mean" << endl
-		 <<  "\"" << input << "\" refers to multiple commands:"
-		 << endl;
+	UserInterface_println("what command did you mean");
+	UserInterface_println("\"" + input + "\" refers to multiple commands:");
 
 	for(auto itr = matches.begin(); itr != matches.end(); ++itr) {
-		cout << "  " << *itr << endl;
+		UserInterface_println("  " + *itr);
 	}
 }
 
@@ -102,10 +136,11 @@ static bool processSubToken(const vector<string> &inputs, vector<string> &tokens
 
 		return true;
 	}
+
 	
-	if (index == tokens.size() && index > 0) {
+	//if (index == tokens.size() && index > 0) {
 		UserInterface_invalidInput(token);
-	}
+	//}
 	return false;
 }
 
@@ -195,20 +230,21 @@ static vector<string> parseInput(string &input) {
 }
 
 
+
+
+
 static void interfaceLoop() {
-	bool hasOverflown = false;
-
-	string input;
-
-	cout << "enter a command" << endl
-		 << "  type \"list\" to display possible commands" << endl;
+	UserInterface_println("enter a command");
+	UserInterface_println("  type \"list\" to display possible commands");
 
 	while(IS_RUNNING) {
-		getline(cin, input);
+		//char str[BUFFER_LENGTH];
+		//getstr(str);
+		string input = UserInterface_getUserInput();
 
 		if (IGNORE) {
 			IGNORE = false;
-		} else {
+		} else if(input > "") {
 			vector<string> tokens = parseInput(input);
 
 			if (tokens.size() == 1) {
@@ -216,7 +252,7 @@ static void interfaceLoop() {
 			} else if (tokens.size() > 1) {
 				parseTokens(tokens);
 			} else {
-				assert(false && "invalid token count from user input");
+			//	assert(false && "invalid token count from user input");
 			}
 		}
 	}
@@ -228,12 +264,142 @@ static void* threadFunc(void *arg) {
 
 
 static void startInterfaceThread(void) {
+	IS_RUNNING = true;
+	IGNORE = false;
+
+	UserInterface_printTop("making thread\n");
+
+
 	if ( pthread_create(&INTERFACE_THREAD, NULL, threadFunc, NULL) ) {
-		fprintf( stderr, "Error creating thread\n" );
+		UserInterface_printTop("Error creating thread\n");
+		//fprintf( stderr, "Error creating thread\n" );
 		exit(-1);
 	}
 }
 
+
+
+static void destroyNCurses(WINDOW *display) {
+	delwin(display);
+	endwin();
+	refresh();
+}
+
+static void initNCurses(void) {
+	DISPLAY_WINDOW = initscr();
+
+	if (DISPLAY_WINDOW == NULL) {
+		cout << "failure initiating NCurse Window" << endl
+			 << "exiting program" << endl;
+		endwin();
+		exit(-1);
+	}
+
+	//raw();
+	noecho();
+}
+
+
+static string C2S(const char c) {
+	stringstream ss;
+	string s;
+	ss << c;
+	ss >> s;
+	return s;
+}
+
+static string I2S(const int i) {
+	stringstream ss;
+	string s;
+	ss << i;
+	ss >> s;
+	return s;
+}
+
+static bool isDeleteChar(int ch) {
+	static const int DELETE = 127;
+	return ch == DELETE;
+}
+
+static bool isNewlineChar(int ch) {
+	static const int NEWLINE = 10;
+	return ch == NEWLINE;
+}
+
+static bool isValidChar(int ch) {
+	static const int CHAR_START = 31;
+	static const int CHAR_END = 126;
+	return ch > CHAR_START && CHAR_END > ch;
+}
+
+static string getUserInput() {
+	char ch = getch();
+	char first;
+	int row = ++interface_row - 1;
+
+	if (isNewlineChar(ch)) {
+		return "";
+	}
+	if (isValidChar(ch)) {
+		first = ch;
+		UserInterface_printRow(C2S(ch), row);
+	}
+
+	string input = "";
+	input = input + ch;
+
+	while(1) {
+		ch = getch();
+
+		if (isNewlineChar(ch)) {
+			input = input;
+			return input;
+		}
+		if (isDeleteChar(ch)) {
+			if (input.length() > 0) {
+				input = input.substr(0,input.length() - 1);
+			}
+		} else if (isValidChar(ch)) {
+			input = input + ch;
+		}
+
+		//UserInterface_printTop(I2S(ch));
+		UserInterface_printRow(input, row);
+	}
+
+	return "";
+}
+
+string UserInterface_getUserInput(void) {
+
+	string input = getUserInput();
+	interface_row = 1;
+	clear();
+	refresh();
+
+	return input;
+
+/*
+	//UserInterface_println(getUserInput());
+	//sleep(10);
+
+	char str[BUFFER_LENGTH];
+	char ch = getch();
+
+	++interface_row;
+	getstr(str);
+
+	string input(str);
+	input = ch + input;
+
+
+
+	return input;
+	//return string(ch + str);
+*/
+
+
+}
 
 bool UserInterface_isActive(void) {
 	return IS_RUNNING;
@@ -246,18 +412,53 @@ void UserInterface_ignoreNext(void) {
 
 void UserInterface_quit(void) {
 	IS_RUNNING = false;
+	destroyNCurses(DISPLAY_WINDOW);
 }
 
 pthread_t& UserInterface_getThreadId(void) {
 	return INTERFACE_THREAD;
 }
 
+
+
+/*
+struct MyCout {};
+extern MyCout myCout;
+
+template <typename T>
+MyCout& operator<< (MyCout &s, const T &x) {
+  //format x as you please
+	//printw("%s", value.c_str());
+
+
+	cout << "meh " << x;
+	return s;
+}
+
+MyCout& operator<< (MyCout &s, std::ostream& (*f)(std::ostream &)) {
+  f(std::cout);
+  return s;
+}
+
+MyCout& operator<< (MyCout &s, std::ostream& (*f)(std::ios &)) {
+  f(std::cout);
+  return s;
+}
+
+MyCout& operator<< (MyCout &s, std::ostream& (*f)(std::ios_base &)) {
+  f(std::cout);
+  return s;
+}
+
+ 	//MyCout cout;
+	//cout << "test" << endl;
+
+*/
+
+
 void UserInterface_create(void) {
+	initNCurses();
 	Commands_initiate();
-
-	IS_RUNNING = true;
-	IGNORE = false;
-
 	startInterfaceThread();
 }
 
