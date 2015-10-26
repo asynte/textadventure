@@ -28,8 +28,8 @@
 using namespace std;
 
 
-int main() {
 
+	
 void npcDataInterfaceTest1() {
 	npcDataInterface npc{"smurf.yml"};
 	npc.loadAll();
@@ -49,7 +49,7 @@ void objDataInterfaceTest1() {
 }
 
 void roomDataInterfaceTest1() {
-	roomDataInterface room{"smurf.yml"};
+	roomDataInterface room{"test.yml"};
 	room.loadAll();
 	room.printAll();
 }
@@ -154,7 +154,9 @@ void testSwitch() {
 				break;
 		}
 	}
-
-
+}
+int main() {
+	//testSwitch();
+	World world("test");
 	return 0;
 }	

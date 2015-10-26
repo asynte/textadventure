@@ -9,7 +9,8 @@ class World{
 public:
 	World();
 	World(string name);
-	void build(string name);
+	//void build(string name);
+	void initializeWorld(string name);
 	vector<Room> getRoomsVector();
 	string getName();
 	void setRoomIndex(int roomIndex);

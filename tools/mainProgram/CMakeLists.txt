@@ -51,21 +51,7 @@ endif()
 if(CMAKE_THREAD_LIBS_INIT)
   target_link_libraries(alphaversion "${CMAKE_THREAD_LIBS_INIT}")
 endif()
->>>>>>> origin/dataInterface
 
-		#Pthread Library
-		find_package(Threads REQUIRED)
-		if(THREADS_HAVE_PTHREAD_ARG)
-		  set_property(TARGET ${EXECUTABLE_NAME} PROPERTY COMPILE_OPTIONS "-pthread")
-		  set_property(TARGET ${EXECUTABLE_NAME} PROPERTY INTERFACE_COMPILE_OPTIONS "-pthread")
-		endif()
-		if(CMAKE_THREAD_LIBS_INIT)
-		  target_link_libraries(${EXECUTABLE_NAME} "${CMAKE_THREAD_LIBS_INIT}")
-		endif()
 
-		#NCurses Library
-		find_package(Curses REQUIRED)
-		include_directories(${CURSES_INCLUDE_DIR})
-		target_link_libraries(${EXECUTABLE_NAME} ${CURSES_LIBRARIES})
 
 
