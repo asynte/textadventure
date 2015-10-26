@@ -2,7 +2,7 @@
 #include <string>
 #include <vector>
 #include "yaml-cpp/yaml.h"
-#include "dataInterfaceHeaders/npcDataInterface.h"
+#include "dataInterfaceHeaders/dataInterfaceBase.h"
 
 using namespace std;
 
@@ -43,35 +43,38 @@ using namespace std;
 	// print description of NPC struct at specified index
 	void npcDataInterface::printDescription (const int& index) {
 		// for all strings at npc description vector
+		cout << "Description\n";
 		for (string s : npcVector[index].description){
-			cout << s << "\n";
+			cout << "- " << s << "\n";
 		}
 	}
 
 	// print id of NPC struct at specified index
 	void npcDataInterface::printID (const int& index) {
-		cout << npcVector[index].id << "\n";
+		cout << "ID: " << npcVector[index].id << "\n";
 	}
 
 	// print key word of NPC struct at specified index
 	void npcDataInterface::printKeyWord (const int& index) {
 		// for all strings at npc keywords vector
+		cout << "Keywords\n";
 		for (string s : npcVector[index].keyWord){
-			cout << s << "\n";
+			cout << "- " << s << "\n";
 		}
 	}
 
 	// print long description of NPC struct at specified index
 	void npcDataInterface::printLongDescription (const int& index) {
 		// for all strings at npc long description vector
+		cout << "Long Description\n";
 		for (string s : npcVector[index].longDesc){
-			cout << s << "\n";
+			cout << "- " << s << "\n";
 		}
 	}
 
 	// print short description of NPC struct at specified index
 	void npcDataInterface::printShortDescription (const int& index) {
-		cout << npcVector[index].shortDesc << "\n";
+		cout << "Short description: " << npcVector[index].shortDesc << "\n";
 	}
 
 	// print elements of NPC struct at specified index
@@ -81,6 +84,7 @@ using namespace std;
 		printKeyWord(index);
 		printLongDescription(index);
 		printShortDescription(index);
+		cout << "\n";
 	}
 
 	// print elements of NPC struct at specified NPC ID
@@ -88,11 +92,11 @@ using namespace std;
 
 		// go through all NPC nodes in npcVector
 		int i = 0;
-		while (id != npcNode[i]["id"].as<int>()) {
+		while (id != npcVector[i].id) {
 			i++;
 		}	
 
-		if (i < npcNode.size()) {
+		if (i < npcVector.size()) {
 			printAtIndex(i);
 		}
 	
@@ -102,7 +106,7 @@ using namespace std;
 	void npcDataInterface::printAll () {
 
 		// go through all NPC nodes in NPCS sequence
-		for (int i = 0; i < npcNode.size(); i++) {
+		for (int i = 0; i < npcVector.size(); i++) {
 			printAtIndex(i);
 		}		
 	}
@@ -156,6 +160,8 @@ using namespace std;
 	// push node with specified "id" into npcVector
 	void npcDataInterface::loadFromID(const int& id) {
 
+
+		// std::find_if (npcNode.begin(), npcNode.end(), id = npcNode[i]["id"].as<int>());
 		int i = 0;
 		while (id != npcNode[i]["id"].as<int>()) {
 			i++;
@@ -171,24 +177,20 @@ using namespace std;
 	// push node with specified "id" into npcVector
 	void npcDataInterface::loadFromID(const vector<int>& id) {
 
+
 		// loop id.size() times
 		for (int count = 0; count < id.size(); count++) {
 		
-			int i = 0;
-			while (id[count] != npcNode[i]["id"].as<int>()) {
-				i++;
-			}	
-
-			if (i < npcNode.size()) {
-				// push current NPC node to vector	
-				push(i);
-			}	
+			loadFromID(id[count]);
 		}
 	}
 
 
 	// push all NPC nodes into npcVector
 	void npcDataInterface::loadAll() {
+
+		// copy (npcNode, npcNode.size(), npcVector)
+
 
 		// go through all NPC nodes in NPC sequence
 		for (int i = 0; i < npcNode.size(); i++) {
