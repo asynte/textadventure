@@ -132,7 +132,7 @@ public:
 	///////////////////////////////////
 	// 		   LOAD FUNCTIONS        //
 	///////////////////////////////////
-
+		
 	virtual void push (const int& index);
 
 	virtual void load (const int& count);
@@ -324,6 +324,9 @@ public:
 	
 	vector<string> getExtendedKeyWord (const int& roomIndex, const int& extendedIndex);
 
+	int getRoomSize ();
+
+	int getDoorSize (const int& index);
 
 	///////////////////////////////////
 	// 		  PRINT FUNCTIONS        //
