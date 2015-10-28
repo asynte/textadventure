@@ -9,6 +9,10 @@ Character::Character(string name) {
     this->setLevel(1);
     this->setHealth(CHAR_DEFAULTHEALTH);
     this->setAtk(CHAR_DEFAULTATK);
+    this->setStr(CHAR_DEFAULTSTAT);
+    this->setInt(CHAR_DEFAULTSTAT);
+    this->setDex(CHAR_DEFAULTSTAT);
+    this->setCha(CHAR_DEFAULTSTAT);
     this->currentLocation = CHAR_STARTLOCATION;
 }
 
@@ -27,6 +31,14 @@ int Character::getHealth() {
     return this->charHealth;
 }
 
+void Character::setExp(int exp) {
+    this->experience = exp;
+}
+
+void Character::increaseExp(int expGained) {
+    this->experience += expGained;
+}
+
 void Character::setLevel(int lvl) {
     this->charLevel = lvl;
 }
@@ -35,8 +47,14 @@ int Character::getLevel() {
     return this->charLevel;
 }
 
-void Character::levelUp() {
-    this->charLevel++;
+void Character::updateLevel() {
+    int newLevel = 0;
+    int expCounter = this->experience;
+    while (expCounter > newLevel*100) { // each level requires level*100 exp (i.e. lvl 9 requires 900 exp)
+        newLevel++; 
+        expCounter -= newLevel*100;
+    }
+    this->setLevel(newLevel);
 }
 
 void Character::setAtk(int atk) {
@@ -45,6 +63,37 @@ void Character::setAtk(int atk) {
 
 int Character::getAtk() {
     return this->charAtk;
+}
+
+void Character::setStr(int str) {
+    this->charStrength = str;
+}
+
+int Character::getStr() {
+    return this->charStrength;
+}
+void Character::setInt(int intel) {
+    this->charIntelligence = intel;
+}
+
+int Character::getInt() {
+    return this->charIntelligence;
+}
+
+void Character::setDex(int dex) {
+    this->charDexterity = dex;
+}
+
+int Character::getDex() {
+    return this->charDexterity;
+}
+
+void Character::setCha(int chari) {
+    this->charCharisma = chari;
+}
+
+int Character::getCha() {
+    return this->charCharisma;
 }
 
 vector<Widget> Character::getInventory() {

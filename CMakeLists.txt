@@ -15,7 +15,6 @@ include_directories(${Boost_INCLUDE_DIR})
 
 include_directories(${CMAKE_SOURCE_DIR}/include)
 
-
 add_subdirectory(lib)
 add_subdirectory(tools)
 
