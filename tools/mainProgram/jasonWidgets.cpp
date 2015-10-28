@@ -30,56 +30,8 @@ void parseYamlAndPrint();
 //1 to go North, 2 to go South, 3 to go West, 4 to go East, 5 to go Up, 6 to go Down
 int main()
 {	
-	DIR *dir;
-
-	vector<string> vstring;
-	struct dirent *ent;
-	if ((dir = opendir ("data")) != NULL) {
-	  /* print all the files and directories within directory */
-	  while ((ent = readdir (dir)) != NULL) {
-	    vstring.push_back(ent->d_name);
-	  }
-	  closedir (dir);
-	} else {
-	  /* could not open directory */
-	  perror ("");
-	  return EXIT_FAILURE;
-	}
-	vector<string> filenames=getAllWorld(vstring);
-	vector <World> worldsVector;
-	for(int i=0;i<filenames.size();i++){
-		worldsVector.push_back(World(filenames[i]));
-	}
-	for(int i=0;i<worldsVector.size();i++){
-		cout<<worldsVector[i].getName()<<endl;
-	}
-
-	World world=worldsVector[0];
-	string input;
-        Character player("Dirction");
-        world.getInformation(player.getLocation());
-        bool wantsToPlay = true;
-	while(wantsToPlay){
-            int direction=(int)goToOtherRoom();
-            int roomNumber=world.willGoToRoom(direction, player.getLocation());
-            if(roomNumber!=0){
-                cout<<"Do you want to go? yes/no"<<endl;
-                cin>>input;
-                cout<<endl;
-                if(input.compare("yes")==0){
-                    player.move(world, roomNumber);
-                }else{
-                    wantsToPlay = false;
-                }
-            }
-	}
-        
-        /*Object rock(69, "Dwayne Johnson");
-        world.getRoomsVector()[0].setWidgetVector(0, rock);
-        player.addToInventory(rock);
-        player.getInventory()[0].getName();*/
-	
-	return 0;
+    cout << "Success\n";
+    return 0;
 }
 double goToOtherRoom(){
 	double doorInput;

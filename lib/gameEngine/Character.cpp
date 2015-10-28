@@ -96,7 +96,7 @@ int Character::getCha() {
     return this->charCharisma;
 }
 
-vector<Widget> Character::getInventory() {
+vector<Object> Character::getInventory() {
     return this->charInventory;
 }
 
@@ -118,6 +118,14 @@ void Character::addToInventory(Object obj) {
         cout << w.getName() + " is not in the inventory!";
     }
 }*/
+
+vector<Object> Character::getEquipment() {
+    return this->charEquipment;
+}
+
+void Character::equip(Object item) {
+    
+}
 
 void Character::interact(NPC npc) { // interact with NPC 
     cout << "\n" + npc.getDesc();

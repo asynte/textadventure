@@ -16,12 +16,17 @@ public:
 	string getLongDesc();
 	vector<string> getKeyWords();
 	vector<string> getExtra();
-	//void interact();
+        void setWearable(bool);
+	bool isWearable();
+        void setEquipArea(equipmentArea);
+        equipmentArea getEquipArea();
 
 protected:
 	string objLongDesc;
 	vector<string> objKeyWords;
 	vector<string> objExtra;
+        bool wearable;
+        equipmentArea equippedOn;
 };
 
 #endif

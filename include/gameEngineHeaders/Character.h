@@ -25,8 +25,8 @@ public:
     void getStatus();
     void setHealth(int);
     int getHealth();
-    void setExp();
-    void increaseExp();
+    void setExp(int);
+    void increaseExp(int);
     int getExp();
     void setLevel(int);
     int getLevel();
@@ -41,9 +41,11 @@ public:
     int getDex();
     void setCha(int);
     int getCha();
-    vector<Widget> getInventory();
+    vector<Object> getInventory();
     void addToInventory(Object);
-    //void removeFromInventory(Widget&);
+    //void removeFromInventory(Object);
+    vector<Object> getEquipment();
+    void equip(Object);
     int getLocation();
     void interact(NPC);
     void interact(Object);
@@ -61,7 +63,8 @@ protected:
     int charIntelligence;
     int charDexterity;
     int charCharisma;
-    vector<Widget> charInventory;
+    vector<Object> charInventory;
+    vector<Object> charEquipment;
     int currentLocation;
 };
 
