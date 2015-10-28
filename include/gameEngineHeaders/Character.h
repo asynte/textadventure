@@ -44,7 +44,7 @@ public:
     vector<Object> getInventory();
     void addToInventory(Object);
     //void removeFromInventory(Object);
-    vector<Object> getEquipment();
+    Object** getEquipment();
     void equip(Object);
     int getLocation();
     void interact(NPC);
@@ -64,7 +64,8 @@ protected:
     int charDexterity;
     int charCharisma;
     vector<Object> charInventory;
-    vector<Object> charEquipment;
+    *charEquipment[Object];
+    //add vector for skills?
     int currentLocation;
 };
 

@@ -13,14 +13,18 @@ Character::Character(string name) {
     this->setInt(CHAR_DEFAULTSTAT);
     this->setDex(CHAR_DEFAULTSTAT);
     this->setCha(CHAR_DEFAULTSTAT);
+    this->getEquipment() = { nullptr }; // set equipment to nothing
     this->currentLocation = CHAR_STARTLOCATION;
 }
 
-void Character::getStatus() { // print Character's stats
+void Character::printStatus() { // print Character's stats
     cout << "\nName: " + this->getName();
     cout << "\nHealth: " + to_string(this->getHealth());
     cout << "\nLevel: " + to_string(this->getLevel());
-    cout << "\nAttack: " + to_string(this->getAtk()) + "\n";
+    cout << "\nEquipment: ";
+    for (int wornItem = 0; wornItem < this->getEquipment.size(); wornItem++) {
+        cout << "\n\t" + (*this->getEquipment[wornItem]).getName();
+    }
 }
 
 void Character::setHealth(int hp) {
@@ -119,12 +123,25 @@ void Character::addToInventory(Object obj) {
     }
 }*/
 
-vector<Object> Character::getEquipment() {
+Object** Character::getEquipment() {
     return this->charEquipment;
 }
 
-void Character::equip(Object item) {
-    
+void Character::equip(Object &item) {
+    if (item.isWearable()) {
+        Object* areaIsEquipped = this->getEquipment()[item.getEquipArea()];
+        if (areaIsEquipped == nullptr) { // nothing equipped in this area
+            this->getEquipment()[item.getEquipArea()] = &item;
+        } else { // something equipped in this area
+            cout << areaIsEquipped->getName() + " is already equipped! Please unequip first.";
+        }
+    } else { // not wearable
+        cout << "This item is not wearable!";
+    }
+}
+
+void Character::unequip(Object item) {
+    this->getEquipment()[item.getEquipArea()] = nullptr;
 }
 
 void Character::interact(NPC npc) { // interact with NPC 
