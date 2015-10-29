@@ -22,6 +22,7 @@
 // 		}
 // };
 World::World(string name){
+	cout<<"a"<<endl;
 	this->name=name;
 	initializeWorld(name);
 }
@@ -30,8 +31,10 @@ World::World(string name){
 //function to replace the commented build() function, this is to call all of louie's yaml parsing
 void World::initializeWorld(string name){
  	string fileName="../data/"+name+".yml";
+
  	roomDataInterface room{fileName};
 	room.loadAll();
+	room.printAll();
 	
 }
 

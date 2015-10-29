@@ -5,6 +5,9 @@
 #include <string>
 #include <vector>
 #include "yaml-cpp/yaml.h"
+#include "../gameEngineHeaders/Room.h"
+#include "../gameEngineHeaders/Door.h"
+#include "../gameEngineHeaders/Extended.h"
 
 using namespace std;
 
@@ -260,28 +263,28 @@ public:
 class roomDataInterface : public dataInterfaceBase{
 private: 
 
-	struct DOOR {
-		vector<string> description;
-		string direction;
-		vector<string> keyWord;
-		int to;
-	};
+	// struct DOOR {
+	// 	vector<string> description;
+	// 	string direction;
+	// 	vector<string> keyWord;
+	// 	int to;
+	// };
 
-	struct EXTENDED {
-		vector<string> description;
-		vector<string> keyWord;
-	};
+	// struct EXTENDED {
+	// 	vector<string> description;
+	// 	vector<string> keyWord;
+	// };
 
-	struct ROOM {
-		vector<string> description;
-		vector<DOOR> door;
-		vector<EXTENDED> extended;
-		int id;
-		string name;
-	};
+	// struct ROOM {
+	// 	vector<string> description;
+	// 	vector<DOOR> door;
+	// 	vector<EXTENDED> extended;
+	// 	int id;
+	// 	string name;
+	// };
 
 	// store each node on vector
-	vector<ROOM> roomVector;
+	vector<Room> roomVector;
 
 	// node where root of yaml file will be set
 	YAML::Node baseNode;
@@ -304,14 +307,14 @@ public:
 	// 		   GET FUNCTIONS         //
 	///////////////////////////////////
 
- 	vector<string> getDescription (const int& index);
+ 	string getDescription (const int& index);
 
 	int getID (const int& index);
 
 	string getName (const int& index);
 
 
-	vector<string> getDoorDescription (const int& roomIndex, const int& doorIndex);
+	string getDoorDescription (const int& roomIndex, const int& doorIndex);
 
 	string getDoorDirection (const int& roomIndex, const int& doorIndex);
 
@@ -320,7 +323,7 @@ public:
 	int getDoorTO (const int& roomIndex, const int& doorIndex);
 
 
-	vector<string> getExtendedDescription (const int& roomIndex, const int& extendedIndex);
+	string getExtendedDescription (const int& roomIndex, const int& extendedIndex);
 	
 	vector<string> getExtendedKeyWord (const int& roomIndex, const int& extendedIndex);
 

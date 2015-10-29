@@ -4,26 +4,27 @@ using namespace std;
 #ifndef DOOR_H
 #define DOOR_H
 #include <iostream>
+#include <vector>
 
 class Door{
 public:
-	Door();
-	Door(string,string,string,int);
+	Door(string,string,vector<string>,int);
 	string getDescription();
 	int getDirectionAsInt();
 	string getDirection();
-	string getKeywords();
+	vector<string> getKeywords();
 	int getToID();
 	void getInformation();
 	void setDescription(string);
 	void setDirection(string);
-	void setKeywords(string);
+	void setKeywords(vector<string>);
 	void setToID(int);
 private:
 	string description;
 	string direction;
-	string keywords;
+	vector<string> keywords;
 	int toID;
+
 };
 
 

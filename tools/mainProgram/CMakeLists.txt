@@ -29,6 +29,7 @@ target_link_libraries(alphaversion Object)
 target_link_libraries(alphaversion Room)
 target_link_libraries(alphaversion Widget)
 target_link_libraries(alphaversion World)
+target_link_libraries(alphaversion Extended)
 
 #userAccount Libraries
 target_link_libraries(alphaversion Login)

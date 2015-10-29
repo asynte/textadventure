@@ -68,13 +68,13 @@ void roomDataInterfaceTest2() {
 
 
 	// assign valuables from ROOM struct
-	vector<string> a = ROOM2.getDescription(0);
+	string a = ROOM2.getDescription(0);
 
 	int b = ROOM2.getID(0);
 
 	string c = ROOM2.getName(0);
 
-	vector<string> d = ROOM2.getDoorDescription(0, 0);
+	string d = ROOM2.getDoorDescription(0, 0);
 
 	string e = ROOM2.getDoorDirection(0, 0);
 
@@ -82,19 +82,18 @@ void roomDataInterfaceTest2() {
 
 	int f = ROOM2.getDoorTO(0, 0);
 
-	vector<string> g = ROOM2.getExtendedDescription(0, 0);
+	string g = ROOM2.getExtendedDescription(0, 0);
 
 	vector<string> h = ROOM2.getExtendedKeyWord(0, 0);
 
 
 	// output variable values to terminal
-	for (string s: a){
-		cout << s << "\n";
-	}
+	
+		cout << a << "\n";
 
-	for (string s: d){
-		cout << s << "\n";
-	}
+	
+		cout << d << "\n";
+	
 
 	cout << e << "\n";
 
@@ -102,9 +101,9 @@ void roomDataInterfaceTest2() {
 		cout << s << "\n";
 	}	
 
-	for (string s: g){
-		cout << s << "\n";
-	}	
+	
+		cout << g << "\n";
+		
 
 	for (string s: h){
 		cout << s << "\n";
@@ -156,7 +155,8 @@ void testSwitch() {
 	}
 }
 int main() {
-	//testSwitch();
+	
 	World world("test");
+	testSwitch();
 	return 0;
 }	

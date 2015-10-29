@@ -10,8 +10,11 @@ add_library(Object Object.cpp)
 add_library(Room Room.cpp)
 add_library(Widget Widget.cpp)
 add_library(World World.cpp)
+add_library(Extended Extended.cpp)
 
 
 target_link_libraries(World ${CMAKE_SOURCE_DIR}/lib/yaml/libyaml-cpp.a)
 target_link_libraries(Room Door)
 target_link_libraries(Room World)
+target_link_libraries(Room Extended)
+target_link_libraries(Door Extended)
