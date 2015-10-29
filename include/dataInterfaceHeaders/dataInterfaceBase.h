@@ -262,27 +262,6 @@ public:
 
 class roomDataInterface : public dataInterfaceBase{
 private: 
-
-	// struct DOOR {
-	// 	vector<string> description;
-	// 	string direction;
-	// 	vector<string> keyWord;
-	// 	int to;
-	// };
-
-	// struct EXTENDED {
-	// 	vector<string> description;
-	// 	vector<string> keyWord;
-	// };
-
-	// struct ROOM {
-	// 	vector<string> description;
-	// 	vector<DOOR> door;
-	// 	vector<EXTENDED> extended;
-	// 	int id;
-	// 	string name;
-	// };
-
 	// store each node on vector
 	vector<Room> roomVector;
 
@@ -312,7 +291,7 @@ public:
 	int getID (const int& index);
 
 	string getName (const int& index);
-
+	vector <Room> getRoomVector();
 
 	string getDoorDescription (const int& roomIndex, const int& doorIndex);
 

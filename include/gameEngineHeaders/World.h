@@ -2,9 +2,9 @@ using namespace std;
 
 #ifndef WORLD_H
 #define WORLD_H
-#include "Room.h"
-#include "Door.h"
-
+#include "gameEngineHeaders/Room.h"
+#include "gameEngineHeaders/Door.h"
+#include "dataInterfaceHeaders/dataInterfaceBase.h"
 class World{
 public:
 	World();
@@ -15,7 +15,7 @@ public:
 	string getName();
 	void setRoomIndex(int roomIndex);
 	void addRoom(Room room);
-	void getInformation(int currentLocation);
+	void getInformation();
 	int willGoToRoom(int direction, int currentLocation);
 	void goToRoom(int roomID);
 	void getNowRoomInformation(int currentLocation);

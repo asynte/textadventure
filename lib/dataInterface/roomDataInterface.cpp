@@ -24,7 +24,9 @@ using namespace std;
 	string roomDataInterface::getName (const int& index) {
 		return roomVector[index].getName();
 	}
-
+	vector <Room> roomDataInterface::getRoomVector(){
+		return roomVector;
+	}
 
 	// DOOR roomDataInterface::getDoor (const int& index) {
 	// 	return roomVector[index].door;

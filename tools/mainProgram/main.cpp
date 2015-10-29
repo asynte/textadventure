@@ -157,6 +157,6 @@ void testSwitch() {
 int main() {
 	
 	World world("test");
-	testSwitch();
+	world.getInformation();
 	return 0;
 }	

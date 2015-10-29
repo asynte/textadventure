@@ -5,9 +5,6 @@
 #include <string>
 #include <vector>
 #include "gameEngineHeaders/World.h"
-#include "yaml-cpp/yaml.h"
-#include "userInterfaceHeaders/UserInterface.h"
-#include "dataInterfaceHeaders/dataInterfaceBase.h"
 // class InterfaceObserver : public Observer {
 //     public:
 // 		InterfaceObserver()	{}
@@ -22,7 +19,6 @@
 // 		}
 // };
 World::World(string name){
-	cout<<"a"<<endl;
 	this->name=name;
 	initializeWorld(name);
 }
@@ -34,20 +30,21 @@ void World::initializeWorld(string name){
 
  	roomDataInterface room{fileName};
 	room.loadAll();
-	room.printAll();
+	roomsVector=room.getRoomVector();
 	
 }
 
 string World::getName(){
 	return name;
 }
-// void World::getInformation(int currentLocation){
-// 	UserInterface_println(getName());
-// 	roomsVector[currentLocation].getInformation();
-// }
-// vector<Room> World:: getRoomsVector(){
-// 	return roomsVector;
-// }
+void World::getInformation(){
+	for(Room r:roomsVector){
+		cout<<r.getName()<<endl;
+	}	
+}
+vector<Room> World:: getRoomsVector(){
+	return roomsVector;
+}
 // int World::willGoToRoom(int direction, int currentLocation){
 // 	Room nowRoom=roomsVector[currentLocation];
 // 	Door door;
