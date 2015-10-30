@@ -1,16 +1,16 @@
 
+
+#ifndef CHARACTER_H
+#define CHARACTER_H
 #include <string>
 #include <iostream>
 #include <vector>
 #include <algorithm>
-#include "Widget.h"
-#include "Object.h"
-#include "NPC.h"
-#include "Monster.h"
-#include "World.h"
-
-#ifndef CHARACTER_H
-#define CHARACTER_H
+#include "gameEngineHeaders/Widget.h"
+#include "gameEngineHeaders/Object.h"
+#include "gameEngineHeaders/NPC.h"
+#include "gameEngineHeaders/Monster.h"
+//#include "gameEngineHeaders/World.h"
 
 using namespace std;
 
@@ -32,13 +32,14 @@ public:
     vector<Widget> getInventory();
     void addToInventory(Object);
     //void removeFromInventory(Widget&);
+    void setLocation(int location);
     int getLocation();
     void interact(NPC);
     void interact(Object);
     void examine(Object);
     void examine(Monster);
     void interact(Monster);
-    void move(World, int);
+    //void move(World, int);
     
 protected:
     int charHealth;

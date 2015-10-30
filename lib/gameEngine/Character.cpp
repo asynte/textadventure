@@ -1,8 +1,8 @@
 
-#include "gameEngineHeaders/Character.h"
-
 #ifndef CHARACTER_CPP
 #define CHARACTER_CPP
+
+#include "gameEngineHeaders/Character.h"
 
 Character::Character(string name) {
     this->setName(name);
@@ -49,6 +49,9 @@ int Character::getAtk() {
 
 vector<Widget> Character::getInventory() {
     return this->charInventory;
+}
+void Character::setLocation(int location){
+    this->currentLocation=location;
 }
 
 int Character::getLocation() {
@@ -102,7 +105,7 @@ void Character::interact(Monster mon) { // fight Monster
         // delete monster from World??
     }
 }
-
+/*
 void Character::move(World w, int roomId) {
     for (int i=0; i < w.getRoomsVector().size(); i++){ // find location of "roomId" by iterating through roomVector
         if (w.getRoomsVector()[i].getID()==roomId) {
@@ -111,4 +114,7 @@ void Character::move(World w, int roomId) {
     }
     w.getNowRoomInformation(this->currentLocation);
 }
+*/
+
+
 #endif

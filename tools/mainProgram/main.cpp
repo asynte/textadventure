@@ -49,13 +49,16 @@ void objDataInterfaceTest1() {
 }
 
 void roomDataInterfaceTest1() {
-	roomDataInterface room{"test.yml"};
+	cout<< "in data" <<endl;
+
+	roomDataInterface room{"data/midgaard.yml"};
 	room.loadAll();
+	//room.printDescription(0);
 	room.printAll();
 }
 
 void resetDataInterfaceTest1() {
-	resetDataInterface reset{"smurf.yml"};
+	resetDataInterface reset{"data/smurf.yml"};
 	reset.loadAll();
 	reset.printAll();
 }
@@ -115,48 +118,74 @@ void roomDataInterfaceTest2() {
 
 }
 
-void testSwitch() {
+// void testSwitch() {
 
-	int i = 0;
-	bool loop = true;
 
-	while (loop)
-	{
-		cout << "Command: ";
-		cin >> i;
-		switch(i) {
-			case 1:
-				cout << "\n";
-				npcDataInterfaceTest1();
-				break;
-			case 2:
-				cout << "\n";
-				objDataInterfaceTest1();
-				break;
-			case 3:
-				cout << "\n";
-				roomDataInterfaceTest1();
-				break;
-			case 4:
-				cout << "\n";
-				resetDataInterfaceTest1();
-				break;
-			case 5:
-				cout << "\n";
-				npcDataInterfaceTest2();
-				break;
-			default:
-				cout << "\nWrong numba, Psych!\n";
-				break;
-			case -1:
-				loop = false;
-				break;
-		}
-	}
-}
+
+// 	string i = "0";
+// 	bool loop = true;
+
+// 	while (loop)
+// 	{
+// 		//cout << "Command: ";
+// 		// cin >> i;
+// 		i = UserInterface_getUserInput;
+
+
+// 		// if (i == "1") {
+			
+// 		// } else {
+
+// 		// }
+
+// 		//cout << i << endl;
+
+// 		// switch(i) {
+// 		// 	case "1":
+// 		// 		//cout << "\n";
+// 		// 		npcDataInterfaceTest1();
+// 		// 		break;
+// 		// 	case "2":
+// 		// 		//cout << "\n";
+// 		// 		objDataInterfaceTest1();
+// 		// 		break;
+// 		// 	case "3":
+// 		// 		//cout << "\n";
+// 		// 		roomDataInterfaceTest1();
+// 		// 		break;
+// 		// 	case "4":
+// 		// 		//cout << "\n";
+// 		// 		resetDataInterfaceTest1();
+// 		// 		break;
+// 		// 	case "5":
+// 		// 		//cout << "\n";
+// 		// 		npcDataInterfaceTest2();
+// 		// 		break;
+// 		// 	default:
+// 		// 		cout << "\nWrong numba, Psych!\n";
+// 		// 		break;
+// 		// 	case "-1":
+// 		// 		loop = false;
+// 		// 		break;
+// 		}
+// 	}
+// }
 int main() {
-	
-	World world("test");
+	// UserInterface_create();
+	World world("midgaard");
+	// vector <World> worldsVector;
+	// // for(int i=0;i<worldsVector.size();i++){
+	// // 	cout<<worldsVector[i].getName()<<endl;
+	// // }
+
+	// Character player("Retard");
+
+	roomDataInterfaceTest1();
+	// testSwitch();
 	world.getInformation();
+
+
+	// pthread_join(UserInterface_getThreadId(), NULL);
+
 	return 0;
 }	

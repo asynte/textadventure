@@ -4,7 +4,10 @@ using namespace std;
 #define WORLD_H
 #include "gameEngineHeaders/Room.h"
 #include "gameEngineHeaders/Door.h"
+#include "gameEngineHeaders/Character.h"
+#include "gameEngineHeaders/Widget.h"
 #include "dataInterfaceHeaders/dataInterfaceBase.h"
+
 class World{
 public:
 	World();
@@ -17,8 +20,10 @@ public:
 	void addRoom(Room room);
 	void getInformation();
 	int willGoToRoom(int direction, int currentLocation);
-	void goToRoom(int roomID);
+	//void goToRoom(int roomID);
 	void getNowRoomInformation(int currentLocation);
+	// void parseUserInput(const string &command, const string& arguement);
+	void goToRoom(int id, Character &c);
 private:
 	vector<Room> roomsVector;
 	string name;

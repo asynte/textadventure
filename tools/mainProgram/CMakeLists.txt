@@ -44,6 +44,7 @@ target_link_libraries(alphaversion UserInterface)
 target_link_libraries(alphaversion Commands)
 target_link_libraries(alphaversion ObserverList)
 
+#Adding Threads
 find_package(Threads REQUIRED)
 if(THREADS_HAVE_PTHREAD_ARG)
   set_property(TARGET alphaversion PROPERTY COMPILE_OPTIONS "-pthread")
@@ -52,6 +53,11 @@ endif()
 if(CMAKE_THREAD_LIBS_INIT)
   target_link_libraries(alphaversion "${CMAKE_THREAD_LIBS_INIT}")
 endif()
+
+#Adding NCurses
+find_package(Curses REQUIRED)
+include_directories(${CURSES_INCLUDE_DIR})
+target_link_libraries(alphaversion ${CURSES_LIBRARIES})
 
 
 
