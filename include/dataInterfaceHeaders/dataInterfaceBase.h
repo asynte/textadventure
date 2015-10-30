@@ -324,6 +324,13 @@ public:
 	
 	vector<string> getExtendedKeyWord (const int& roomIndex, const int& extendedIndex);
 
+<<<<<<< HEAD
+=======
+	int getRoomSize ();
+
+	int getDoorSize (const int& index);
+
+>>>>>>> 4896a5095d0ac5079b3b9d17677ef263f3b00b85
 	///////////////////////////////////
 	// 		  PRINT FUNCTIONS        //
 	///////////////////////////////////

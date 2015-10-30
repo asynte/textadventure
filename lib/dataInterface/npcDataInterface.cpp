@@ -162,16 +162,24 @@ using namespace std;
 	void npcDataInterface::loadFromID(const int& id) {
 
 
+<<<<<<< HEAD
 		// std::find_if (npcNode.begin(), npcNode.end(), [](YAML::Node n) { return id == n["id"].as<int>(); });
 		int i = 0;
 		while (id != npcNode[i]["id"].as<int>()) {
 			i++;
 		}	
+=======
+		YAML::Node::iterator it = std::find_if (npcNode.begin(), npcNode.end(), [&id](YAML::Node n) { return id == n["id"].as<int>(); });
+>>>>>>> 4896a5095d0ac5079b3b9d17677ef263f3b00b85
 
-		if (i < npcNode.size()) {
-			// push current NPC node to vector	
-			push(i);
-		}		
+		if (it == npcNode.end()){
+			std::cout << "Error: Index out of bounds\n";
+		}
+
+		else {
+			int i = std::distance(npcNode.begin(), it);
+			push (i);
+		}
 	}
 
 
@@ -186,18 +194,14 @@ using namespace std;
 		}
 	}
 
-
 	// push all NPC nodes into npcVector
 	void npcDataInterface::loadAll() {
 
-		// copy (npcNode, npcNode.size(), npcVector)
-
-
 		// go through all NPC nodes in NPC sequence
-		for (int i = 0; i < npcNode.size(); i++) {
+		for (int index = 0; index < npcNode.size(); index++) {
 
 			// push current NPC node to vector
-			push(i);
+			push(index);
 		}
 	}
 
