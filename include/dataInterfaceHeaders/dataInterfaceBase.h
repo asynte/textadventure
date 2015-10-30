@@ -132,7 +132,7 @@ public:
 	///////////////////////////////////
 	// 		   LOAD FUNCTIONS        //
 	///////////////////////////////////
-
+		
 	virtual void push (const int& index);
 
 	virtual void load (const int& count);
@@ -324,7 +324,6 @@ public:
 	
 	vector<string> getExtendedKeyWord (const int& roomIndex, const int& extendedIndex);
 
-
 	///////////////////////////////////
 	// 		  PRINT FUNCTIONS        //
 	///////////////////////////////////
@@ -425,7 +424,7 @@ public:
 	// 		  PRINT FUNCTIONS        //
 	///////////////////////////////////
 
-	void printAction(const int& index);
+	void printAction (const int& index);
 	
 	void printComment (const int& index);
 
@@ -458,5 +457,86 @@ public:
 	virtual void loadAll();
 
 };
+
+
+class dataEmitter {
+private: 
+
+	vector<string> area;
+	vector<string> npcs;
+	vector<string> objects;
+	vector<string> resets;
+	vector<string> rooms;
+
+	string yamlFileName;
+
+	ofstream outFile;
+
+	YAML::Emitter emitter;
+public:
+
+	dataEmitter(const string& file)
+	: yamlFileName(file  + ".yml") {
+
+		std::ifstream inFile(yamlFileName);
+
+		if (inFile.peek() == std::ifstream::traits_type::eof()) {
+			// area.push_back("AREA:\n");
+			// npcs.push_back("NPCS:\n");
+			// objects.push_back("OBJECTS:\n");
+			// resets.push_back("RESETS:\n");
+			// rooms.push_back("ROOMS:\n");
+
+		}
+
+		else {
+			string line;
+			int count = 0;
+
+			while (getline (inFile, line)) {
+
+				if (line == "NPCS:") {
+					count = 1;
+				}	
+
+				if (line == "OBJECTS:") {
+					count = 2;
+				}
+
+				if (count == 0) {
+					area.push_back(line + "\n");
+				}
+		
+
+				if (count == 1) {
+					npcs.push_back(line + "\n");
+				}
+
+				if (count == 2) {
+					objects.push_back(line + "\n");
+				}
+			}
+		}
+
+		outFile.open(yamlFileName);
+
+	}
+
+	~dataEmitter() {
+		outFile.close();
+	}
+
+	virtual void searchLine (const string& s);
+
+	virtual void printToFile ();
+
+	virtual void emitArea ();
+
+	virtual void emitNPC ();
+
+
+};
+
+
 
 #endif

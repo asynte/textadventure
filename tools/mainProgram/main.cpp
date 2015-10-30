@@ -112,6 +112,13 @@ void roomDataInterfaceTest2() {
 
 }
 
+void dataEmitterTest1() {
+	dataEmitter emit{"example"};
+	emit.emitNPC();
+	emit.printToFile();
+
+}
+
 void testSwitch() {
 
 	int i = 0;
@@ -142,6 +149,9 @@ void testSwitch() {
 				cout << "\n";
 				npcDataInterfaceTest2();
 				break;
+			case 6:
+				dataEmitterTest1();
+				break;
 			default:
 				cout << "\nWrong numba, Psych!\n";
 				break;
@@ -154,7 +164,8 @@ void testSwitch() {
 }
 int main() {
 
-	testSwitch();
+	// testSwitch();
+	dataEmitterTest1();
 
 	return 0;
 }	
