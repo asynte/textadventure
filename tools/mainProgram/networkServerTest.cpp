@@ -25,32 +25,29 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-using namespace std;
+static	const char* serverIp = "142.58.184.81";
+static	int serverPort = 1234;
+TCPServer* server = NULL;
+TCPDataflow* connection = NULL;
 
-int main(int argc, char** argv) {
-	const char* serverIp = "142.58.184.105";
-	int serverPort = 1234;
-	TCPDataflow* connection = NULL;
-	TCPServer* server = NULL;
+void acceptConnection(){
 	server = new TCPServer(serverPort, serverIp);
-	int count = 0;
 	while(true)
 	{
 		if (server->listeningConnection() == 0)
 		{
 			cout << "Waiting for a connection on IP: " << serverIp << " Port: " << serverPort << endl;
 			connection = server->acceptingConnection();
-			if(connection != NULL)
+			if(connection != NULL) 
 			{
-				ssize_t len;
-				char line[256];
-				while((len = connection->recvData(line, sizeof(line))) > 0)
+				ssize_t bufferLength;
+				char requestedCommand[256];
+				ostringstream outputStream;
+				while((bufferLength = connection->recvData(requestedCommand, sizeof(requestedCommand))) > 0)
 				{
-					count ++;
-					line[len] = 0;
-					cout << "Received: " << line << endl;
-					ostringstream outputStream;
-					outputStream << "Here's what you can " << line << ":\noption 1)\noption 2)\netc.. \n"<< "That was request: " << count << endl;
+					requestedCommand[bufferLength] = 0;
+					cout << "Received: " << requestedCommand << endl;
+					outputStream << "Server sent you back: " << requestedCommand << endl;
 					string message = outputStream.str();
 					connection->sendData(message.c_str(), message.size());
 				}
@@ -58,5 +55,10 @@ int main(int argc, char** argv) {
 			}
 		}
 	}
+}
+
+
+int main(int argc, char** argv) {
+	acceptConnection();
 	return 0;
-}	
+}
