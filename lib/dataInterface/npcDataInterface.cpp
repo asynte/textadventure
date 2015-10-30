@@ -157,11 +157,12 @@ using namespace std;
 		}
 	}
 
+
 	// push node with specified "id" into npcVector
 	void npcDataInterface::loadFromID(const int& id) {
 
 
-		// std::find_if (npcNode.begin(), npcNode.end(), id = npcNode[i]["id"].as<int>());
+		// std::find_if (npcNode.begin(), npcNode.end(), [](YAML::Node n) { return id == n["id"].as<int>(); });
 		int i = 0;
 		while (id != npcNode[i]["id"].as<int>()) {
 			i++;

@@ -121,7 +121,6 @@ using namespace std;
 	// print elements of OBJECT struct at specified OBJECT ID
 	void objDataInterface::printAtID (const int& id) {
 
-		// go through all OBJECT nodes in objVector
 		int i = 0;
 		while (id != objVector[i].id) {
 			i++;
@@ -136,7 +135,7 @@ using namespace std;
 	// print all OBJECT struct at objVector
 	void objDataInterface::printAll () {
 
-		// go through all OBJECT nodes in OBJECTS sequence
+		// go through all OBJECT nodes in objVector
 		for (int i = 0; i < objVector.size(); i++) {
 			printAtIndex(i);
 		}		
