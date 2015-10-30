@@ -11,6 +11,8 @@ using namespace std;
 class Login{
 
 public:
+    string usernameTEMP;
+    string usernameTEMP2;
     string username;
     string password;
     string user;

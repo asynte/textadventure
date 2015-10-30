@@ -7,6 +7,7 @@
 #include <string.h>
 
 
+
 class InterfaceObserver : public Observer {
     public:
         InterfaceObserver() {}
@@ -53,58 +54,81 @@ void Login::UserAuth(int choice){
 void Login::userRegisterDo(){
 	ofstream file;
 	file.open("data/userdata.txt",fstream::app);
+
 	if(file.is_open()){
-		file<<"\n"<<username<< " " <<password;
+		file<<"\n"<<"UserName:"<<username<< " " <<password;
 		file.close();
-			UserInterface_println("Enter Password:");
-		UserInterface_println("Hi" + username);
-		UserInterface_println("! You are registered now! Welcome!");
+		UserInterface_println("Enter Password:");
+		UserInterface_println("Hi " + username + "! You are registered now! Welcome!");
 		UserAuth(0);
 	}
 	else{
-			UserInterface_println("File Not Found");
+		UserInterface_println("Saved File Not Found");
 	}
 }
 
 // Initialize user registration
 void Login::userRegister(){
     
-	UserInterface_println("Enter a new username:");
-	username = UserInterface_getUserInput();
-	ifstream fin;
-	fin.open("data/userdata.txt");
-	bool isFound=0;
+	int exitcon = 1;
+
+	while (exitcon == 1){
+		exitcon = 0;
+		UserInterface_println("Enter a new username:");
+		username = UserInterface_getUserInput();
+
+		usernameTEMP = "UserName:"+username;
 
 
-	while(!fin.eof()){
-		string temp = "";
-		getline(fin,temp);
-		for(int i=0;i<username.size();i++){
-			if(temp[i]==username[i])
-				isFound = 1;
-				else{
-				isFound =0;
-				break;
+		ifstream fin;
+		fin.open("data/userdata.txt");
+		bool isFound=0;
+
+
+		if(fin.is_open()){
+			string candidate;
+
+			while(fin >>candidate){
+				if(usernameTEMP == candidate){
+					UserInterface_println("Sorry Username already exist!");
+					UserInterface_println("Please try again!");
+					exitcon = 1;
 				}
+			}
 		}
-	}
-	if(isFound){
-	UserInterface_println("Sorry Username already exist!");
-	UserInterface_println("Please try a different one!");
-	userRegister();
-	}else{
 
-	UserInterface_println("Please enter a new password:");
-    password = UserInterface_getUserInput();
-	userRegisterDo();	
 	}
+	string pass1;
+	string pass2;
+	bool out = 1;
+
+	while(out){
+		UserInterface_println("Please enter a new password:");
+    	pass1 = UserInterface_getUserInput();
+
+		UserInterface_println("Please enter re-enter your new password:");
+	    pass2 = UserInterface_getUserInput();
+
+    	if(pass1==pass2){
+    		password = pass1;
+    		out = 0;
+    		userRegisterDo();
+  	  	}
+
+    	if(pass1!=pass2){
+    		UserInterface_println("Password does not match!");
+    	}
+	}
+
 }
+
 
 
 bool Login::Loggedin(){
 	string userpass;
 	UserInterface_println("Enter Username:");
 	user = UserInterface_getUserInput();
+	usernameTEMP2 = "UserName:"+user;
 	//user = UserInterface_getUserInput();
 	//hide pass
 
@@ -112,15 +136,15 @@ bool Login::Loggedin(){
     //pass = getpass("Enter Password: "); // get a password
 
 	UserInterface_println("Enter Password:");
+
 	pass = UserInterface_getUserInput();
 
 	//search pattern	
-	userpass = user+" "+pass;
+	userpass = usernameTEMP2+" "+pass;
 	string line;
     ifstream usersFile;
-    //system("ls");
     usersFile.open ("data/userdata.txt"); 
-    //system("ls");
+
 	bool found = false;
 
      	if(usersFile.is_open()) {
