@@ -58,12 +58,11 @@ void Login::userRegisterDo(){
 	if(file.is_open()){
 		file<<"\n"<<"UserName:"<<username<< " " <<password;
 		file.close();
-		UserInterface_println("Enter Password:");
 		UserInterface_println("Hi " + username + "! You are registered now! Welcome!");
 		UserAuth(0);
 	}
 	else{
-		UserInterface_println("Saved File Not Found");
+		UserInterface_println("File Not Found");
 	}
 }
 
@@ -136,7 +135,6 @@ bool Login::Loggedin(){
     //pass = getpass("Enter Password: "); // get a password
 
 	UserInterface_println("Enter Password:");
-
 	pass = UserInterface_getUserInput();
 
 	//search pattern	
@@ -146,24 +144,24 @@ bool Login::Loggedin(){
     usersFile.open ("data/userdata.txt"); 
 
 	bool found = false;
-
-     	if(usersFile.is_open()) {
+    if(usersFile.is_open()) {
 		while(getline(usersFile,line) && !found) {
 			//match any strings
 			if (line.compare(userpass) == 0) { 
-		  	// if data found break loop
-                  	found = true; 
-              		}
-          	}
-	usersFile.close(); 
-	if(found) {
-		//link it to our game server
-		UserInterface_println("Welcome to the game "+user);
-		//cout << "Welcome to the game "<< user << '\n'; 
-	}else {
-		UserInterface_println("Incorrect Username and/or password !");
-		Loggedin();
-		return false;
+			// if data found break loop
+	        found = true; 
+	        }
+     	}
+		usersFile.close(); 
+
+		if(found) {
+			//link it to our game server
+			UserInterface_println("Welcome to the game "+user);
+			//cout << "Welcome to the game "<< user << '\n'; 
+		}else {
+			UserInterface_println("Incorrect Username and/or password !");
+			Loggedin();
+			return false;
 		}
     }
     return true;
