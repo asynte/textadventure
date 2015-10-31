@@ -7,6 +7,7 @@
 #include "gameEngineHeaders/Room.h"
 #include "gameEngineHeaders/Widget.h"
 #include "gameEngineHeaders/World.h"
+#include "gameEngineHeaders/GameEngine.h"
 #include "userAccountHeaders/Login.h"
 #include "networkingHeaders/TCPClient.h"
 #include "networkingHeaders/TCPDataflow.h"
@@ -25,43 +26,44 @@
 #include <stdlib.h>
 
 
+
+
 using namespace std;
 
 
 
 	
-void npcDataInterfaceTest1() {
-	npcDataInterface npc{"smurf.yml"};
-	npc.loadAll();
-	npc.printAll();
-}
+// void npcDataInterfaceTest1() {
+// 	npcDataInterface npc{"smurf.yml"};
+// 	npc.loadAll();
+// 	npc.printAll();
+// }
 
-void npcDataInterfaceTest2() {
-	npcDataInterface npc{"smurf.yml"};
-	npc.loadFromID({101, 102, 103});
-	npc.printAll();
-}
+// void npcDataInterfaceTest2() {
+// 	npcDataInterface npc{"smurf.yml"};
+// 	npc.loadFromID({101, 102, 103});
+// 	npc.printAll();
+// }
 
-void objDataInterfaceTest1() {
-	objDataInterface object{"smurf.yml"};
-	object.loadAll();
-	object.printAll();
-}
+// void objDataInterfaceTest1() {
+// 	objDataInterface object{"smurf.yml"};
+// 	object.loadAll();
+// 	object.printAll();
+// }
 
-void roomDataInterfaceTest1() {
-	cout<< "in data" <<endl;
+// void roomDataInterfaceTest1() {
 
-	roomDataInterface room{"data/midgaard.yml"};
-	room.loadAll();
-	//room.printDescription(0);
-	room.printAll();
-}
+// 	roomDataInterface room{"data/test.yml"};
+// 	room.loadAll();
+// 	//room.printDescription(0);
+// 	room.printAll();
+// }
 
-void resetDataInterfaceTest1() {
-	resetDataInterface reset{"data/smurf.yml"};
-	reset.loadAll();
-	reset.printAll();
-}
+// void resetDataInterfaceTest1() {
+// 	resetDataInterface reset{"data/smurf.yml"};
+// 	reset.loadAll();
+// 	reset.printAll();
+// }
 
 void roomDataInterfaceTest2() {
 
@@ -171,21 +173,13 @@ void roomDataInterfaceTest2() {
 // 	}
 // }
 int main() {
-	// UserInterface_create();
-	World world("midgaard");
-	// vector <World> worldsVector;
-	// // for(int i=0;i<worldsVector.size();i++){
-	// // 	cout<<worldsVector[i].getName()<<endl;
-	// // }
+	UserInterface_create();
+	//roomDataInterfaceTest1();
 
-	// Character player("Retard");
+	GameEngine *g = new GameEngine();
+	UserInterface_addListener(g);
 
-	roomDataInterfaceTest1();
-	// testSwitch();
-	world.getInformation();
-
-
-	// pthread_join(UserInterface_getThreadId(), NULL);
+	pthread_join(UserInterface_getThreadId(), NULL);
 
 	return 0;
 }	

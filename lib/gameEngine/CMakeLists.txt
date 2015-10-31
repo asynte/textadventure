@@ -11,17 +11,25 @@ add_library(Room Room.cpp)
 add_library(Widget Widget.cpp)
 add_library(World World.cpp)
 add_library(Extended Extended.cpp)
+add_library(GameEngine GameEngine.cpp)
 
 
 target_link_libraries(World ${CMAKE_SOURCE_DIR}/lib/yaml/libyaml-cpp.a)
+target_link_libraries(World Widget)
+target_link_libraries(World Character)
+#target_link_libraries(World UserInterface)
+
 target_link_libraries(Room Door)
 target_link_libraries(Room World)
-target_link_libraries(World Character)
-target_link_libraries(Character World)
-target_link_libraries(World Widget)
+
 target_link_libraries(Character Widget)
 target_link_libraries(Character NPC)
 target_link_libraries(Character Object)
 target_link_libraries(Character Monster)
+target_link_libraries(Character World)
+target_link_libraries(Character Room)
+
 target_link_libraries(Room Extended)
 target_link_libraries(Door Extended)
+
+target_link_libraries(GameEngine World)

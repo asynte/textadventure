@@ -21,6 +21,7 @@ target_link_libraries(alphaversion roomDataInterface)
 target_link_libraries(alphaversion resetDataInterface)
 
 #gameEngine Libraries
+target_link_libraries(alphaversion GameEngine)
 target_link_libraries(alphaversion Character)
 target_link_libraries(alphaversion Door)
 target_link_libraries(alphaversion Monster)

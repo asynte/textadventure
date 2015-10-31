@@ -1,55 +1,35 @@
 #ifndef WORLD_CPP
 #define WORLD_CPP
+
 #include <iostream>
 #include <fstream>
 #include <string>
 #include <vector>
 #include "gameEngineHeaders/World.h"
-//#include "gameEngineHeaders/Character.h"
-//#include "gameEngineHeaders/Widget.h"
-#include "userInterfaceHeaders/UserInterface.h"
-#include <unistd.h>
+#include "gameEngineHeaders/Character.h"
+#include "gameEngineHeaders/Widget.h"
 
 
-
-static void parseUserInput(const string &command, const string &arguement);
-
-
-class InterfaceObserver : public Observer {
-    public:
-		InterfaceObserver()	{}
-
-		void notify(const string &userInput) {
-			//call functions with userInput as arguement
-
-			parseUserInput(userInput, "");
-		}
-		void notify(const vector<string> &userInput) {
-			string command = userInput.at(0);
-			string arguement = userInput.at(1);
-
-			parseUserInput(command, arguement);
-		}
-};
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// THIS IS ONLY THING I NEED TO EDIT
-void parseUserInput(const string &command, const string &arguement) {
-	if (command == "move") {
-		UserInterface_println("entered the move command!");
-		//Character::move(this, Door::getDirectionAsInt(arguement))
-	}
-
-}
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 World::World(string name){
 	this->name=name;
 	initializeWorld(name);
 
-	InterfaceObserver *observer = new InterfaceObserver();
-	UserInterface_addListener(observer);
+
 }
+
+void World::addCharacter(const Character &character) {
+	characters.push_back(character);
+}
+
+Room World::getCurrentRoom(const Character &character) {
+	//int currentRoomId = character.getLocation();
+	int currentRoomId = 0;
+	Room currentRoom = roomsVector[currentRoomId];
+
+	return currentRoom;
+}
+
 // void World::parseUserInput(const string &command, const string &arguement) {
 // 	// if (userInput == "move") {
 // 	// 	Character::move(this, Door::getDirectionAsInt(arguement))
@@ -72,12 +52,11 @@ void World::initializeWorld(string name){
 string World::getName(){
 	return name;
 }
-// string World::getInformation(){
-// 	return "a";
-// }
-void World::getInformation(){
+
+void World::printRoomNames(){
 	for(Room r:roomsVector){
-		cout<<r.getName()<<endl;
+		// cout<<r.getName()<<endl;
+		UserInterface_println(r.getName());
 	}	
 }
 
@@ -112,7 +91,7 @@ vector<Room> World:: getRoomsVector(){
 void World::goToRoom(int id, Character &c){
 	for(int i=0;i<roomsVector.size();i++){
 		if(roomsVector[i].getID()==id){
-			c.setLocation(i);
+			c.setLocation(roomsVector[i]);
 		}
 	}
 	// Maybe print out which room it just went into
@@ -140,27 +119,7 @@ void World::goToRoom(int id, Character &c){
 void World::addRoom(Room room){
 	//can not do
 }
-/*
-//This function is equivalent to old function
-//vector<string> getAllWorld(vector<string> vstring)
-//Just renamed
-vector<string> CreateWorld(vector<string> vstring){
-	vector<string> filenames;
 
-	InterfaceObserver *observer = new InterfaceObserver();
-
-	for(int i=0;i<vstring.size();i++){
-		string temp=getYAMLFileName(vstring[i]);
-		if(temp.compare("")!=0){
-			filenames.push_back(temp);
-		}
-	}
-
-	UserInterface_addListener(observer);
-	
-	return filenames;
-}
-*/
 
 
 

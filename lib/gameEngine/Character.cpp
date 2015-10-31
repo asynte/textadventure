@@ -2,14 +2,18 @@
 #ifndef CHARACTER_CPP
 #define CHARACTER_CPP
 
+
 #include "gameEngineHeaders/Character.h"
+
+// Character::Character() {
+// }
 
 Character::Character(string name) {
     this->setName(name);
     this->setLevel(1);
     this->setHealth(CHAR_DEFAULTHEALTH);
     this->setAtk(CHAR_DEFAULTATK);
-    this->currentLocation = CHAR_STARTLOCATION;
+    // this->currentLocation = Room();
 }
 
 void Character::getStatus() { // print Character's stats
@@ -50,12 +54,12 @@ int Character::getAtk() {
 vector<Widget> Character::getInventory() {
     return this->charInventory;
 }
-void Character::setLocation(int location){
-    this->currentLocation=location;
+void Character::setLocation(Room room){
+    this->currentRoom = room;
 }
 
-int Character::getLocation() {
-    return this->currentLocation;
+const Room Character::getCurrentRoom() {
+    return this->currentRoom;
 }
 
 void Character::addToInventory(Object obj) {

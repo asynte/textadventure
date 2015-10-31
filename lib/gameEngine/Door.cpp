@@ -1,7 +1,10 @@
 #ifndef DOOR_CPP
 #define DOOR_CPP
+
+
 #include "gameEngineHeaders/Door.h"
 #include "userInterfaceHeaders/UserInterface.h"
+
 //1 for North, 2 for South, 3 for West, 4 for East, 5 for Up, 6 for Down
 Door::Door(string description,string direction,vector<string> keywords,int toID) {
 	this->description = description;
@@ -13,9 +16,7 @@ Door::Door(string description,string direction,vector<string> keywords,int toID)
 string Door::getDescription(){
 	return description;
 }
-int Door::getDirectionAsInt(const string &str){
-
-
+int Door_getDirectionAsInt(const string &str){
 	if(str == "south"){
 		return 2;
 	}else if(str == "north"){
@@ -32,7 +33,7 @@ int Door::getDirectionAsInt(const string &str){
 }
 
 int Door::getDirectionAsInt(){
-	return getDirectionAsInt(direction);
+	return Door_getDirectionAsInt(direction);
 
 	// if(direction.compare("south")==0){
 	// 	return 2;

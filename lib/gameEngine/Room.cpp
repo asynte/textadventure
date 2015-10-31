@@ -1,5 +1,8 @@
 #ifndef ROOM_CPP
 #define ROOM_CPP
+
+
+#include <algorithm>
 #include "gameEngineHeaders/Room.h"
 #include "userInterfaceHeaders/UserInterface.h"
 
@@ -9,6 +12,10 @@
 // 	ID=0;
 // 	name="";
 // }
+Room::Room() {
+
+}
+
 Room::Room(string description,vector<Door> doorsList,vector<Extended> extendedList,string name,int ID) {
 	this->description = description;
 	this->doorsList=doorsList;
@@ -25,10 +32,10 @@ vector<Door> Room::getDoorsList(){
 vector<Extended> Room::getExtended(){
 	return extendedList;
 }
-string Room::getName(){
+string Room::getName() const{
 	return name;
 }
-int Room::getID(){
+int Room::getID() const{
 	return ID;
 }
 void Room::getInformation(){
@@ -67,6 +74,8 @@ bool Room::isRoomAvailable(int direction){
 	//UserInterface_println("You cannot go in this direction because this direction does not exist");
 	return false;
 }
+
+
 Door Room::getDoorWantToGo(int direction){
 	for(int i=0;i<doorsList.size();i++){
 		if(doorsList[i].getDirectionAsInt()==direction){
@@ -74,4 +83,33 @@ Door Room::getDoorWantToGo(int direction){
 		}
 	}
 }
+
+vector<string> Room::getPossibleDirections() {
+	vector<string> directions;
+
+	for(int i=0;i<doorsList.size();i++){
+		Door door = doorsList[i];
+		string direction = door.getDirection();
+
+		// if ( find(directions.begin(), directions.end(), direction) != directions.end() ) {
+
+		cout << "adding: " << direction;
+
+			directions.push_back(direction);
+		// }
+	}
+
+	return directions;
+}
+
+
+// bool Room::isRoomAvailable(int direction){
+// 	for(int i=0;i<doorsList.size();i++){
+// 		if(doorsList[i].getDirectionAsInt()==direction){
+// 			return true;
+// 		}
+// 	}
+// 	cout<<"You cannot go in this direction because this direction does not exist"<<endl;
+// 	return false;
+// }
 #endif
