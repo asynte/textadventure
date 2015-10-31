@@ -10,6 +10,7 @@
 #include "gameEngineHeaders/Widget.h"
 #include "gameEngineHeaders/NPC.h"
 #include "gameEngineHeaders/Object.h"
+#include "gameEngineHeaders/Room.h"
 class Widget;
 class NPC;
 class Object;
@@ -54,8 +55,8 @@ public:
     Object** getEquipment();
     void equip(Object&);
     void unequip(Object);
-    void setLocation(int);
-    int getLocation();
+    void setLocation(Room r);
+    const Room getCurrentRoom();
     void interact(NPC);
     void interact(Object);
     void examine(Object);
@@ -74,8 +75,7 @@ protected:
     int charDexterity;
     int charCharisma;
     vector<Object> charInventory;
-    //add vector for skills?
-    int currentLocation;
+    Room currentRoom;
     bool wantsToPVP;
 };
 

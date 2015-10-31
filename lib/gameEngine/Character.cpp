@@ -13,9 +13,8 @@ Character::Character(string name) {
     this->setInt(CHAR_DEFAULTSTAT);
     this->setDex(CHAR_DEFAULTSTAT);
     this->setCha(CHAR_DEFAULTSTAT);
-    //this->charEquipment = { nullptr }; // set equipment to nothing
     this->setPVP(false);
-    this->currentLocation = CHAR_STARTLOCATION;
+    //this->currentRoom = room;
 }
 
 void Character::printStatus() { // print Character's stats
@@ -105,12 +104,12 @@ vector<Object> Character::getInventory() {
     return this->charInventory;
 }
 
-void Character::setLocation(int location) {
-    this->currentLocation = location;
+void Character::setLocation(Room room) {
+    this->currentRoom = room;
 }
 
-int Character::getLocation() {
-    return this->currentLocation;
+const Room Character::getCurrentRoom() {
+    return this->currentRoom;
 }
 
 void Character::setPVP(bool b) {
