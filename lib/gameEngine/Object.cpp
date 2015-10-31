@@ -1,7 +1,7 @@
-#include "gameEngineHeaders/Object.h"
-
 #ifndef OBJECT_CPP
 #define OBJECT_CPP
+
+#include "gameEngineHeaders/Object.h"
 
 Object::Object(int id, string name) {
     widgetName = name;

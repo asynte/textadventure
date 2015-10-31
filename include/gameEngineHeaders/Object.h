@@ -1,11 +1,11 @@
+#ifndef OBJECT_H
+#define OBJECT_H
 
 #include <string>
 #include <vector>
 #include <iostream>
-#include "Widget.h"
-
-#ifndef OBJECT_H
-#define OBJECT_H
+#include "gameEngineHeaders/Widget.h"
+class Widget;
 
 class Object : public Widget {
 

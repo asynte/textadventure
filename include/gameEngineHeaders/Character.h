@@ -1,16 +1,19 @@
 
+#ifndef CHARACTER_H
+#define CHARACTER_H
+
 #include <string>
 #include <iostream>
 #include <vector>
 #include <algorithm>
-#include "Widget.h"
-#include "Object.h"
-#include "NPC.h"
-#include "Monster.h"
-#include "World.h"
+#include <map>
+#include "gameEngineHeaders/Widget.h"
+#include "gameEngineHeaders/NPC.h"
+#include "gameEngineHeaders/Object.h"
+class Widget;
+class NPC;
+class Object;
 
-#ifndef CHARACTER_H
-#define CHARACTER_H
 
 using namespace std;
 
@@ -20,9 +23,10 @@ public:
     const int CHAR_DEFAULTATK = 10;
     const int CHAR_DEFAULTSTAT = 1;
     const int CHAR_STARTLOCATION = 0;
+    map<int, Object> charEquipment;
     
     Character(string);
-    void getStatus();
+    void printStatus();
     void setHealth(int);
     int getHealth();
     void setExp(int);
@@ -41,18 +45,24 @@ public:
     int getDex();
     void setCha(int);
     int getCha();
+    void setPVP(bool);
+    bool getPVP();
+    void togglePVP();
     vector<Object> getInventory();
     void addToInventory(Object);
     //void removeFromInventory(Object);
     Object** getEquipment();
-    void equip(Object);
+    void equip(Object&);
+    void unequip(Object);
+    void setLocation(int);
     int getLocation();
     void interact(NPC);
     void interact(Object);
     void examine(Object);
-    void examine(Monster);
-    void interact(Monster);
-    void move(World, int);
+    void examine(NPC);
+    void attack(NPC);
+    void attack(Character&);
+    //void move(World, int);
     
 protected:
     int charHealth;
@@ -64,9 +74,9 @@ protected:
     int charDexterity;
     int charCharisma;
     vector<Object> charInventory;
-    *charEquipment[Object];
     //add vector for skills?
     int currentLocation;
+    bool wantsToPVP;
 };
 
 #endif

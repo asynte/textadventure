@@ -20,7 +20,6 @@ target_link_libraries(testWidget objDataInterface)
 #gameEngine Libraries
 target_link_libraries(testWidget Character)
 target_link_libraries(testWidget Door)
-target_link_libraries(testWidget Monster)
 target_link_libraries(testWidget NPC)
 target_link_libraries(testWidget Object)
 target_link_libraries(testWidget Room)

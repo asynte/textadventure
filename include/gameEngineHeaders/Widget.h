@@ -11,7 +11,7 @@ class Widget {
 
 public:
     enum equipmentArea { HEAD, TORSO, HANDS, LEGS, FEET, WEAPON, SHIELD };
-    const int NUMEQUIP = 7;
+    const static int NUMEQUIP = 7;
     
     Widget();
     Widget(int, vector<string>, string, string);
