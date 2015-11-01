@@ -4,48 +4,51 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
 cmake_minimum_required(VERSION 2.8.9)
 
-add_executable(testWidget jasonWidgets.cpp)
-#set_target_properties(testWidget PROPERTIES COMPILE_FLAGS "-m32" LINK_FLAGS "-m32")
+add_executable(alphaversion main.cpp)
 #yaml library
-target_link_libraries(testWidget ${CMAKE_SOURCE_DIR}/lib/yaml/libyaml-cpp.a)
+target_link_libraries(alphaversion ${CMAKE_SOURCE_DIR}/lib/yaml/libyaml-cpp.a)
 #networking library
-target_link_libraries(testWidget ${CMAKE_SOURCE_DIR}/lib/networkinglibrary/libDataflow.a)
+target_link_libraries(alphaversion ${CMAKE_SOURCE_DIR}/lib/networkinglibrary/libDataflow.a)
 
 #add all the libraries
 
 #dataInterace Libraries
-target_link_libraries(testWidget npcDataInterface)
-target_link_libraries(testWidget objDataInterface)
+target_link_libraries(alphaversion npcDataInterface)
+target_link_libraries(alphaversion objDataInterface)
+target_link_libraries(alphaversion roomDataInterface)
+target_link_libraries(alphaversion resetDataInterface)
+target_link_libraries(alphaversion dataEmitter)
 
 #gameEngine Libraries
-target_link_libraries(testWidget Character)
-target_link_libraries(testWidget Door)
-target_link_libraries(testWidget NPC)
-target_link_libraries(testWidget Object)
-target_link_libraries(testWidget Room)
-target_link_libraries(testWidget Widget)
-target_link_libraries(testWidget World)
+target_link_libraries(alphaversion Character)
+target_link_libraries(alphaversion Door)
+target_link_libraries(alphaversion Monster)
+target_link_libraries(alphaversion NPC)
+target_link_libraries(alphaversion Object)
+target_link_libraries(alphaversion Room)
+target_link_libraries(alphaversion Widget)
+target_link_libraries(alphaversion World)
 
 #userAccount Libraries
-target_link_libraries(testWidget Login)
+target_link_libraries(alphaversion Login)
 
 #networkingInterface Libraries
-target_link_libraries(testWidget TCPClient)
-target_link_libraries(testWidget TCPDataflow)
-target_link_libraries(testWidget TCPServer)
+target_link_libraries(alphaversion TCPClient)
+target_link_libraries(alphaversion TCPDataflow)
+target_link_libraries(alphaversion TCPServer)
 
 #userInterface Libraries
-target_link_libraries(testWidget UserInterface)
-target_link_libraries(testWidget Commands)
-target_link_libraries(testWidget ObserverList)
+target_link_libraries(alphaversion UserInterface)
+target_link_libraries(alphaversion Commands)
+target_link_libraries(alphaversion ObserverList)
 
 find_package(Threads REQUIRED)
 if(THREADS_HAVE_PTHREAD_ARG)
-  set_property(TARGET testWidget PROPERTY COMPILE_OPTIONS "-pthread")
-  set_property(TARGET testWidget PROPERTY INTERFACE_COMPILE_OPTIONS "-pthread")
+  set_property(TARGET alphaversion PROPERTY COMPILE_OPTIONS "-pthread")
+  set_property(TARGET alphaversion PROPERTY INTERFACE_COMPILE_OPTIONS "-pthread")
 endif()
 if(CMAKE_THREAD_LIBS_INIT)
-  target_link_libraries(testWidget "${CMAKE_THREAD_LIBS_INIT}")
+  target_link_libraries(alphaversion "${CMAKE_THREAD_LIBS_INIT}")
 endif()
 
 

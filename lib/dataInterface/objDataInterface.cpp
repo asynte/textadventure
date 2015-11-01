@@ -2,7 +2,8 @@
 #include <string>
 #include <vector>
 #include "yaml-cpp/yaml.h"
-#include "dataInterfaceHeaders/objDataInterface.h"
+#include "dataInterfaceHeaders/dataInterfaceBase.h"
+#include "gameEngineHeaders/Object.h"
 
 using namespace std;
 
@@ -11,28 +12,44 @@ using namespace std;
 	///////////////////////////////////
 
 	// return extra of OBJECT struct at specified index
-	vector<string> objDataInterface::getExtra (const int& index) {
-		return objVector[index].extra;
+	vector<string> objDataInterface::getExtraDescription (const int& objIndex, const int& extraIndex) {
+		if (objVector[objIndex].extra.empty()) {
+			return vector<string>();
+		}
+
+		else {
+			return objVector[objIndex].extra[extraIndex].description;
+		}
+	}
+
+	vector<string> objDataInterface::getExtraKeyWord (const int& objIndex, const int& extraIndex) {
+		if (objVector[objIndex].extra.empty()) {
+			return vector<string>();
+		}
+
+		else {
+			return objVector[objIndex].extra[extraIndex].keyWord;
+		}
 	}
 
 	// return id of OBJECT struct at specifiedindex
 	int objDataInterface::getID (const int& index) {
-		return objVector[index].id;
+		return objVector[index].getId();
 	}
 
 	// return keyword of OBJECT struct at specified index
 	vector<string> objDataInterface::getKeyWord (const int& index) {
-		return objVector[index].keyWord;
+		return objVector[index].getKeyWords();
 	}
 
 	// return long description of OBJECT struct at specified index
 	vector<string> objDataInterface::getLongDescription (const int& index) {
-		return objVector[index].longDesc;
+		return objVector[index].getLongDesc();
 	}
 
 	// return short description of OBJECT struct at specified index
 	string objDataInterface::getShortDescription (const int& index) {
-		return objVector[index].shortDesc;
+		return objVector[index].getName();
 	}
 
 
@@ -41,58 +58,73 @@ using namespace std;
 	///////////////////////////////////
 
 	// print extra of OBJECT struct at specified index
-	void objDataInterface::printExtra (const int& index) {
-		// for all strings at object extra vector
-		for (string s : objVector[index].extra){
-			cout << s << "\n";
+	void objDataInterface::printExtraDescription (const int& objIndex, const int& extraIndex) {
+		// for all strings at ROOM long description vector
+		cout << "Extra description\n";
+		for (string s : objVector[objIndex].extra[extraIndex].description){
+			cout << "- " << s << "\n";
+		}
+	}
+
+	// print extra of OBJECT struct at specified index
+	void objDataInterface::printExtraKeyWord (const int& objIndex, const int& extraIndex) {
+		// for all strings at ROOM long description vector
+		cout << "Extra keywords\n";
+		for (string s : objVector[objIndex].extra[extraIndex].getKeyWords()){
+			cout << "- " << s << "\n";
 		}
 	}
 
 	// print id of OBJECT struct at specified index
 	void objDataInterface::printID (const int& index) {
-		cout << objVector[index].id << "\n";
+		cout << "ID: " << objVector[index].getId() << "\n";
 	}
 
 	// print key word of OBJECT struct at specified index
 	void objDataInterface::printKeyWord (const int& index) {
 		// for all strings at obj keywords vector
-		for (string s : objVector[index].keyWord){
-			cout << s << "\n";
+		cout << "Keywords\n";
+		for (string s : objVector[index].getKeyWords()){
+			cout << "- " << s << "\n";
 		}
 	}
 
 	// print long description of OBJECT struct at specified index
 	void objDataInterface::printLongDescription (const int& index) {
 		// for all strings at obj long description vector
-		for (string s : objVector[index].longDesc){
-			cout << s << "\n";
-		}
+		cout << "Long Description: " + objVector[index].getLongDesc() << endl;
 	}
 
 	// print short description of OBJECT struct at specified index
 	void objDataInterface::printShortDescription (const int& index) {
-		cout << objVector[index].shortDesc << "\n";
+		cout << "Short description: " << objVector[index].getShortDesc << "\n";
 	}
 
 	// print elements of OBJECT struct at specified index
 	void objDataInterface::printAtIndex (const int& index) {
-		printExtra(index);
+		
+		/*for (int i = 0; i < objVector[index].extra.size(); i++) {
+
+			printExtraDescription(index, i);
+			printExtraKeyWord(index, i);
+		}*/
+
 		printID(index);	
 		printKeyWord(index);
 		printLongDescription(index);
 		printShortDescription(index);
+		cout << "\n";
 	}
 
 	// print elements of OBJECT struct at specified OBJECT ID
 	void objDataInterface::printAtID (const int& id) {
 
-		// go through all OBJECT nodes in objVector
 		int i = 0;
-		while (id != objNode[i]["id"].as<int>()) {
+		while (id != objVector[i].id) {
 			i++;
 		}	
 
-		if (i < objNode.size()) {
+		if (i < objVector.size()) {
 			printAtIndex(i);
 		}
 	
@@ -101,8 +133,8 @@ using namespace std;
 	// print all OBJECT struct at objVector
 	void objDataInterface::printAll () {
 
-		// go through all OBJECT nodes in OBJECTS sequence
-		for (int i = 0; i < objNode.size(); i++) {
+		// go through all OBJECT nodes in objVector
+		for (int i = 0; i < objVector.size(); i++) {
 			printAtIndex(i);
 		}		
 	}
@@ -114,17 +146,33 @@ using namespace std;
 	// push OBJECT node to OBJECT struct vector
 	void objDataInterface::push (const int& index) {
 
-		// OBJECT.extra = objNode[i]["extra"].as<vector<string>>()
+		// OBJECT.extra
 		// OBJECT.id 		   = objNode[i]["id"].as<int>()
 		// OBJECT.keyWord     = objNode[i]["keywords"].as<vector<string>>()
 		// OBJECT.longDesc    = objNode[i]["longdesc"].as<vector<string>>()
 		// OBJECT.shortDesc   = objNode[i]["shortdesc"].as<string>()
 
+
+		vector<EXTRA> extraVector;
+                YAML::Node longdescNode = objNode[i]["longdesc"];
+                string longDescription;
+            // concatenate entire long description
+            for (int k = 0; k < longdescNode.size(); k++) {
+                longDescription += longdescNode[k].as<string>() + " ";
+            }
+
+		for (int i = 0; i < objNode[index]["extra"].size(); i++){
+		extraVector.push_back(EXTRA{
+			objNode[index]["extra"][i]["desc"].as<vector<string>>(),
+			objNode[index]["extra"][i]["keywords"].as<vector<string>>()
+		});
+	}
+
 		objVector.push_back(OBJECT{
-			objNode[index]["extra"].as<vector<string>>(), 
 			objNode[index]["id"].as<int>(), 
+			extraVector, 
 			objNode[index]["keywords"].as<vector<string>>(),
-			objNode[index]["longdesc"].as<vector<string>>(), 
+			longDescription, 
 			objNode[index]["shortdesc"].as<string>()
 		});
 	}
@@ -174,15 +222,7 @@ using namespace std;
 		// loop id.size() times
 		for (int count = 0; count < id.size(); count++) {
 		
-			int i = 0;
-			while (id[count] != objNode[i]["id"].as<int>()) {
-				i++;
-			}	
-
-			if (i < objNode.size()) {
-				// push current OBJECT node to vector	
-				push(i);
-			}	
+			loadFromID(id[count]);
 		}
 	}
 

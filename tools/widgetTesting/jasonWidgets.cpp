@@ -30,8 +30,10 @@ using namespace std;
 double goToOtherRoom();
 string getYAMLFileName(string file);
 vector<string> getAllWorld(vector<string> vstring);
-//Jason Parse
+//Jason
 void parseYamlAndPrint();
+void testCharacter();
+void testNPCdata();
 
 //1 to go North, 2 to go South, 3 to go West, 4 to go East, 5 to go Up, 6 to go Down
 int main()
