@@ -151,11 +151,11 @@ public:
 class objDataInterface : public dataInterfaceBase{
 private: 
 
-	struct EXTRA {
+	/*struct EXTRA {
 		vector<string> description;
 		vector<string> keyWord;
 	};
-	/*struct OBJECT {
+	struct OBJECT {
 		vector<EXTRA> extra;
 		int id;
 		vector<string> keyWord;
@@ -192,9 +192,9 @@ public:
     //    0 <= index < objNode.size()
     // Post-condition:
     //    Returns the extra of OBJECTS struct at specified index
-	vector<string> getExtraDescription (const int& objIndex, const int& extraIndex);
+	//vector<string> getExtraDescription (const int& objIndex, const int& extraIndex);
 
-	vector<string> getExtraKeyWord(const int& objIndex, const int& extraIndex);
+	vector<string> getExtraKeyWord(const int& objIndex/*, const int& extraIndex*/);
 
 	// Pre-condition:
     //    0 <= index < objNode.size()
@@ -224,9 +224,9 @@ public:
 	// 		  PRINT FUNCTIONS        //
 	///////////////////////////////////
 
-	void printExtraDescription(const int& objIndex, const int& extraIndex);
+	//void printExtraDescription(const int& objIndex, const int& extraIndex);
 
-	void printExtraKeyWord(const int& objIndex, const int& extraIndex);
+	void printExtraKeyWord(const int& objIndex/*, const int& extraIndex*/);
 
 	void printID (const int& index);
 

@@ -20,17 +20,17 @@ using namespace std;
 		else {
 			return objVector[objIndex].extra[extraIndex].description;
 		}
-	}
+	}*/
 
-	vector<string> objDataInterface::getExtraKeyWord (const int& objIndex, const int& extraIndex) {
+	vector<string> objDataInterface::getExtraKeyWord (const int& objIndex/*, const int& extraIndex*/) {
 		if (objVector[objIndex].getExtra().empty()) {
 			return vector<string>();
 		}
 
 		else {
-			return objVector[objIndex].extra[extraIndex].keyWord;
+			return objVector[objIndex].getExtra();
 		}
-	}*/
+	}
 
 	// return id of OBJECT struct at specifiedindex
 	int objDataInterface::getID (const int& index) {
@@ -64,16 +64,16 @@ using namespace std;
 		for (string s : objVector[objIndex].getExtra()[extraIndex].getDesc()){
 			cout << "- " << s << "\n";
 		}
-	}
+	}*/
 
 	// print extra of OBJECT struct at specified index
-	void objDataInterface::printExtraKeyWord (const int& objIndex, const int& extraIndex) {
+	void objDataInterface::printExtraKeyWord (const int& objIndex/*, const int& extraIndex*/) {
 		// for all strings at ROOM long description vector
 		cout << "Extra keywords\n";
-		for (string s : objVector[objIndex].getExtra()[extraIndex].getKeyWords()){
+		for (string s : objVector[objIndex].getExtra()){
 			cout << "- " << s << "\n";
 		}
-	}*/
+	}
 
 	// print id of OBJECT struct at specified index
 	void objDataInterface::printID (const int& index) {
@@ -108,7 +108,7 @@ using namespace std;
 			printExtraDescription(index, i);
 			printExtraKeyWord(index, i);
 		}*/
-
+			printExtraKeyWord(index);
 		printID(index);	
 		printKeyWord(index);
 		printLongDescription(index);
@@ -153,7 +153,7 @@ using namespace std;
 		// OBJECT.shortDesc   = objNode[i]["shortdesc"].as<string>()
 
 
-		vector<string> extraVector;
+		//vector<string> extraVector;
                 YAML::Node longdescNode = objNode[index]["longdesc"];
                 string longDescription;
             // concatenate entire long description
@@ -162,15 +162,14 @@ using namespace std;
             }
 
 		/*for (int i = 0; i < objNode[index]["extra"].size(); i++){
-		extraVector.push_back(EXTRA{
-			objNode[index]["extra"][i]["desc"].as<vector<string>>(),
-			objNode[index]["extra"][i]["keywords"].as<vector<string>>()
-		});
-	}*/
+			extraVector.push_back(
+				objNode[index]["extra"].as<vector<string>>()
+			);
+		}*/
 
 		objVector.push_back(Object(
 			objNode[index]["id"].as<int>(), 
-			extraVector, 
+			objNode[index]["extra"].as<vector<string>>(), 
 			objNode[index]["keywords"].as<vector<string>>(),
 			longDescription, 
 			objNode[index]["shortdesc"].as<string>()
