@@ -13,13 +13,14 @@ public:
 	Object();
         Object(int, string);
 	Object(int, vector<string>, vector<string>, string, string);
-	string getLongDesc();
-	vector<string> getKeyWords();
-	vector<string> getExtra();
+        void setLongDesc(string);
+	string getLongDesc() const;
+	vector<string> getKeyWords() const;
+	vector<string> getExtra() const;
         void setWearable(bool);
-	bool isWearable();
+	bool isWearable() const;
         void setEquipArea(equipmentArea);
-        equipmentArea getEquipArea();
+        equipmentArea getEquipArea() const;
 
 protected:
 	string objLongDesc;

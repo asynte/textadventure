@@ -7,14 +7,12 @@
 #include <vector>
 #include <algorithm>
 #include <map>
+#include <regex>
+#include <stdlib.h>
 #include "gameEngineHeaders/Widget.h"
 #include "gameEngineHeaders/NPC.h"
 #include "gameEngineHeaders/Object.h"
 #include "gameEngineHeaders/Room.h"
-class Widget;
-class NPC;
-class Object;
-
 
 using namespace std;
 
@@ -24,45 +22,47 @@ public:
     const int CHAR_DEFAULTATK = 10;
     const int CHAR_DEFAULTSTAT = 1;
     const int CHAR_STARTLOCATION = 0;
-    map<int, Object> charEquipment;
+    map<int, const Object> charEquipment; // maps equipmentArea to Object
     
     Character(string);
     void printStatus();
     void setHealth(int);
-    int getHealth();
+    int getHealth() const;
     void setExp(int);
     void increaseExp(int);
-    int getExp();
+    int getExp() const;
     void setLevel(int);
-    int getLevel();
+    int getLevel() const;
     void updateLevel();
     void setAtk(int);
-    int getAtk();
+    int getAtk() const;
     void setStr(int);
-    int getStr();
+    int getStr() const;
     void setInt(int);
-    int getInt();
+    int getInt() const;
     void setDex(int);
-    int getDex();
+    int getDex() const;
     void setCha(int);
-    int getCha();
+    int getCha() const;
     void setPVP(bool);
-    bool getPVP();
+    bool getPVP() const;
     void togglePVP();
-    vector<Object> getInventory();
+    vector<Object> getInventory() const;
     void addToInventory(Object);
-    //void removeFromInventory(Object);
-    Object** getEquipment();
+    void showInventory() const;
+    void removeFromInventory(Object&);
     void equip(Object&);
     void unequip(Object);
     void setLocation(Room r);
-    const Room getCurrentRoom();
+    const Room getCurrentRoom() const;
     void interact(NPC);
     void interact(Object);
     void examine(Object);
     void examine(NPC);
+    void examine(Character&);
     void attack(NPC);
     void attack(Character&);
+    void battleSequence(NPC);
     //void move(World, int);
     
 protected:

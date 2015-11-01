@@ -1,6 +1,12 @@
 #include "dataInterfaceHeaders/npcDataInterface.h"
 #include "dataInterfaceHeaders/objDataInterface.h"
-#include "gameEngineHeaders/gameEngine.h"
+#include "gameEngineHeaders/Character.h"
+#include "gameEngineHeaders/Widget.h"
+#include "gameEngineHeaders/NPC.h"
+#include "gameEngineHeaders/Object.h"
+#include "gameEngineHeaders/Room.h"
+#include "gameEngineHeaders/World.h"
+#include "gameEngineHeaders/Door.h"
 #include "userAccountHeaders/Login.h"
 #include "networkingHeaders/TCPClient.h"
 #include "networkingHeaders/TCPDataflow.h"
@@ -30,7 +36,35 @@ void parseYamlAndPrint();
 //1 to go North, 2 to go South, 3 to go West, 4 to go East, 5 to go Up, 6 to go Down
 int main()
 {	
-    cout << "Success\n";
+    Character player("Retard");
+    player.increaseExp(300);
+    player.updateLevel();
+    player.printStatus();
+    /*player.togglePVP();
+    Object rock(69, "shiny rock");
+    Object sword(100, "Excalibur");
+    sword.setLongDesc("A legendary sword.");
+    sword.setWearable(true);
+    sword.setEquipArea(Widget::WEAPON);
+    player.interact(sword);
+    player.interact(rock);
+    player.equip(sword);
+    player.examine(sword);
+    player.showInventory();
+    player.printStatus();
+    //player.unequip(sword);
+    //player.printStatus();
+    player.removeFromInventory(rock);
+    player.removeFromInventory(sword);
+    player.showInventory();*/
+    Character player2("Downy");
+    NPC smurf;
+    smurf.setName("Smurfy Timmeh");
+    smurf.setLongDesc("An orphan smurf with no friends.");
+    player.examine(player2);
+    player.examine(smurf);
+    player.attack(smurf);
+    
     return 0;
 }
 double goToOtherRoom(){

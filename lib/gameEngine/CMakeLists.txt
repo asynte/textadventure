@@ -17,14 +17,13 @@ target_link_libraries(Room World)
 target_link_libraries(Character Widget)
 target_link_libraries(Widget NPC)
 target_link_libraries(Widget Object)
+target_link_libraries(Widget Character)
 target_link_libraries(Character NPC)
 target_link_libraries(Character Object)
 target_link_libraries(Character World)
 target_link_libraries(Character Room)
 
-target_link_libraries(Widget Character)
-target_link_libraries(NPC Character)
-target_link_libraries(Object Character)
+
 
 
 

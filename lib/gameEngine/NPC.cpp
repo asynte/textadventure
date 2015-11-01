@@ -3,6 +3,11 @@
 
 #include "gameEngineHeaders/gameEngine.h"
 
+NPC::NPC() {
+    this->setHealth(NPC_DEFAULTHEALTH);
+    this->setAtk(NPC_DEFAULTATK);
+}
+
 NPC::NPC(int id, string desc, vector<string> keywords, string longDesc, string shortDesc) {
 	widgetId = id;
 	npcDesc = desc;
@@ -13,15 +18,19 @@ NPC::NPC(int id, string desc, vector<string> keywords, string longDesc, string s
     this->setAtk(NPC_DEFAULTATK);
 }
 
-string NPC::getLongDesc() {
+string NPC::getLongDesc() const {
 	return npcLongDesc;
 }
 
-vector<string> NPC::getKeyWords() {
+void NPC::setLongDesc(string longdesc) {
+    this->npcLongDesc = longdesc;
+}
+
+vector<string> NPC::getKeyWords() const {
 	return npcKeyWords;
 }
 
-string NPC::getDesc() {
+string NPC::getDesc() const {
 	return npcDesc;
 }
 
@@ -29,7 +38,7 @@ void NPC::setHealth(int hp) {
     this->npcHealth = hp;
 }
 
-int NPC::getHealth() {
+int NPC::getHealth() const {
     return this->npcHealth;
 }
 
@@ -37,7 +46,7 @@ void NPC::setAtk(int atk) {
     this->npcAtk = atk;
 }
 
-int NPC::getAtk(){
+int NPC::getAtk() const {
     return this->npcAtk;
 }
 
