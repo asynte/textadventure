@@ -1,5 +1,4 @@
-#include "dataInterfaceHeaders/npcDataInterface.h"
-#include "dataInterfaceHeaders/objDataInterface.h"
+#include "dataInterfaceHeaders/dataInterfaceBase.h"
 #include "gameEngineHeaders/gameEngine.h"
 #include "userAccountHeaders/Login.h"
 #include "networkingHeaders/TCPClient.h"

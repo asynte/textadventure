@@ -5,6 +5,8 @@
 #include <string>
 #include <vector>
 #include "yaml-cpp/yaml.h"
+#include "gameEngineHeaders/NPC.h"
+#include "gameEngineHeaders/Object.h"
 
 using namespace std;
 
@@ -83,7 +85,7 @@ public:
     //    0 <= index < npcNode.size()
     // Post-condition:
     //    Returns the description of NPC struct at specified index
-	vector<string> getDescription (const int& index);
+	string getDescription (const int& index);
 
 	// Pre-condition:
     //    0 <= index < npcNode.size()
@@ -163,7 +165,7 @@ private:
 	};*/
 
 	// store each OBJECTS node on objVector
-	vector<OBJECT> objVector;
+	vector<Object> objVector;
 
 	// node where root of yaml file will be set
 	YAML::Node baseNode;
@@ -324,13 +326,13 @@ public:
 	
 	vector<string> getExtendedKeyWord (const int& roomIndex, const int& extendedIndex);
 
-<<<<<<< HEAD
-=======
+/*<<<<<<< HEAD
+=======*/
 	int getRoomSize ();
 
 	int getDoorSize (const int& index);
 
->>>>>>> 4896a5095d0ac5079b3b9d17677ef263f3b00b85
+//>>>>>>> 4896a5095d0ac5079b3b9d17677ef263f3b00b85
 	///////////////////////////////////
 	// 		  PRINT FUNCTIONS        //
 	///////////////////////////////////

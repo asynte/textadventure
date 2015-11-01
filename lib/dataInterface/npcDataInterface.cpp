@@ -49,7 +49,7 @@ using namespace std;
 
 	// print id of NPC struct at specified index
 	void npcDataInterface::printID (const int& index) {
-		cout << "ID: " << npcVector[index].getId << "\n";
+		cout << "ID: " + npcVector[index].getId() << "\n";
 	}
 
 	// print key word of NPC struct at specified index
@@ -132,13 +132,13 @@ using namespace std;
                 longDescription += longdescNode[k].as<string>() + " ";
             }
             
-		npcVector.push_back(NPC{
+		npcVector.push_back(NPC(
 			npcNode[index]["id"].as<int>(), 
                                 description,
 			npcNode[index]["keywords"].as<vector<string>>(),
 			longDescription, 
 			npcNode[index]["shortdesc"].as<string>()
-		});
+		));
 	}
 
 	// push "count" amount of nodes into npcVector
@@ -170,15 +170,15 @@ using namespace std;
 	void npcDataInterface::loadFromID(const int& id) {
 
 
-<<<<<<< HEAD
+//<<<<<<< HEAD
 		// std::find_if (npcNode.begin(), npcNode.end(), [](YAML::Node n) { return id == n["id"].as<int>(); });
 		int i = 0;
 		while (id != npcNode[i]["id"].as<int>()) {
 			i++;
 		}	
-=======
+//=======
 		YAML::Node::iterator it = std::find_if (npcNode.begin(), npcNode.end(), [&id](YAML::Node n) { return id == n["id"].as<int>(); });
->>>>>>> 4896a5095d0ac5079b3b9d17677ef263f3b00b85
+//>>>>>>> 4896a5095d0ac5079b3b9d17677ef263f3b00b85
 
 		if (it == npcNode.end()){
 			std::cout << "Error: Index out of bounds\n";

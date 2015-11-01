@@ -1,5 +1,4 @@
-#include "dataInterfaceHeaders/npcDataInterface.h"
-#include "dataInterfaceHeaders/objDataInterface.h"
+#include "dataInterfaceHeaders/dataInterfaceBase.h"
 #include "gameEngineHeaders/Character.h"
 #include "gameEngineHeaders/Widget.h"
 #include "gameEngineHeaders/NPC.h"
