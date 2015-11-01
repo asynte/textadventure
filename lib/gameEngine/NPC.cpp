@@ -1,7 +1,12 @@
-#include "gameEngineHeaders/NPC.h"
-
 #ifndef NPC_CPP
 #define NPC_CPP
+
+#include "gameEngineHeaders/gameEngine.h"
+
+NPC::NPC() {
+    this->setHealth(NPC_DEFAULTHEALTH);
+    this->setAtk(NPC_DEFAULTATK);
+}
 
 NPC::NPC(int id, string desc, vector<string> keywords, string longDesc, string shortDesc) {
 	widgetId = id;
@@ -9,18 +14,40 @@ NPC::NPC(int id, string desc, vector<string> keywords, string longDesc, string s
 	npcKeyWords = keywords;
 	npcLongDesc = longDesc;
 	widgetName = shortDesc;
+    this->setHealth(NPC_DEFAULTHEALTH);
+    this->setAtk(NPC_DEFAULTATK);
 }
 
-string NPC::getLongDesc() {
+string NPC::getLongDesc() const {
 	return npcLongDesc;
 }
 
-vector<string> NPC::getKeyWords() {
+void NPC::setLongDesc(string longdesc) {
+    this->npcLongDesc = longdesc;
+}
+
+vector<string> NPC::getKeyWords() const {
 	return npcKeyWords;
 }
 
-string NPC::getDesc() {
+string NPC::getDesc() const {
 	return npcDesc;
+}
+
+void NPC::setHealth(int hp) {
+    this->npcHealth = hp;
+}
+
+int NPC::getHealth() const {
+    return this->npcHealth;
+}
+
+void NPC::setAtk(int atk) {
+    this->npcAtk = atk;
+}
+
+int NPC::getAtk() const {
+    return this->npcAtk;
 }
 
 #endif

@@ -5,6 +5,8 @@
 #include <string>
 #include <vector>
 #include "yaml-cpp/yaml.h"
+#include "gameEngineHeaders/NPC.h"
+#include "gameEngineHeaders/Object.h"
 
 using namespace std;
 
@@ -47,13 +49,21 @@ public:
 class npcDataInterface : public dataInterfaceBase{
 private: 
 
+<<<<<<< HEAD
 	struct NPC {
+=======
+	/*struct NPC {
+>>>>>>> tempGameEngine
 		vector<string> description;
 		int id;
 		vector<string> keyWord;
 		vector<string> longDesc;
 		string shortDesc;
+<<<<<<< HEAD
 	};
+=======
+	};*/
+>>>>>>> tempGameEngine
 
 	// store each NPCS node on npcVector
 	vector<NPC> npcVector;
@@ -83,7 +93,11 @@ public:
     //    0 <= index < npcNode.size()
     // Post-condition:
     //    Returns the description of NPC struct at specified index
+<<<<<<< HEAD
 	vector<string> getDescription (const int& index);
+=======
+	string getDescription (const int& index);
+>>>>>>> tempGameEngine
 
 	// Pre-condition:
     //    0 <= index < npcNode.size()
@@ -101,7 +115,11 @@ public:
     //    0 <= index < npcNode.size()
     // Post-condition:
     //    Returns the long description of NPC struct at specified index
+<<<<<<< HEAD
 	vector<string> getLongDescription (const int& index);
+=======
+	string getLongDescription (const int& index);
+>>>>>>> tempGameEngine
 
 	// Pre-condition:
     //    0 <= index < npcNode.size()
@@ -149,7 +167,11 @@ public:
 class objDataInterface : public dataInterfaceBase{
 private: 
 
+<<<<<<< HEAD
 	struct EXTRA {
+=======
+	/*struct EXTRA {
+>>>>>>> tempGameEngine
 		vector<string> description;
 		vector<string> keyWord;
 	};
@@ -160,10 +182,17 @@ private:
 		vector<string> longDesc;
 		string shortDesc;
 
+<<<<<<< HEAD
 	};
 
 	// store each OBJECTS node on objVector
 	vector<OBJECT> objVector;
+=======
+	};*/
+
+	// store each OBJECTS node on objVector
+	vector<Object> objVector;
+>>>>>>> tempGameEngine
 
 	// node where root of yaml file will be set
 	YAML::Node baseNode;
@@ -190,9 +219,15 @@ public:
     //    0 <= index < objNode.size()
     // Post-condition:
     //    Returns the extra of OBJECTS struct at specified index
+<<<<<<< HEAD
 	vector<string> getExtraDescription (const int& objIndex, const int& extraIndex);
 
 	vector<string> getExtraKeyWord(const int& objIndex, const int& extraIndex);
+=======
+	//vector<string> getExtraDescription (const int& objIndex, const int& extraIndex);
+
+	vector<string> getExtraKeyWord(const int& objIndex/*, const int& extraIndex*/);
+>>>>>>> tempGameEngine
 
 	// Pre-condition:
     //    0 <= index < objNode.size()
@@ -210,7 +245,11 @@ public:
     //    0 <= index < objNode.size()
     // Post-condition:
     //    Returns the long description of OBJECTS struct at specified index
+<<<<<<< HEAD
 	vector<string> getLongDescription (const int& index);
+=======
+	string getLongDescription (const int& index);
+>>>>>>> tempGameEngine
 
 	// Pre-condition:
     //    0 <= index < objNode.size()
@@ -222,9 +261,15 @@ public:
 	// 		  PRINT FUNCTIONS        //
 	///////////////////////////////////
 
+<<<<<<< HEAD
 	void printExtraDescription(const int& objIndex, const int& extraIndex);
 
 	void printExtraKeyWord(const int& objIndex, const int& extraIndex);
+=======
+	//void printExtraDescription(const int& objIndex, const int& extraIndex);
+
+	void printExtraKeyWord(const int& objIndex/*, const int& extraIndex*/);
+>>>>>>> tempGameEngine
 
 	void printID (const int& index);
 
@@ -325,12 +370,21 @@ public:
 	vector<string> getExtendedKeyWord (const int& roomIndex, const int& extendedIndex);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+/*<<<<<<< HEAD
+=======*/
+>>>>>>> tempGameEngine
 	int getRoomSize ();
 
 	int getDoorSize (const int& index);
 
+<<<<<<< HEAD
 >>>>>>> 4896a5095d0ac5079b3b9d17677ef263f3b00b85
+=======
+//>>>>>>> 4896a5095d0ac5079b3b9d17677ef263f3b00b85
+>>>>>>> tempGameEngine
 	///////////////////////////////////
 	// 		  PRINT FUNCTIONS        //
 	///////////////////////////////////
