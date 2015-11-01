@@ -56,8 +56,8 @@ vector<string> UserInterface_getPossibleDirections(void) {
 		exit(0);
 	} else {
 		UserInterface_println("game engine found");
-		vector<string> directions = gameEngine->getPossibleDirections();
-		return gameEngine->getPossibleDirections();
+		vector<string> directions = gameEngine->GameEngine_getPossibleDirections();
+		return directions;
 	}
 }
 

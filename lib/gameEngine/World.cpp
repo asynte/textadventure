@@ -8,6 +8,7 @@
 #include "gameEngineHeaders/World.h"
 #include "gameEngineHeaders/Character.h"
 #include "gameEngineHeaders/Widget.h"
+//#include "dataInterfaceHeaders/dataInterfaceBase.h"
 
 
 
@@ -41,7 +42,10 @@ Room World::getCurrentRoom(const Character &character) {
 //function to replace the commented build() function, this is to call all of louie's yaml parsing
 void World::initializeWorld(string name){
  	string fileName="data/"+name+".yml";
+
+ 	cout<<"cunt";
  	roomDataInterface room{fileName};
+
 	room.loadAll();
 	roomsVector=room.getRoomVector();
 

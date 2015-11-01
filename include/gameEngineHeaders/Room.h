@@ -15,7 +15,7 @@ public:
 	Room();
 	Room(string,vector<Door>,vector<Extended>,string,int);
 	string getDescription();
-	vector<Door> getDoorsList();
+	vector<Door> getDoorsList() const;
 	vector<Extended> getExtended();
 	Door getDoorWantToGo(int direction);
 	string getName() const;

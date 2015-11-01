@@ -274,6 +274,7 @@ private:
 public:
 
 	// room constructor
+	roomDataInterface();
 	roomDataInterface(const string& file)
 	: baseNode(YAML::LoadFile(file)), roomNode(baseNode["ROOMS"]) {
 

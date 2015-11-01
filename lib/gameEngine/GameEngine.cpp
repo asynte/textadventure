@@ -26,6 +26,8 @@ void GameEngine::notify(const vector<string> &userInput) {
 // THIS IS ONLY THING I NEED TO EDIT
 void GameEngine::processUserCommand(const string &command, const string &arguement) {
 
+	// string usrcmd;
+	// int temp = arguement.copy(usrcmd, arguement.length());
 	UserInterface_println("command: " + command + " arguement:" + arguement);
 
 	// if (command == "move" && arguement.length() > 0) {
@@ -36,8 +38,8 @@ void GameEngine::processUserCommand(const string &command, const string &argueme
 		//int directionId = 
 		//int directionId = Door_getDirectionAsInt(arguement);
 
-		int directionId = 0;
-		int newRoomId = 3002;
+		// int directionId = 0;
+		// int newRoomId = 3002;
 
 		//currentWorld.printRoomNames();
 
@@ -45,14 +47,35 @@ void GameEngine::processUserCommand(const string &command, const string &argueme
 
 		//string test = I2S()
 
-		currentWorld.goToRoom(newRoomId, currentPlayer);
-		UserInterface_println("currentRoom post: " + I2S(currentPlayer.getCurrentRoom().getID()));
+		// currentWorld.goToRoom(newRoomId, currentPlayer);
+
+		parseMoveCommand(arguement);
+		//UserInterface_println("currentRoom post: " + I2S(currentPlayer.getCurrentRoom().getID()));
 	}
 
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+void GameEngine::parseMoveCommand(string userCommand){
+	vector<string> possibleCmds = GameEngine_getPossibleDirections();
+	locale loc;
+	string lowercase_cmd = tolower(userCommand, loc);	
+	bool validCommand = find(possibleCmds.begin(), possibleCmds.end(), lowercase_cmd) != possibleCmds.end();
 
-vector<string> GameEngine::getPossibleDirections() {
+	if (validCommand) {
+		for (auto currentDoor : (currentPlayer.getCurrentRoom()).getDoorsList()) {
+			if (lowercase_cmd == currentDoor.getDirection()) { // convert string direction to roomID (i.e. east to 3009)
+				currentWorld.goToRoom(currentDoor.getToID(), currentPlayer);
+				UserInterface_println("You are in: " + (currentPlayer.getCurrentRoom()).getName() );
+			}
+		}
+
+		
+
+	}
+}
+
+
+vector<string> GameEngine::GameEngine_getPossibleDirections() {
 	// int roomId = currentPlayer.getLocation();
 
 
@@ -93,7 +116,7 @@ vector<string> GameEngine::getPossibleDirections() {
 
 GameEngine::GameEngine()  : 
 	currentPlayer(Character("Retard")), 
-	currentWorld(World("test")) 
+	currentWorld(World("midgaard")) 
 	{
 		currentWorld.printRoomNames();
 	}

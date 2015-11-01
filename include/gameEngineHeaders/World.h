@@ -10,7 +10,7 @@ using namespace std;
 #include "gameEngineHeaders/Door.h"
 #include "gameEngineHeaders/Character.h"
 #include "gameEngineHeaders/Widget.h"
-#include "dataInterfaceHeaders/dataInterfaceBase.h"
+
 
 
 
@@ -47,6 +47,6 @@ class World{
 };
 
 #include "userInterfaceHeaders/UserInterface.h"
-
+#include "dataInterfaceHeaders/dataInterfaceBase.h"
 
 #endif

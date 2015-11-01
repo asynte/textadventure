@@ -18,7 +18,8 @@ class GameEngine : public Observer {
 		void notify(const string &userInput) ;
 		void notify(const vector<string> &userInput);
 
-		vector<string> getPossibleDirections();
+		vector<string> GameEngine_getPossibleDirections();
+		void parseMoveCommand(string userCommand);
 
 	private:
 		Character currentPlayer;

@@ -26,7 +26,7 @@ Room::Room(string description,vector<Door> doorsList,vector<Extended> extendedLi
 string Room::getDescription(){
 	return description;
 }
-vector<Door> Room::getDoorsList(){
+vector<Door> Room::getDoorsList() const {
 	return doorsList;
 }
 vector<Extended> Room::getExtended(){
@@ -93,9 +93,9 @@ vector<string> Room::getPossibleDirections() {
 
 		// if ( find(directions.begin(), directions.end(), direction) != directions.end() ) {
 
-		cout << "adding: " << direction;
+		//cout << "adding: " << direction;
 
-			directions.push_back(direction);
+		directions.push_back(direction);
 		// }
 	}
 
