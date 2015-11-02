@@ -63,7 +63,7 @@ public:
     void examine(Character&);
     void attack(NPC);
     void attack(Character&);
-    void battleSequence(NPC);
+    void battleSequence(NPC&);
     
 protected:
     int charHealth;

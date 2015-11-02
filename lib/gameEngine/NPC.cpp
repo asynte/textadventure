@@ -1,7 +1,7 @@
 #ifndef NPC_CPP
 #define NPC_CPP
 
-#include "gameEngineHeaders/gameEngine.h"
+#include "gameEngineHeaders/NPC.h"
 
 NPC::NPC() {
     this->setHealth(NPC_DEFAULTHEALTH);

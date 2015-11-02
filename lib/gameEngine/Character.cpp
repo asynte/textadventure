@@ -113,10 +113,6 @@ void Character::setLocation(Room room){
     this->currentRoom = room;
 }
 
-void Character::setLocation(Room room) {
-    this->currentRoom = room;
-}
-
 const Room Character::getCurrentRoom() const {
     return this->currentRoom;
 }
@@ -228,8 +224,8 @@ void Character::attack(NPC npc) { // fight NPC
             round++;
         //} else if ( regex_search(userCmd, regex("Flee*", regex_constants::basic)) ) { //flee
         } else if (userCmd == "Flee") {
-            int fleeChance = rand()%4;
-            if (fleeChance > 1) { // flee success, 75%
+            int fleeChance = (rand()*10)%4;
+            if (fleeChance > 0) { // flee success, 75%
                 cout << "You have fled the battle. Coward!" << endl;
                 break;
             } else { // flee failed, 25%
@@ -264,6 +260,17 @@ void Character::attack(Character &c) { // fight NPC
             }        
         }
         round++;
+    }
+}
+
+void Character::battleSequence(NPC &npc) {
+    npc.setHealth( npc.getHealth() - this->getAtk() ); // NPC takes damage equal to character's atk
+    if (npc.getHealth() <= 0) { 
+        cout << npc.getName() + " takes " + to_string(this->getAtk()) + " damage and has no health remaining!" << endl;
+    } else { // keep fighting
+        cout << npc.getName() + " takes " + to_string(this->getAtk()) + " damage and has " + to_string(npc.getHealth()) + " health remaining!" << endl;
+        this->setHealth( this->getHealth() - npc.getAtk() ); // character takes damage equal to NPC's atk
+        cout << "You take " + to_string(npc.getAtk()) + " damage and have " + to_string(this->getHealth()) + " health remaining!" << endl;
     }
 }
 

@@ -27,15 +27,8 @@
 
 using namespace std;
 
-void dataEmitterTest1() {
-	dataEmitter emit{"example"};
-	emit.emitNPC();
-	emit.printToFile();
-
-}
-
 void testFight() {
-	Character player("Retard");
+	Character player("Kid with no arms");
     player.increaseExp(300);
     player.updateLevel();
     player.printStatus();
@@ -49,7 +42,7 @@ void testFight() {
 }
 
 void testEquip() {
-	Character player("Retard");
+	Character player("Kid with no arms");
     player.increaseExp(300);
     player.updateLevel();
     player.printStatus();
@@ -71,63 +64,42 @@ void testEquip() {
     player.removeFromInventory(sword);
     player.showInventory();
 }
-/*void testSwitch() {
-	while (loop)
-	{
-		cout << "Command: ";
-		cin >> i;
-		switch(i) {
-			case 1:
-				cout << "\n";
-				npcDataInterfaceTest1();
-				break;
-			case 2:
-				cout << "\n";
-				objDataInterfaceTest1();
-				break;
-			case 3:
-				cout << "\n";
-				roomDataInterfaceTest1();
-				break;
-			case 4:
-				cout << "\n";
-				resetDataInterfaceTest1();
-				break;
-			case 5:
-				cout << "\n";
-				npcDataInterfaceTest2();
-				break;
-			case 6:
-				dataEmitterTest1();
-				break;
-			default:
-				cout << "\nWrong numba, Psych!\n";
-				break;
-			case -1:
-				loop = false;
-				break;
-		}
-	}
-}*/
 
 int main() {
 
-	//Constructs object
-	// cout<< " Nigger initiate" << endl;
-	// roomDataInterface Hell{""};
+    /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	UserInterface_create();
-	//roomDataInterfaceTest1();
-	cout<< "NIGGGGGGG" << endl;
-	roomDataInterface ROOM2("data/test.yml");
+	// UserInterface_create();
+	// cout<< "NIGGGGGGG" << endl;
+	// roomDataInterface ROOM2("data/test.yml");
 
-	cout << "more niggers" << endl;
-	GameEngine *g = new GameEngine(); // !!!BRYAN FIX PLEASE!!!! DYNAMIC CAST ERROR!!!! std::bad_cast
-	UserInterface_addListener(g);
+	// cout << "more niggers" << endl;
+	// GameEngine *g = new GameEngine(); // !!!BRYAN FIX PLEASE!!!! DYNAMIC CAST ERROR!!!! std::bad_cast
+	// UserInterface_addListener(g);
 
-	pthread_join(UserInterface_getThreadId(), NULL);
-	// testSwitch();
-	//dataEmitterTest1();
+	// pthread_join(UserInterface_getThreadId(), NULL);
 
+    /////////////////////////////////////////////////////////////////////////////////////////////////////
+    // GameEngine *g = new GameEngine(); // !!!BRYAN FIX PLEASE!!!! DYNAMIC CAST ERROR!!!! std::bad_cast
+    // UserInterface_addListener(g);
+
+    // roomDataInterface ROOM2("data/smurf.yml");
+    // ROOM2.loadAll();
+    // ROOM2.printAll();
+    // objDataInterface objParser("data/smurf.yml");
+    // objParser.loadAll();
+    // objParser.printAll();
+    // npcDataInterface npcParser("data/smurf.yml");
+    // npcParser.loadAll();
+    // npcParser.printAll();
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    // testFight();
+    // testEquip();
+
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////
+    
 	return 0;
 }	

@@ -97,7 +97,7 @@ using namespace std;
 
 	int roomDataInterface::getDoorSize (const int& index) {
 
-		return roomVector[index].door.size();
+		return roomVector[index].getDoorsList().size();
 	}
 
 

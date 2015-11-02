@@ -5,10 +5,12 @@ using namespace std;
 
 
 #include <iostream>
-#include "Door.h"
-#include "Widget.h"
+#include "gameEngineHeaders/Door.h"
+#include "gameEngineHeaders/Widget.h"
+#include "gameEngineHeaders/Object.h"
+#include "gameEngineHeaders/NPC.h"
 #include <vector>
-#include "Extended.h"
+#include "gameEngineHeaders/Extended.h"
 
 class Room{
 public:
@@ -32,7 +34,7 @@ private:
 	vector<Extended> extendedList;
 	int ID;
 	string name;
-        //vector<Widget> widgetVector;
+    vector<Widget> widgetVector;
 };
 
 #endif
