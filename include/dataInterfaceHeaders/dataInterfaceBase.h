@@ -276,8 +276,9 @@ public:
 	// room constructor
 	roomDataInterface();
 	roomDataInterface(const string& file)
-	: baseNode(YAML::LoadFile(file)), roomNode(baseNode["ROOMS"]) {
-
+	: baseNode(YAML::LoadFile(file)) {
+		cout << "file loaded" << endl;
+		roomNode = baseNode["ROOMS"];
 	}
 
 	// room deconstructor

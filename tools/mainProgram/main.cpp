@@ -32,12 +32,16 @@ using namespace std;
 int main() {
 
 	//Constructs object
-	cout<< " Nigger initiate";
-	//roomDataInterface Hell{"midgaard.yml"};
+	// cout<< " Nigger initiate" << endl;
+	// roomDataInterface Hell{""};
 
 	UserInterface_create();
 	//roomDataInterfaceTest1();
 
+	cout<< "NIGGGGGGG" << endl;
+	roomDataInterface ROOM2("data/test.yml");
+
+	cout << "more niggers" << endl;
 	GameEngine *g = new GameEngine();
 	UserInterface_addListener(g);
 

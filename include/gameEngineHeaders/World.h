@@ -11,7 +11,7 @@ using namespace std;
 #include "gameEngineHeaders/Character.h"
 #include "gameEngineHeaders/Widget.h"
 
-
+#include "dataInterfaceHeaders/dataInterfaceBase.h"
 
 
 class World{
@@ -47,6 +47,5 @@ class World{
 };
 
 #include "userInterfaceHeaders/UserInterface.h"
-#include "dataInterfaceHeaders/dataInterfaceBase.h"
 
 #endif

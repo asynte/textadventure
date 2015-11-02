@@ -44,7 +44,7 @@ void World::initializeWorld(string name){
  	string fileName="data/"+name+".yml";
 
  	cout<<"cunt";
- 	roomDataInterface room{fileName};
+ 	roomDataInterface room(fileName);
 
 	room.loadAll();
 	roomsVector=room.getRoomVector();

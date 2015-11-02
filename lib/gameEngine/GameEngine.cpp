@@ -116,7 +116,7 @@ vector<string> GameEngine::GameEngine_getPossibleDirections() {
 
 GameEngine::GameEngine()  : 
 	currentPlayer(Character("Retard")), 
-	currentWorld(World("midgaard")) 
+	currentWorld(World("test")) 
 	{
 		currentWorld.printRoomNames();
 	}
