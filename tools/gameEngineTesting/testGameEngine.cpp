@@ -80,16 +80,17 @@ int main() {
 	// pthread_join(UserInterface_getThreadId(), NULL);
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////
+    
     // GameEngine *g = new GameEngine(); // !!!BRYAN FIX PLEASE!!!! DYNAMIC CAST ERROR!!!! std::bad_cast
     // UserInterface_addListener(g);
 
-    // roomDataInterface ROOM2("data/smurf.yml");
+    // roomDataInterface ROOM2("data/midgaard.yml");
     // ROOM2.loadAll();
     // ROOM2.printAll();
-    // objDataInterface objParser("data/smurf.yml");
-    // objParser.loadAll();
-    // objParser.printAll();
-    // npcDataInterface npcParser("data/smurf.yml");
+    objDataInterface objParser("data/midgaard.yml");
+    objParser.loadAll();
+    objParser.printAll();
+    // npcDataInterface npcParser("data/midgaard.yml");
     // npcParser.loadAll();
     // npcParser.printAll();
 
@@ -97,7 +98,6 @@ int main() {
 
     // testFight();
     // testEquip();
-
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////
     

@@ -7,14 +7,15 @@ Object::Object() {
     
 }
 
-Object::Object(int id, string name) {
+Object::Object(int id, string name) { // for testing use only
     widgetName = name;
     widgetId = id;
     wearable = false;
 }
 
-Object::Object(int id, vector<string> extra, vector<string> keywords, string longDesc, string shortDesc) {
-    objExtra = extra;
+Object::Object(int id, string extraDesc, vector<string> extraKeywords, vector<string> keywords, string longDesc, string shortDesc) {
+    objExtraDesc = extraDesc;
+    objExtraKeyWords = extraKeywords;
     widgetId = id;
     objKeyWords = keywords;
     objLongDesc = longDesc;
@@ -34,8 +35,12 @@ vector<string> Object::getKeyWords() const {
     return objKeyWords;
 }
 
-vector<string> Object::getExtra() const {
-    return objExtra;
+vector<string> Object::getExtraKeyWords() const {
+    return objExtraKeyWords;
+}
+
+string Object::getExtraDesc() const {
+    return objExtraDesc;
 }
 
 void Object::setWearable(bool w) {

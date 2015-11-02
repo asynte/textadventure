@@ -148,26 +148,6 @@ public:
 class objDataInterface : public dataInterfaceBase{
 private: 
 
-	/*struct EXTRA {
->>>>>>> tempGameEngine
-		vector<string> description;
-		vector<string> keyWord;
-	};
-	struct OBJECT {
-		vector<EXTRA> extra;
-		int id;
-		vector<string> keyWord;
-		vector<string> longDesc;
-		string shortDesc;
-
-<<<<<<< HEAD
-	};
-
-	// store each OBJECTS node on objVector
-	vector<OBJECT> objVector;
-=======
-	};*/
-
 	// store each OBJECTS node on objVector
 	vector<Object> objVector;
 
@@ -176,6 +156,11 @@ private:
 
 	// node where OBJECTS sequence of yaml file will be set
 	YAML::Node objNode;
+
+	struct EXTRA {
+		vector<string> extraDescriptionVector;
+		vector<string> extraKeyWordsVector;
+	};
 
 public:
 
@@ -197,9 +182,9 @@ public:
     // Post-condition:
     //    Returns the extra of OBJECTS struct at specified index
 
-	//vector<string> getExtraDescription (const int& objIndex, const int& extraIndex);
+	string getExtraDescription (const int& objIndex);
 
-	vector<string> getExtraKeyWord(const int& objIndex/*, const int& extraIndex*/);
+	vector<string> getExtraKeyWord(const int& objIndex);
 
 	// Pre-condition:
     //    0 <= index < objNode.size()
@@ -231,9 +216,9 @@ public:
 	///////////////////////////////////
 
 
-	//void printExtraDescription(const int& objIndex, const int& extraIndex);
+	void printExtraDescription(const int& objIndex);
 
-	void printExtraKeyWord(const int& objIndex/*, const int& extraIndex*/);
+	void printExtraKeyWord(const int& objIndex);
 
 	void printID (const int& index);
 

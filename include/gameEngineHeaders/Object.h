@@ -12,11 +12,12 @@ class Object : public Widget {
 public:
 	Object();
         Object(int, string);
-	Object(int, vector<string>, vector<string>, string, string);
+	Object(int, string, vector<string>, vector<string>, string, string);
         void setLongDesc(string);
 	string getLongDesc() const;
 	vector<string> getKeyWords() const;
-	vector<string> getExtra() const;
+	vector<string> getExtraKeyWords() const;
+	string getExtraDesc() const;
         void setWearable(bool);
 	bool isWearable() const;
         void setEquipArea(equipmentArea);
@@ -25,7 +26,8 @@ public:
 protected:
 	string objLongDesc;
 	vector<string> objKeyWords;
-	vector<string> objExtra;
+	string objExtraDesc;
+	vector<string> objExtraKeyWords;
         bool wearable;
         equipmentArea equippedOn;
 };
