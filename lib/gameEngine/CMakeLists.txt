@@ -4,7 +4,6 @@ cmake_minimum_required(VERSION 2.8.9)
 
 add_library(Character Character.cpp)
 add_library(Door Door.cpp)
-add_library(Monster Monster.cpp)
 add_library(NPC NPC.cpp)
 add_library(Object Object.cpp)
 add_library(Room Room.cpp)
@@ -21,15 +20,18 @@ target_link_libraries(World Character)
 
 target_link_libraries(Room Door)
 target_link_libraries(Room World)
+target_link_libraries(Room Extended)
+
+target_link_libraries(Door Extended)
 
 target_link_libraries(Character Widget)
+target_link_libraries(Widget NPC)
+target_link_libraries(Widget Object)
+target_link_libraries(Widget Character)
 target_link_libraries(Character NPC)
 target_link_libraries(Character Object)
-target_link_libraries(Character Monster)
 target_link_libraries(Character World)
 target_link_libraries(Character Room)
 
-target_link_libraries(Room Extended)
-target_link_libraries(Door Extended)
-
 target_link_libraries(GameEngine World)
+

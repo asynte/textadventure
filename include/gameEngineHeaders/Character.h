@@ -1,21 +1,18 @@
 
-
 #ifndef CHARACTER_H
 #define CHARACTER_H
-
 
 #include <string>
 #include <iostream>
 #include <vector>
 #include <algorithm>
+#include <map>
+#include <regex>
+#include <stdlib.h>
 #include "gameEngineHeaders/Widget.h"
-#include "gameEngineHeaders/Object.h"
 #include "gameEngineHeaders/NPC.h"
-#include "gameEngineHeaders/Monster.h"
+#include "gameEngineHeaders/Object.h"
 #include "gameEngineHeaders/Room.h"
-
-
-//#include "gameEngineHeaders/World.h"
 
 using namespace std;
 
@@ -23,37 +20,63 @@ class Character : public Widget {
 public:
     const int CHAR_DEFAULTHEALTH = 100;
     const int CHAR_DEFAULTATK = 10;
+    const int CHAR_DEFAULTSTAT = 1;
     const int CHAR_STARTLOCATION = 0;
 
-    //Character();
+    map<int, const Object> charEquipment; // maps equipmentArea to Object
+    
     Character(string);
-
-    void getStatus();
+    void printStatus();
     void setHealth(int);
-    int getHealth();
+    int getHealth() const;
+    void setExp(int);
+    void increaseExp(int);
+    int getExp() const;
     void setLevel(int);
-    int getLevel();
-    void levelUp();
+    int getLevel() const;
+    void updateLevel();
     void setAtk(int);
-    int getAtk();
-    vector<Widget> getInventory();
+    int getAtk() const;
+    void setStr(int);
+    int getStr() const;
+    void setInt(int);
+    int getInt() const;
+    void setDex(int);
+    int getDex() const;
+    void setCha(int);
+    int getCha() const;
+    void setPVP(bool);
+    bool getPVP() const;
+    void togglePVP();
+    vector<Object> getInventory() const;
     void addToInventory(Object);
-    //void removeFromInventory(Widget&);
+    void showInventory() const;
+    void removeFromInventory(Object&);
+    void equip(Object&);
+    void unequip(Object);
     void setLocation(Room r);
-    const Room getCurrentRoom();
+    const Room getCurrentRoom() const;
     void interact(NPC);
     void interact(Object);
     void examine(Object);
-    void examine(Monster);
-    void interact(Monster);
-    //void move(World, int);
+    void examine(NPC);
+    void examine(Character&);
+    void attack(NPC);
+    void attack(Character&);
+    void battleSequence(NPC);
     
 protected:
     int charHealth;
+    int experience;
     int charLevel;
     int charAtk;
-    vector<Widget> charInventory;
+    int charStrength;
+    int charIntelligence;
+    int charDexterity;
+    int charCharisma;
+    vector<Object> charInventory;
     Room currentRoom;
+    bool wantsToPVP;
 };
 
 #endif

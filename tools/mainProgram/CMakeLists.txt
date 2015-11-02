@@ -19,12 +19,12 @@ target_link_libraries(alphaversion npcDataInterface)
 target_link_libraries(alphaversion objDataInterface)
 target_link_libraries(alphaversion roomDataInterface)
 target_link_libraries(alphaversion resetDataInterface)
+target_link_libraries(alphaversion dataEmitter)
 
 #gameEngine Libraries
 target_link_libraries(alphaversion GameEngine)
 target_link_libraries(alphaversion Character)
 target_link_libraries(alphaversion Door)
-target_link_libraries(alphaversion Monster)
 target_link_libraries(alphaversion NPC)
 target_link_libraries(alphaversion Object)
 target_link_libraries(alphaversion Room)

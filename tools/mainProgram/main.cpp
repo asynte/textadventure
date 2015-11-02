@@ -1,7 +1,6 @@
 #include "dataInterfaceHeaders/dataInterfaceBase.h"
 #include "gameEngineHeaders/Character.h"
 #include "gameEngineHeaders/Door.h"
-#include "gameEngineHeaders/Monster.h"
 #include "gameEngineHeaders/NPC.h"
 #include "gameEngineHeaders/Object.h"
 #include "gameEngineHeaders/Room.h"
@@ -28,6 +27,51 @@
 
 using namespace std;
 
+void dataEmitterTest1() {
+	dataEmitter emit{"example"};
+	emit.emitNPC();
+	emit.printToFile();
+
+}
+
+void testSwitch() {
+	while (loop)
+	{
+		cout << "Command: ";
+		cin >> i;
+		switch(i) {
+			case 1:
+				cout << "\n";
+				npcDataInterfaceTest1();
+				break;
+			case 2:
+				cout << "\n";
+				objDataInterfaceTest1();
+				break;
+			case 3:
+				cout << "\n";
+				roomDataInterfaceTest1();
+				break;
+			case 4:
+				cout << "\n";
+				resetDataInterfaceTest1();
+				break;
+			case 5:
+				cout << "\n";
+				npcDataInterfaceTest2();
+				break;
+			case 6:
+				dataEmitterTest1();
+				break;
+			default:
+				cout << "\nWrong numba, Psych!\n";
+				break;
+			case -1:
+				loop = false;
+				break;
+		}
+	}
+}
 
 int main() {
 
@@ -37,15 +81,16 @@ int main() {
 
 	UserInterface_create();
 	//roomDataInterfaceTest1();
-
 	cout<< "NIGGGGGGG" << endl;
 	roomDataInterface ROOM2("data/test.yml");
 
 	cout << "more niggers" << endl;
-	GameEngine *g = new GameEngine();
+	GameEngine *g = new GameEngine(); // !!!BRYAN FIX PLEASE!!!! DYNAMIC CAST ERROR!!!! std::bad_cast
 	UserInterface_addListener(g);
 
 	pthread_join(UserInterface_getThreadId(), NULL);
+	// testSwitch();
+	//dataEmitterTest1();
 
 	return 0;
 }	

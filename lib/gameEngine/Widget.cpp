@@ -9,11 +9,11 @@ void Widget::setName(string name) {
     this->widgetName = name;
 }
 
-string Widget::getName() {
+string Widget::getName() const {
     return widgetName;
 }
 
-int Widget::getId() {
+int Widget::getId() const {
     return widgetId;
 }
 
