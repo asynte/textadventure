@@ -1,25 +1,34 @@
+#ifndef NPC_H
+#define NPC_H
 
 #include <string>
 #include <vector>
 #include <iostream>
-#include "Widget.h"
-
-#ifndef NPC_H
-#define NPC_H
+#include "gameEngineHeaders/Widget.h"
+class Widget;
 
 class NPC : public Widget {
 
 public:
+    NPC();
 	NPC(int, string, vector<string>, string, string);
-	string getLongDesc();
-	vector<string> getKeyWords();
-	string getDesc();
-	//void interact();
+	string getLongDesc() const;
+        void setLongDesc(string);
+	vector<string> getKeyWords() const;
+	string getDesc() const;
+	void setHealth(int);
+    int getHealth() const;
+    void setAtk(int);
+    int getAtk() const;
 
 protected:
-	string npcLongDesc;
-	vector<string> npcKeyWords;
-	string npcDesc;
+    const int NPC_DEFAULTHEALTH = 20;
+    const int NPC_DEFAULTATK = 3;
+    string npcLongDesc;
+    vector<string> npcKeyWords;
+    string npcDesc;
+    int npcHealth;
+    int npcAtk;
 };
 
 #endif
