@@ -8,6 +8,8 @@
 #include "../gameEngineHeaders/Room.h"
 #include "../gameEngineHeaders/Door.h"
 #include "../gameEngineHeaders/Extended.h"
+#include "gameEngineHeaders/NPC.h"
+#include "gameEngineHeaders/Object.h"
 
 using namespace std;
 
@@ -50,14 +52,6 @@ public:
 class npcDataInterface : public dataInterfaceBase{
 private: 
 
-	struct NPC {
-		vector<string> description;
-		int id;
-		vector<string> keyWord;
-		vector<string> longDesc;
-		string shortDesc;
-	};
-
 	// store each NPCS node on npcVector
 	vector<NPC> npcVector;
 
@@ -86,8 +80,9 @@ public:
     //    0 <= index < npcNode.size()
     // Post-condition:
     //    Returns the description of NPC struct at specified index
-	vector<string> getDescription (const int& index);
 
+	string getDescription (const int& index);
+	vector <NPC> getNPCVector();
 	// Pre-condition:
     //    0 <= index < npcNode.size()
     // Post-condition:
@@ -104,7 +99,8 @@ public:
     //    0 <= index < npcNode.size()
     // Post-condition:
     //    Returns the long description of NPC struct at specified index
-	vector<string> getLongDescription (const int& index);
+
+	string getLongDescription (const int& index);
 
 	// Pre-condition:
     //    0 <= index < npcNode.size()
@@ -135,7 +131,7 @@ public:
 	///////////////////////////////////
 	// 		   LOAD FUNCTIONS        //
 	///////////////////////////////////
-
+		
 	virtual void push (const int& index);
 
 	virtual void load (const int& count);
@@ -152,27 +148,19 @@ public:
 class objDataInterface : public dataInterfaceBase{
 private: 
 
-	struct EXTRA {
-		vector<string> description;
-		vector<string> keyWord;
-	};
-	struct OBJECT {
-		vector<EXTRA> extra;
-		int id;
-		vector<string> keyWord;
-		vector<string> longDesc;
-		string shortDesc;
-
-	};
-
 	// store each OBJECTS node on objVector
-	vector<OBJECT> objVector;
+	vector<Object> objVector;
 
 	// node where root of yaml file will be set
 	YAML::Node baseNode;
 
 	// node where OBJECTS sequence of yaml file will be set
 	YAML::Node objNode;
+
+	struct EXTRA {
+		vector<string> extraDescriptionVector;
+		vector<string> extraKeyWordsVector;
+	};
 
 public:
 
@@ -193,10 +181,11 @@ public:
     //    0 <= index < objNode.size()
     // Post-condition:
     //    Returns the extra of OBJECTS struct at specified index
-	vector<string> getExtraDescription (const int& objIndex, const int& extraIndex);
 
-	vector<string> getExtraKeyWord(const int& objIndex, const int& extraIndex);
+	string getExtraDescription (const int& objIndex);
 
+	vector<string> getExtraKeyWord(const int& objIndex);
+	vector<Object> getObjVector();
 	// Pre-condition:
     //    0 <= index < objNode.size()
     // Post-condition:
@@ -213,7 +202,8 @@ public:
     //    0 <= index < objNode.size()
     // Post-condition:
     //    Returns the long description of OBJECTS struct at specified index
-	vector<string> getLongDescription (const int& index);
+
+	string getLongDescription (const int& index);
 
 	// Pre-condition:
     //    0 <= index < objNode.size()
@@ -225,9 +215,10 @@ public:
 	// 		  PRINT FUNCTIONS        //
 	///////////////////////////////////
 
-	void printExtraDescription(const int& objIndex, const int& extraIndex);
 
-	void printExtraKeyWord(const int& objIndex, const int& extraIndex);
+	void printExtraDescription(const int& objIndex);
+
+	void printExtraKeyWord(const int& objIndex);
 
 	void printID (const int& index);
 
@@ -274,9 +265,11 @@ private:
 public:
 
 	// room constructor
+	roomDataInterface();
 	roomDataInterface(const string& file)
-	: baseNode(YAML::LoadFile(file)), roomNode(baseNode["ROOMS"]) {
-
+	: baseNode(YAML::LoadFile(file)) {
+		cout << "file loaded" << endl;
+		roomNode = baseNode["ROOMS"];
 	}
 
 	// room deconstructor
@@ -306,6 +299,9 @@ public:
 	
 	vector<string> getExtendedKeyWord (const int& roomIndex, const int& extendedIndex);
 
+	int getRoomSize ();
+
+	int getDoorSize (const int& index);
 
 	///////////////////////////////////
 	// 		  PRINT FUNCTIONS        //
@@ -407,7 +403,7 @@ public:
 	// 		  PRINT FUNCTIONS        //
 	///////////////////////////////////
 
-	void printAction(const int& index);
+	void printAction (const int& index);
 	
 	void printComment (const int& index);
 
@@ -440,5 +436,86 @@ public:
 	virtual void loadAll();
 
 };
+
+
+class dataEmitter {
+private: 
+
+	vector<string> area;
+	vector<string> npcs;
+	vector<string> objects;
+	vector<string> resets;
+	vector<string> rooms;
+
+	string yamlFileName;
+
+	ofstream outFile;
+
+	YAML::Emitter emitter;
+public:
+
+	dataEmitter(const string& file)
+	: yamlFileName(file  + ".yml") {
+
+		std::ifstream inFile(yamlFileName);
+
+		if (inFile.peek() == std::ifstream::traits_type::eof()) {
+			// area.push_back("AREA:\n");
+			// npcs.push_back("NPCS:\n");
+			// objects.push_back("OBJECTS:\n");
+			// resets.push_back("RESETS:\n");
+			// rooms.push_back("ROOMS:\n");
+
+		}
+
+		else {
+			string line;
+			int count = 0;
+
+			while (getline (inFile, line)) {
+
+				if (line == "NPCS:") {
+					count = 1;
+				}	
+
+				if (line == "OBJECTS:") {
+					count = 2;
+				}
+
+				if (count == 0) {
+					area.push_back(line + "\n");
+				}
+		
+
+				if (count == 1) {
+					npcs.push_back(line + "\n");
+				}
+
+				if (count == 2) {
+					objects.push_back(line + "\n");
+				}
+			}
+		}
+
+		outFile.open(yamlFileName);
+
+	}
+
+	~dataEmitter() {
+		outFile.close();
+	}
+
+	virtual void searchLine (const string& s);
+
+	virtual void printToFile ();
+
+	virtual void emitArea ();
+
+	virtual void emitNPC ();
+
+
+};
+
+
 
 #endif

@@ -1,0 +1,54 @@
+NPCS:
+- description:
+  - The wizard looks old and senile, and yet he looks like a very powerful
+  - wizard. He is equipped with fine clothing, and is wearing many fine
+  - rings and bracelets.
+  id: 3000
+  keywords:
+  - wizard
+  longdesc:
+  - A wizard walks around behind the counter, talking to himself.
+  shortdesc: the wizard
+- description:
+  - A fat, nice looking baker. But you can see that he has many scars on his
+  - body.
+  id: 3001
+  keywords:
+  - baker
+  longdesc:
+  - The baker looks at you calmly, wiping flour from his face with one hand.
+  shortdesc: the baker
+- description:
+  - A tall grocer, who moves two 200 pounds bag of flour around on his shoulders.
+  id: 3002
+  keywords:
+  - grocer
+  longdesc:
+  - A grocer stands at the counter, with a slightly impatient look on his face.
+  shortdesc: the grocer
+- description:
+  - A young weaponsmith, who still has lots to learn.
+  id: 3003
+  keywords:
+  - weaponsmith
+  longdesc:
+  - A weaponsmith.
+  shortdesc: the weaponsmith
+- description:
+  - An old but very strong armourer, he has made more armours in his
+  - lifetime than you have ever seen.
+  id: 3004
+  keywords:
+  - armourer
+  - armorer
+  longdesc:
+  - An armourer stands here.
+  shortdesc: the armourer
+- description:
+  - Well COUNT your money!
+  id: 3005
+  keywords:
+  - thief
+  longdesc:
+  - A thief, all dressed in black.
+  shortdesc: the thief

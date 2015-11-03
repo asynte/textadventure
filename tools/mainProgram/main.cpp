@@ -1,7 +1,6 @@
 #include "dataInterfaceHeaders/dataInterfaceBase.h"
 #include "gameEngineHeaders/Character.h"
 #include "gameEngineHeaders/Door.h"
-#include "gameEngineHeaders/Monster.h"
 #include "gameEngineHeaders/NPC.h"
 #include "gameEngineHeaders/Object.h"
 #include "gameEngineHeaders/Room.h"
@@ -26,137 +25,35 @@
 
 
 using namespace std;
-
-
-
-	
-void npcDataInterfaceTest1() {
-	npcDataInterface npc{"smurf.yml"};
-	npc.loadAll();
-	npc.printAll();
-}
-
-void npcDataInterfaceTest2() {
-	npcDataInterface npc{"smurf.yml"};
-	npc.loadFromID({101, 102, 103});
-	npc.printAll();
-}
-
-void objDataInterfaceTest1() {
-	objDataInterface object{"smurf.yml"};
-	object.loadAll();
-	object.printAll();
-}
-
-void roomDataInterfaceTest1() {
-	roomDataInterface room{"test.yml"};
-	room.loadAll();
-	room.printAll();
-}
-
-void resetDataInterfaceTest1() {
-	resetDataInterface reset{"smurf.yml"};
-	reset.loadAll();
-	reset.printAll();
-}
-
-void roomDataInterfaceTest2() {
-
-	roomDataInterface ROOM2{"midgaard.yml"};
-
-	ROOM2.loadFromID(3120);
-
-
-	// assign valuables from ROOM struct
-	string a = ROOM2.getDescription(0);
-
-	int b = ROOM2.getID(0);
-
-	string c = ROOM2.getName(0);
-
-	string d = ROOM2.getDoorDescription(0, 0);
-
-	string e = ROOM2.getDoorDirection(0, 0);
-
-	vector<string> j = ROOM2.getDoorKeyWord(0, 0);
-
-	int f = ROOM2.getDoorTO(0, 0);
-
-	string g = ROOM2.getExtendedDescription(0, 0);
-
-	vector<string> h = ROOM2.getExtendedKeyWord(0, 0);
-
-
-	// output variable values to terminal
-	
-		cout << a << "\n";
-
-	
-		cout << d << "\n";
-	
-
-	cout << e << "\n";
-
-	for (string s: j){
-		cout << s << "\n";
-	}	
-
-	
-		cout << g << "\n";
-		
-
-	for (string s: h){
-		cout << s << "\n";
-	}	
-
-	cout << f << "\n";
-
-	cout << b << "\n" << c << "\n\n";
+int init(){
+	roomDataInterface roomParser("data/midgaard.yml");
+	objDataInterface objParser("data/midgaard.yml");
+	npcDataInterface npcParser("data/midgaard.yml");
 
 }
 
-void testSwitch() {
 
-	int i = 0;
-	bool loop = true;
-
-	while (loop)
-	{
-		cout << "Command: ";
-		cin >> i;
-		switch(i) {
-			case 1:
-				cout << "\n";
-				npcDataInterfaceTest1();
-				break;
-			case 2:
-				cout << "\n";
-				objDataInterfaceTest1();
-				break;
-			case 3:
-				cout << "\n";
-				roomDataInterfaceTest1();
-				break;
-			case 4:
-				cout << "\n";
-				resetDataInterfaceTest1();
-				break;
-			case 5:
-				cout << "\n";
-				npcDataInterfaceTest2();
-				break;
-			default:
-				cout << "\nWrong numba, Psych!\n";
-				break;
-			case -1:
-				loop = false;
-				break;
-		}
-	}
-}
 int main() {
-	
-	World world("test");
-	world.getInformation();
+	// roomParser.loadAll();
+npcDataInterface npcParser("data/test.yml");
+npcParser.loadAll();
+npcParser.printAll();
+
+	//World world("midgaard");
+	//world.getInformation();
+	// vector <Room> rooms=world.getRoomsVector();
+	// for(int i=0;i<rooms.size();i++){
+	// 	cout<<"room id: "<<rooms.at(i).getID()<<endl;
+	// 	vector<Object> object=rooms.at(i).getObjectList();
+	// 	cout<<"Object: "<<endl;
+	// 	for(Object o:object){
+	// 		cout<<o.getName()<<endl;
+	// 	}
+	// 	cout<<"NPC:"<<endl;
+	// 	vector<NPC> npc=rooms.at(i).getNPCList();
+	// 	for(NPC n:npc){
+	// 		cout<<n.getName()<<endl;
+	// 	}
+	// }
 	return 0;
 }	

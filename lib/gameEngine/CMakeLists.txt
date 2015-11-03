@@ -4,7 +4,6 @@ cmake_minimum_required(VERSION 2.8.9)
 
 add_library(Character Character.cpp)
 add_library(Door Door.cpp)
-add_library(Monster Monster.cpp)
 add_library(NPC NPC.cpp)
 add_library(Object Object.cpp)
 add_library(Room Room.cpp)

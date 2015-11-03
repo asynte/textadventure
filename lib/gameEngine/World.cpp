@@ -26,14 +26,42 @@ World::World(string name){
 
 //function to replace the commented build() function, this is to call all of louie's yaml parsing
 void World::initializeWorld(string name){
- 	string fileName="../data/"+name+".yml";
-
+ 	string fileName="data/"+name+".yml";
  	roomDataInterface room{fileName};
 	room.loadAll();
 	roomsVector=room.getRoomVector();
-	
+	addObjectToRoom(fileName);
+	addNPCToRoom(fileName);
 }
-
+void World::addObjectToRoom(string fileName){
+	objDataInterface object(fileName);
+	object.loadAll();
+	objectVector=object.getObjVector();
+	for(int i=0;i<objectVector.size();i++){
+		int id=objectVector.at(i).getId();
+		for(int j=0;j<roomsVector.size();j++){
+			int roomId=roomsVector.at(j).getID();
+			if(roomId==id){
+				roomsVector.at(j).addObject(objectVector.at(i));
+			}
+		}
+	}
+}
+void World::addNPCToRoom(string fileName){
+	// npcDataInterface npc(fileName);
+	// npc.loadAll();
+	// npc.printAll();
+	// npcVector=npc.getNPCVector();
+	// for(int i=0;i<npcVector.size();i++){
+	// 	int id=npcVector.at(i).getId();
+	// 	for(int j=0;j<roomsVector.size();j++){
+	// 		int roomId=roomsVector.at(j).getID();
+	// 		if(roomId==id){
+	// 			roomsVector.at(j).addNPC(npcVector.at(i));
+	// 		}
+	// 	}
+	// }
+}
 string World::getName(){
 	return name;
 }
@@ -45,6 +73,7 @@ void World::getInformation(){
 vector<Room> World:: getRoomsVector(){
 	return roomsVector;
 }
+
 // int World::willGoToRoom(int direction, int currentLocation){
 // 	Room nowRoom=roomsVector[currentLocation];
 // 	Door door;

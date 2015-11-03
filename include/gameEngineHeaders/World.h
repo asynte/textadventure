@@ -4,6 +4,8 @@ using namespace std;
 #define WORLD_H
 #include "gameEngineHeaders/Room.h"
 #include "gameEngineHeaders/Door.h"
+#include "gameEngineHeaders/NPC.h"
+
 #include "dataInterfaceHeaders/dataInterfaceBase.h"
 class World{
 public:
@@ -21,7 +23,11 @@ public:
 	void getNowRoomInformation(int currentLocation);
 private:
 	vector<Room> roomsVector;
+	vector <Object> objectVector;
+	vector <NPC> npcVector;
 	string name;
+	void addObjectToRoom(string fileName);
+	void addNPCToRoom(string fileName);
 };
 
 
