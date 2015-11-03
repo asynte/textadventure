@@ -113,54 +113,15 @@ void roomDataInterfaceTest2() {
 
 void dataEmitterTest1() {
 	dataEmitter emit{"example"};
+	emit.emitArea();
 	emit.emitNPC();
+	emit.emitObject();
+	emit.emitReset();
+	emit.emitRoom();
 	emit.printToFile();
 
 }
 
-void testSwitch() {
-
-	int i = 0;
-	bool loop = true;
-
-	while (loop)
-	{
-		cout << "Command: ";
-		cin >> i;
-		switch(i) {
-			case 1:
-				cout << "\n";
-				npcDataInterfaceTest1();
-				break;
-			case 2:
-				cout << "\n";
-				objDataInterfaceTest1();
-				break;
-			case 3:
-				cout << "\n";
-				roomDataInterfaceTest1();
-				break;
-			case 4:
-				cout << "\n";
-				resetDataInterfaceTest1();
-				break;
-			case 5:
-				cout << "\n";
-				npcDataInterfaceTest2();
-				break;
-			case 6:
-				dataEmitterTest1();
-				break;
-			default:
-				cout << "\nWrong numba, Psych!\n";
-				break;
-			case -1:
-				loop = false;
-				break;
-		}
-	}
-
-}
 int main() {
 
 	// testSwitch();
