@@ -73,16 +73,6 @@ using namespace std;
 	}
 
 
-	int roomDataInterface::getRoomSize () {
-
-		return roomVector.size();
-	}
-
-	int roomDataInterface::getDoorSize (const int& index) {
-
-		return roomVector[index].door.size();
-	}
-
 
 	///////////////////////////////////
 	// 		  PRINT FUNCTIONS	     //

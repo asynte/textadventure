@@ -1,7 +1,6 @@
 #include "dataInterfaceHeaders/dataInterfaceBase.h"
 #include "gameEngineHeaders/Character.h"
 #include "gameEngineHeaders/Door.h"
-#include "gameEngineHeaders/Monster.h"
 #include "gameEngineHeaders/NPC.h"
 #include "gameEngineHeaders/Object.h"
 #include "gameEngineHeaders/Room.h"
@@ -114,54 +113,31 @@ void roomDataInterfaceTest2() {
 
 void dataEmitterTest1() {
 	dataEmitter emit{"example"};
+
+	emit.startArea();
+	emit.emitArea();
+	emit.endArea();
+
+	emit.startSequence("NPCS");
 	emit.emitNPC();
+	emit.endSequence();
+
+	// emit.startSequence("OBJECTS");
+	// emit.emitObject();
+	// emit.endSequence();
+
+	// emit.startSequence("RESETS");
+	// emit.emitReset();
+	// emit.endSequence();
+
+	// emit.startSequence("ROOMS");
+	// emit.emitRoom();
+	// emit.endSequence();
+	
 	emit.printToFile();
 
 }
 
-void testSwitch() {
-
-	int i = 0;
-	bool loop = true;
-
-	while (loop)
-	{
-		cout << "Command: ";
-		cin >> i;
-		switch(i) {
-			case 1:
-				cout << "\n";
-				npcDataInterfaceTest1();
-				break;
-			case 2:
-				cout << "\n";
-				objDataInterfaceTest1();
-				break;
-			case 3:
-				cout << "\n";
-				roomDataInterfaceTest1();
-				break;
-			case 4:
-				cout << "\n";
-				resetDataInterfaceTest1();
-				break;
-			case 5:
-				cout << "\n";
-				npcDataInterfaceTest2();
-				break;
-			case 6:
-				dataEmitterTest1();
-				break;
-			default:
-				cout << "\nWrong numba, Psych!\n";
-				break;
-			case -1:
-				loop = false;
-				break;
-		}
-	}
-
-}
 int main() {
 
 	// testSwitch();

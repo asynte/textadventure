@@ -5,6 +5,8 @@
 #include <string>
 #include <vector>
 #include "yaml-cpp/yaml.h"
+#include "gameEngineHeaders/NPC.h"
+#include "gameEngineHeaders/Object.h"
 
 using namespace std;
 
@@ -47,13 +49,15 @@ public:
 class npcDataInterface : public dataInterfaceBase{
 private: 
 
-	struct NPC {
+
+	/*struct NPC {
+>>>>>>> tempGameEngine
 		vector<string> description;
 		int id;
 		vector<string> keyWord;
 		vector<string> longDesc;
 		string shortDesc;
-	};
+	};*/
 
 	// store each NPCS node on npcVector
 	vector<NPC> npcVector;
@@ -83,7 +87,8 @@ public:
     //    0 <= index < npcNode.size()
     // Post-condition:
     //    Returns the description of NPC struct at specified index
-	vector<string> getDescription (const int& index);
+
+	string getDescription (const int& index);
 
 	// Pre-condition:
     //    0 <= index < npcNode.size()
@@ -101,7 +106,8 @@ public:
     //    0 <= index < npcNode.size()
     // Post-condition:
     //    Returns the long description of NPC struct at specified index
-	vector<string> getLongDescription (const int& index);
+
+	string getLongDescription (const int& index);
 
 	// Pre-condition:
     //    0 <= index < npcNode.size()
@@ -149,7 +155,7 @@ public:
 class objDataInterface : public dataInterfaceBase{
 private: 
 
-	struct EXTRA {
+	/*struct EXTRA {
 		vector<string> description;
 		vector<string> keyWord;
 	};
@@ -160,10 +166,10 @@ private:
 		vector<string> longDesc;
 		string shortDesc;
 
-	};
+	};*/
 
 	// store each OBJECTS node on objVector
-	vector<OBJECT> objVector;
+	vector<Object> objVector;
 
 	// node where root of yaml file will be set
 	YAML::Node baseNode;
@@ -190,9 +196,10 @@ public:
     //    0 <= index < objNode.size()
     // Post-condition:
     //    Returns the extra of OBJECTS struct at specified index
-	vector<string> getExtraDescription (const int& objIndex, const int& extraIndex);
 
-	vector<string> getExtraKeyWord(const int& objIndex, const int& extraIndex);
+	//vector<string> getExtraDescription (const int& objIndex, const int& extraIndex);
+
+	vector<string> getExtraKeyWord(const int& objIndex/*, const int& extraIndex*/);
 
 	// Pre-condition:
     //    0 <= index < objNode.size()
@@ -210,7 +217,8 @@ public:
     //    0 <= index < objNode.size()
     // Post-condition:
     //    Returns the long description of OBJECTS struct at specified index
-	vector<string> getLongDescription (const int& index);
+
+	string getLongDescription (const int& index);
 
 	// Pre-condition:
     //    0 <= index < objNode.size()
@@ -222,9 +230,9 @@ public:
 	// 		  PRINT FUNCTIONS        //
 	///////////////////////////////////
 
-	void printExtraDescription(const int& objIndex, const int& extraIndex);
+	//void printExtraDescription(const int& objIndex, const int& extraIndex);
 
-	void printExtraKeyWord(const int& objIndex, const int& extraIndex);
+	void printExtraKeyWord(const int& objIndex/*, const int& extraIndex*/);
 
 	void printID (const int& index);
 
@@ -324,13 +332,7 @@ public:
 	
 	vector<string> getExtendedKeyWord (const int& roomIndex, const int& extendedIndex);
 
-<<<<<<< HEAD
-=======
-	int getRoomSize ();
 
-	int getDoorSize (const int& index);
-
->>>>>>> 4896a5095d0ac5079b3b9d17677ef263f3b00b85
 	///////////////////////////////////
 	// 		  PRINT FUNCTIONS        //
 	///////////////////////////////////
@@ -475,71 +477,113 @@ private:
 	vector<string> resets;
 	vector<string> rooms;
 
+	int npcID = 3000;
+	int objID = 3000;
+	int resetID = 3000;
+	int roomID = 3000;
+
 	string yamlFileName;
 
 	ofstream outFile;
 
 	YAML::Emitter emitter;
+
+
 public:
 
 	dataEmitter(const string& file)
-	: yamlFileName(file  + ".yml") {
+	: yamlFileName(file  + ".yml"), outFile(yamlFileName) {
+
+		emitter << YAML::BeginMap;
 
 		std::ifstream inFile(yamlFileName);
 
-		if (inFile.peek() == std::ifstream::traits_type::eof()) {
-			// area.push_back("AREA:\n");
-			// npcs.push_back("NPCS:\n");
-			// objects.push_back("OBJECTS:\n");
-			// resets.push_back("RESETS:\n");
-			// rooms.push_back("ROOMS:\n");
+		string line;
+		int count = 0;
 
+		while (getline (inFile, line) != "NPCS:") {
+			area.push_back(line + "\n");
 		}
 
-		else {
-			string line;
-			int count = 0;
+		while (getline (inFile, line) != "OBJECTS:") {
+			npcs.push_back(line + "\n");
+		}
 
-			while (getline (inFile, line)) {
+		while (getline (inFile, line) != "RESETS:") {
+			objects.push_back(line + "\n");
+		}	
 
-				if (line == "NPCS:") {
-					count = 1;
-				}	
+		while (getline (inFile, line) != "ROOMS:") {
+			resets.push_back(line + "\n");
+		}
 
-				if (line == "OBJECTS:") {
-					count = 2;
-				}
-
-				if (count == 0) {
-					area.push_back(line + "\n");
-				}
+		while (getline (inFile, line)) {
+			room.push_back(line + "\n");
+		}			
 		
-
-				if (count == 1) {
-					npcs.push_back(line + "\n");
-				}
-
-				if (count == 2) {
-					objects.push_back(line + "\n");
-				}
-			}
-		}
-
-		outFile.open(yamlFileName);
-
 	}
 
 	~dataEmitter() {
 		outFile.close();
 	}
 
+	virtual void const getLineWhile ();
+
 	virtual void searchLine (const string& s);
 
 	virtual void printToFile ();
 
-	virtual void emitArea ();
+	virtual void emitMapValue () ;
 
+	virtual void emitOneSequenceValue () ;
+
+	virtual void emitSequenceValues () ;
+
+	virtual void setID ( int& ID ) ;
+
+	virtual void loopEmit ( int & loopCount, void (*setFunction)() ) ;
+
+
+	virtual void setAreaName ();
+	virtual void startArea ();
+	virtual void emitArea ();
+	virtual void endArea ();
+
+	virtual void startSequence ( const string& s ) ;
+	virtual void endSequence ();
+
+	virtual void setNPCDescription () ;
+	virtual void setNPCKeyWords () ;
+	virtual void setNPCLongDescription() ;
+	virtual void setNPCShortDescription() ;
 	virtual void emitNPC ();
+
+	virtual void setObjectExtra () ;
+	virtual void setObjectExtraDescription () ;
+	virtual void objectExtraLoop();
+	virtual void setObjectKeyWords () ;
+	virtual void setObjectLongDescription () ;
+	virtual void setObjectShortDescription () ;
+	virtual void emitObject ();
+
+	virtual void setResetAction ();
+	virtual void setResetComment ();
+	virtual void setResetLimit ();
+	virtual void setResetRoom ();
+	virtual void emitReset ();
+
+	virtual void setDoorDescription ();
+	virtual void setDoorDirection ();
+	virtual void setDoorKeyWords ();
+	virtual void setDoorTo ();
+	virtual void roomDoorLoop ();
+	virtual void setRoomDoor ();
+	virtual void setExtendedDescription ();
+	virtual void setExtendedKeyWords ();
+	virtual void setRoomExtended ();
+	virtual void roomExtendedLoop() ;
+	virtual void setRoomName ();
+	virtual void emitRoom ();
 
 
 };

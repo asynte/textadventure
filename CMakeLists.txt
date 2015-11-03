@@ -11,7 +11,6 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}/lib")
 
 include_directories(${CMAKE_SOURCE_DIR}/include)
 
-
 add_subdirectory(lib)
 add_subdirectory(tools)
 
