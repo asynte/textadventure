@@ -498,28 +498,27 @@ public:
 
 		std::ifstream inFile(yamlFileName);
 
-		string line;
-		int count = 0;
+		// string line;
 
-		while (getline (inFile, line) != "NPCS:") {
-			area.push_back(line + "\n");
-		}
+		// while (getline (inFile, line) != "NPCS:") {
+		// 	area.push_back(line + "\n");
+		// }
 
-		while (getline (inFile, line) != "OBJECTS:") {
-			npcs.push_back(line + "\n");
-		}
+		// while (getline (inFile, line) != "OBJECTS:") {
+		// 	npcs.push_back(line + "\n");
+		// }
 
-		while (getline (inFile, line) != "RESETS:") {
-			objects.push_back(line + "\n");
-		}	
+		// while (getline (inFile, line) != "RESETS:") {
+		// 	objects.push_back(line + "\n");
+		// }	
 
-		while (getline (inFile, line) != "ROOMS:") {
-			resets.push_back(line + "\n");
-		}
+		// while (getline (inFile, line) != "ROOMS:") {
+		// 	resets.push_back(line + "\n");
+		// }
 
-		while (getline (inFile, line)) {
-			room.push_back(line + "\n");
-		}			
+		// while (getline (inFile, line)) {
+		// 	rooms.push_back(line + "\n");
+		// }			
 		
 	}
 
