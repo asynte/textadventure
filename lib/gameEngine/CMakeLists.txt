@@ -17,3 +17,6 @@ target_link_libraries(Room Door)
 target_link_libraries(Room World)
 target_link_libraries(Room Extended)
 target_link_libraries(Door Extended)
+
+target_link_libraries(Character Room)
+target_link_libraries(Room Character)

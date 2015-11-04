@@ -36,14 +36,12 @@ void printObjectkeywordInRoom(Room room){
 	for(string s:keyword){
 		cout<<s<<" ";
 	}
-	cout<<endl;
 }
 void printNPCkeywordInRoom(Room room){
 	vector<string> keyword=room.getNPCAllKeyWords();
 	for(string s:keyword){
 		cout<<s<<" ";
 	}
-	cout<<endl;
 }
 void printAllkeywordInRoom(Room room){
 	vector<string> keyword=room.getAllKeyWords();

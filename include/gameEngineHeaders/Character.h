@@ -13,6 +13,7 @@
 #include "gameEngineHeaders/NPC.h"
 #include "gameEngineHeaders/Object.h"
 #include "gameEngineHeaders/Room.h"
+class Room;
 
 using namespace std;
 
@@ -25,7 +26,9 @@ public:
 
     map<int, const Object> charEquipment; // maps equipmentArea to Object
     
-    Character(string);
+    Character();
+    //Character(Room);
+    Character(string, Room);
     void printStatus();
     void setHealth(int);
     int getHealth() const;
@@ -48,6 +51,7 @@ public:
     void setPVP(bool);
     bool getPVP() const;
     void togglePVP();
+    vector<string> getKeyWords() const;
     vector<Object> getInventory() const;
     void addToInventory(Object);
     void showInventory() const;
@@ -74,8 +78,10 @@ protected:
     int charIntelligence;
     int charDexterity;
     int charCharisma;
+    vector<string> charKeyWords;
     vector<Object> charInventory;
-    Room currentRoom;
+    Room &currentRoom;
+    //Room test();
     bool wantsToPVP;
 };
 

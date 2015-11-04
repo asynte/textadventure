@@ -8,6 +8,8 @@ Room::Room(){
 	//this->extended_descriptions = extended_descriptions;
 	ID=0;
 	name="";
+	Room *test = this;
+	characterList.push_back(Character("default", *test));
 }
 Room::Room(string description,vector<Door> doorsList,vector<Extended> extendedList,string name,int ID) {
 	this->description = description;
@@ -18,7 +20,7 @@ Room::Room(string description,vector<Door> doorsList,vector<Extended> extendedLi
 }
 vector<string> Room::getObjectAllKeyWords(){
 	vector<string> objectAllKeywords;
-	objectAllKeywords.push_back("Objects keyword: ");
+	objectAllKeywords.push_back("\nObjects keyword: ");
 	for(Object o:objectList){
 		vector<string> objectKeywords=o.getKeyWords();
 		for(string s:objectKeywords){
@@ -29,7 +31,7 @@ vector<string> Room::getObjectAllKeyWords(){
 }
 vector<string> Room::getNPCAllKeyWords(){
 	vector<string> npcAllKeywords;
-	npcAllKeywords.push_back("NPC keyword: ");
+	npcAllKeywords.push_back("\nNPC keyword: ");
 	for(NPC n:npcList){
 		vector<string> npcKeywords=n.getKeyWords();
 		for(string s:npcKeywords){
@@ -40,7 +42,7 @@ vector<string> Room::getNPCAllKeyWords(){
 }
 vector<string> Room::getDoorAllKeywords(){
 	vector<string> doorAllKeywords;
-	doorAllKeywords.push_back("Door keyword: ");
+	doorAllKeywords.push_back("\nDoor keyword: ");
 	for(Door d:doorsList){
 		vector<string> doorKeywords=d.getKeywords();
 		for(string s:doorKeywords){
@@ -49,10 +51,23 @@ vector<string> Room::getDoorAllKeywords(){
 	}
 	return doorAllKeywords;
 }
+//Character not in room, did not test
+vector<string> Room::getCharacterAllKeyWords(){
+	vector<string> characterAllKeywords;
+	characterAllKeywords.push_back("\nCharacter keyword: ");
+	for(Character c:characterList){
+		vector<string> chararcterKeywords=c.getKeyWords();
+		for(string s:chararcterKeywords){
+			characterAllKeywords.push_back(s);
+		}
+	}
+	return characterAllKeywords;
+}
 vector<string>Room::getAllKeyWords(){
 	vector<string> objectAllKeywords=getObjectAllKeyWords();
 	vector<string> npcAllKeywords=getNPCAllKeyWords();
 	vector<string> doorAllKeywords=getDoorAllKeywords();
+	vector<string> characterAllKeywords=getCharacterAllKeyWords();
 	vector<string> allKeywords;
 	for(string s:objectAllKeywords){
 		allKeywords.push_back(s);
@@ -61,6 +76,9 @@ vector<string>Room::getAllKeyWords(){
 		allKeywords.push_back(s);
 	}
 	for(string s:doorAllKeywords){
+		allKeywords.push_back(s);
+	}
+	for(string s:characterAllKeywords){
 		allKeywords.push_back(s);
 	}
 	return allKeywords;

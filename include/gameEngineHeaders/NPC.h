@@ -22,8 +22,8 @@ public:
     int getAtk() const;
 
 protected:
-    const int NPC_DEFAULTHEALTH = 20;
-    const int NPC_DEFAULTATK = 3;
+    static const int NPC_DEFAULTHEALTH = 20;
+    static const int NPC_DEFAULTATK = 3;
     string npcLongDesc;
     vector<string> npcKeyWords;
     string npcDesc;
