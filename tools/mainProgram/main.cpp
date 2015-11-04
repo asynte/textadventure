@@ -1,13 +1,12 @@
-#include "dataInterfaceHeaders/npcDataInterface.h"
-#include "dataInterfaceHeaders/objDataInterface.h"
+#include "dataInterfaceHeaders/dataInterfaceBase.h"
 #include "gameEngineHeaders/Character.h"
 #include "gameEngineHeaders/Door.h"
-#include "gameEngineHeaders/Monster.h"
 #include "gameEngineHeaders/NPC.h"
 #include "gameEngineHeaders/Object.h"
 #include "gameEngineHeaders/Room.h"
 #include "gameEngineHeaders/Widget.h"
 #include "gameEngineHeaders/World.h"
+#include "gameEngineHeaders/GameEngine.h"
 #include "userAccountHeaders/Login.h"
 #include "networkingHeaders/TCPClient.h"
 #include "networkingHeaders/TCPDataflow.h"
@@ -25,13 +24,18 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+
 using namespace std;
 
-int main() {
-	Login test;
-	test.init();
-	UserInterface_create();
-	pthread_join(UserInterface_getThreadId(), NULL);
 
+
+int main() {
+
+	UserInterface_create();
+
+	Login test(true);
+
+	pthread_join(UserInterface_getThreadId(), NULL);
+	
 	return 0;
 }	

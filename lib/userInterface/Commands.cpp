@@ -1,7 +1,6 @@
-#include "userInterfaceHeaders/Commands.h"
-
 #ifndef _COMMANDS_CPP_
 #define _COMMANDS_CPP_
+#include "userInterfaceHeaders/Commands.h"
 
 static const string SPACER = "  ";
 
@@ -16,8 +15,9 @@ static vector<string> options;
 static map<string, string> menuCommands;
 static map<string, string> gameCommands;
 
+static bool isRuntimeMatch = false;
 
-vector<string> Commands_getMatches(const string &input, int n) {
+static vector<string> getMatches(const vector<string> &options, const string &input, int n) {
 	vector<string> matches;
 
 	for(auto itr = options.begin(); itr != options.end(); ++itr) {
@@ -28,6 +28,19 @@ vector<string> Commands_getMatches(const string &input, int n) {
 		}
 	}
 
+	return matches;
+}
+
+
+vector<string> Commands_getMatches(const string &input, int n) {
+	vector<string> matches = getMatches(options, input, n);
+
+	if (matches.size() == 0) {
+		isRuntimeMatch = true;
+		return getMatches(UserInterface_getPossibleDirections(), input, n);
+	}
+
+	isRuntimeMatch = false;
 	return matches;
 }
 
@@ -55,12 +68,25 @@ bool isMenuCommand(const string &str) {
 
 static void move(const string &str) {
 	UserInterface_println("move");
+
+	vector<string> directions = UserInterface_getPossibleDirections();
+
+	if ( find(directions.begin(), directions.end(), str) != directions.end() ) {
+		UserInterface_println("invalid direction: " + str);
+	}
 }
 
 static void move(void) {
+	vector<string> directions = UserInterface_getPossibleDirections();
+
 	UserInterface_println("requires a direction to move to!");
 	UserInterface_println(SPACER + "\"move <direction>\"");
 	UserInterface_println(SPACER + "use \"help move\" to see more details");
+	UserInterface_println(SPACER + "possible directions are:");
+
+	for(int i = 0; directions.size() > i; ++i) {
+		UserInterface_println(SPACER + SPACER + directions.at(i));
+	}
 }
 
 static void quit(void){
@@ -69,11 +95,9 @@ static void quit(void){
 	UserInterface_println("quit game?");
 	UserInterface_println(SPACER +"y/n");
 
-	//UserInterface_ignoreNext();
-	//cin >> result;
 	result = UserInterface_getUserInput();
 
-	if ((result == "y") == true) {
+	if ((result.substr(0,1) == "y") == true) {
 		UserInterface_println("quitting");
 		UserInterface_quit();
 	}
@@ -84,7 +108,7 @@ static void help(void){
 }
 
 static void dummyCommand(void){ 
-	//UserInterface_println("null command");
+	UserInterface_println("null command");
 }
 
 static void help(const string &str){
@@ -102,7 +126,7 @@ static void help(const string &str){
 	}
 }
 
-static void list(void){ 
+static void listCommand(void){ 
 	UserInterface_println("Menu Commands:");
 	for(auto itr = menuCommands.begin(); itr != menuCommands.end(); ++itr) {
 		UserInterface_println(SPACER + itr->first);// endl;
@@ -122,11 +146,11 @@ static void list(void){
 void Commands_initiate() {
 	//no arguement functions
     functionMapVoid["quit"] = quit;
-    functionMapVoid["list"] = list;
+    functionMapVoid["list"] = listCommand;
     functionMapVoid["help"] = help;
     functionMapVoid["move"] = move;
     functionMapVoid["login"] = dummyCommand;
-    functionMapVoid["register"] = dummyCommand;
+    functionMapVoid["testworld"] = dummyCommand;
 
 	//single arguement functions
     functionMapString["help"] = help;
@@ -142,14 +166,7 @@ void Commands_initiate() {
 
 	//game command helper descriptions
 	gameCommands["move"] = "move to a different region in the game\n"
-		 + SPACER +"move <direction>\n"
-		 + SPACER +"possible directions are:\n"
-		 + SPACER + SPACER + "\"north\"\n"
-		 + SPACER + SPACER + "\"south\"\n"
-		 + SPACER + SPACER + "\"east\"\n"
-		 + SPACER + SPACER + "\"west\"\n"
-		 + SPACER + SPACER + "\"up\"\n"
-		 + SPACER + SPACER + "\"down\"";
+		 + SPACER +"move <direction>\n";
 
 	for(auto itr = functionMapVoid.begin(); itr != functionMapVoid.end(); ++itr) {
 		options.push_back(itr->first);
@@ -167,6 +184,10 @@ void Commands_initiate() {
 }
 
 void Commands_callFunction(const string &funcName) {
+	if (isRuntimeMatch) {
+		return;
+	}
+
 	UserInterface_notifyListeners(funcName);
 
 	functionMapVoid[funcName]();
@@ -181,6 +202,10 @@ void Commands_callFunction(const string &funcName, const string &funcArgs) {
 
 void Commands_callFunction(const string &funcName, const vector<string> &funcArgs) {
 	int arguCount = funcArgs.size();
+
+	if (isRuntimeMatch) {
+		return;
+	}
 
 	if (isVoidFunction(funcName) && !isStringFunction(funcName)) {
 		Commands_callFunction(funcName);

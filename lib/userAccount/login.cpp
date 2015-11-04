@@ -32,11 +32,18 @@ class InterfaceObserver : public Observer {
         }
 };
 
+Login::Login() { }
 
-void Login::init() {
+Login::Login(bool temp) { 
+
 	InterfaceObserver *observer = new InterfaceObserver();
 	UserInterface_addListener(observer);
 }
+
+// void Login::init() {
+// 	InterfaceObserver *observer = new InterfaceObserver();
+// 	UserInterface_addListener(observer);
+// }
 
 void Login::UserAuth(int choice){
 	Login user1;

@@ -3,6 +3,7 @@
 
 using namespace std;
 
+
 #include <string>
 #include <iostream>
 #include <algorithm>
@@ -15,6 +16,12 @@ using namespace std;
 #include "assert.h"
 #include "Commands.h"
 #include "ObserverList.h"
+#include <typeinfo>
+#include "assert.h"
+#include "Commands.h"
+#include "ObserverList.h"
+
+
 
 void UserInterface_create(void);
 void UserInterface_quit(void);
@@ -29,11 +36,26 @@ void UserInterface_addListener(Observer *obs);
 void UserInterface_notifyListeners(const string &);
 void UserInterface_notifyListeners(const vector<string> &);
 
-void UserInterface_printError(const string &value);
-void UserInterface_print(const string &value);
-void UserInterface_println(const string &value);
-void UserInterface_printTop(const string &value);
+// added in GameEngineFunctions.h
+// void UserInterface_addGameEngine(GameEngine g) ;
+void UserInterface_addListener(Observer *obs);
 
-string UserInterface_getUserInput(void);
+void UserInterface_notifyListeners(const string &);
+void UserInterface_notifyListeners(const vector<string> &);
+
+vector<string> UserInterface_getPossibleDirections(void);
+
+
+//I/O functions
+	//out to user
+	void UserInterface_print(const string &value);
+	void UserInterface_println(const string &value);
+
+	//get user input
+	string UserInterface_getUserInput(void);
+	
+	//String Conversion
+	string C2S(const char c);
+	string I2S(const int i);
 
 #endif

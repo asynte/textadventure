@@ -1,3 +1,2 @@
 
-UserName:admin adminpass
-UserName:admin2 adminpass
+admin adminpass

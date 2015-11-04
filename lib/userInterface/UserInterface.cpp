@@ -1,7 +1,14 @@
-#include "userInterfaceHeaders/UserInterface.h"
+
 
 #ifndef _USER_INTERFACE_CPP_
 #define _USER_INTERFACE_CPP_
+
+
+
+#include "userInterfaceHeaders/UserInterface.h"
+#include "gameEngineHeaders/GameEngine.h"
+
+
 
 using namespace std;
 
@@ -21,7 +28,7 @@ using namespace std;
 static InterfaceObserver observer;*/
 
 
-
+static GameEngine *gameEngine = NULL;
 static ObserverList observers;
 static bool IS_RUNNING;
 static bool IGNORE;
@@ -33,6 +40,32 @@ static int interface_row;
 static int interface_col;
 
 
+vector<string> UserInterface_getPossibleDirections(void) {
+	UserInterface_println("getting directions...");
+	
+	if (gameEngine == NULL) {
+		UserInterface_println("null game engine");
+		UserInterface_quit();
+		exit(0);
+	} else {
+		UserInterface_println("game engine found");
+
+
+		vector<string> derp;
+		derp.push_back("up");
+		derp.push_back("down");
+		return derp;
+
+		vector<string> directions = gameEngine->GameEngine_getPossibleDirections();
+
+		/*UserInterface_println("direction count: " + I2S(directions.size()));
+		for(int i = 0; directions.size() > i; ++i ) {
+			UserInterface_println("direction: " + directions.at(i));
+		}*/
+
+		return directions;
+	}
+}
 
 void UserInterface_print(const string &value) {
 	mvprintw(interface_row, 0, "%s", value.c_str());
@@ -54,6 +87,16 @@ static void UserInterface_printRow(const string &value, const int row) {
 	refresh();
 }
 
+void UserInterface_addGameEngine(GameEngine *g) {
+	if (gameEngine != NULL) {
+		UserInterface_println("ERROR: already added a game engine!");
+		exit(0);
+	}
+
+	observers.addObserver(g);
+	gameEngine = g;
+}
+
 void UserInterface_addListener(Observer *obs) {
 	observers.addObserver(obs);
 }
@@ -66,15 +109,9 @@ void UserInterface_notifyListeners(const vector<string> &str) {
 }
 
 void UserInterface_invalidInput(const string &str) {
-	UserInterface_println("\"" + str + "\" does not match any commands...\nuse \"list\" to see available commands\nuse \"help <command>\" to see details about a command");
-
-
-
-	/*
-	cout << "\"" << str << "\" does not match any commands..." << endl
-		 << "use \"list\" to see available commands" << endl
-		 << "use \"help <command>\" to see details about a command" << endl;
-	*/
+	UserInterface_println("\"" + str + "\" does not match any commands...");
+	UserInterface_println("use \"list\" to see available commands");
+	UserInterface_println("use \"help <command>\" to see details about a command");
 }
 
 
@@ -92,11 +129,22 @@ static void displayMatches(const vector<string> &matches, const string &input) {
 
 
 
+void printVector(const vector<string> &v) {
+	UserInterface_println("printing...");
+
+	for( int i; v.size() > i; ++i ) {
+		UserInterface_println(v.at(i));
+	}
+}
+
+
 struct parsedResults {
 	bool isMatch;
 	int matchCount;
 	vector<string> matches;
 };
+
+
 
 static struct parsedResults parseSubToken(const string &token) {
 	struct parsedResults result;
@@ -107,6 +155,7 @@ static struct parsedResults parseSubToken(const string &token) {
 
 	return result;
 }
+
 
 
 static bool processSubToken(const vector<string> &inputs, vector<string> &tokens, int index) {
@@ -137,7 +186,6 @@ static bool processSubToken(const vector<string> &inputs, vector<string> &tokens
 		return true;
 	}
 
-	
 	//if (index == tokens.size() && index > 0) {
 		UserInterface_invalidInput(token);
 	//}
@@ -300,7 +348,7 @@ static void initNCurses(void) {
 }
 
 
-static string C2S(const char c) {
+string C2S(const char c) {
 	stringstream ss;
 	string s;
 	ss << c;
@@ -308,7 +356,7 @@ static string C2S(const char c) {
 	return s;
 }
 
-static string I2S(const int i) {
+string I2S(const int i) {
 	stringstream ss;
 	string s;
 	ss << i;
@@ -378,27 +426,6 @@ string UserInterface_getUserInput(void) {
 	refresh();
 
 	return input;
-
-/*
-	//UserInterface_println(getUserInput());
-	//sleep(10);
-
-	char str[BUFFER_LENGTH];
-	char ch = getch();
-
-	++interface_row;
-	getstr(str);
-
-	string input(str);
-	input = ch + input;
-
-
-
-	return input;
-	//return string(ch + str);
-*/
-
-
 }
 
 bool UserInterface_isActive(void) {
@@ -418,43 +445,6 @@ void UserInterface_quit(void) {
 pthread_t& UserInterface_getThreadId(void) {
 	return INTERFACE_THREAD;
 }
-
-
-
-/*
-struct MyCout {};
-extern MyCout myCout;
-
-template <typename T>
-MyCout& operator<< (MyCout &s, const T &x) {
-  //format x as you please
-	//printw("%s", value.c_str());
-
-
-	cout << "meh " << x;
-	return s;
-}
-
-MyCout& operator<< (MyCout &s, std::ostream& (*f)(std::ostream &)) {
-  f(std::cout);
-  return s;
-}
-
-MyCout& operator<< (MyCout &s, std::ostream& (*f)(std::ios &)) {
-  f(std::cout);
-  return s;
-}
-
-MyCout& operator<< (MyCout &s, std::ostream& (*f)(std::ios_base &)) {
-  f(std::cout);
-  return s;
-}
-
- 	//MyCout cout;
-	//cout << "test" << endl;
-
-*/
-
 
 void UserInterface_create(void) {
 	initNCurses();
