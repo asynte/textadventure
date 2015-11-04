@@ -1,2 +1,0 @@
-/usr/bin/ar cr ../libUserInterface.a  CMakeFiles/UserInterface.dir/UserInterface.cpp.o
-/usr/bin/ranlib ../libUserInterface.a

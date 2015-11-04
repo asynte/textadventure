@@ -1,2 +1,0 @@
-/usr/bin/ar cr ../libDoor.a  CMakeFiles/Door.dir/Door.cpp.o
-/usr/bin/ranlib ../libDoor.a

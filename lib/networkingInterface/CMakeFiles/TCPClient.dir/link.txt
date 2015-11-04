@@ -1,2 +1,0 @@
-/usr/bin/ar cr ../libTCPClient.a  CMakeFiles/TCPClient.dir/TCPClient.cpp.o
-/usr/bin/ranlib ../libTCPClient.a

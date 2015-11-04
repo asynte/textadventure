@@ -1,2 +1,0 @@
-/usr/bin/ar cr ../libobjDataInterface.a  CMakeFiles/objDataInterface.dir/objDataInterface.cpp.o
-/usr/bin/ranlib ../libobjDataInterface.a
