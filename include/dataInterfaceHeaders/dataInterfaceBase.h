@@ -5,9 +5,9 @@
 #include <string>
 #include <vector>
 #include "yaml-cpp/yaml.h"
-#include "../gameEngineHeaders/Room.h"
-#include "../gameEngineHeaders/Door.h"
-#include "../gameEngineHeaders/Extended.h"
+#include "gameEngineHeaders/Room.h"
+#include "gameEngineHeaders/Door.h"
+#include "gameEngineHeaders/Extended.h"
 #include "gameEngineHeaders/NPC.h"
 #include "gameEngineHeaders/Object.h"
 

@@ -13,21 +13,19 @@ public:
 	World(string name);
 	//void build(string name);
 	void initializeWorld(string name);
-	vector<Room> getRoomsVector();
 	string getName();
-	void setRoomIndex(int roomIndex);
-	void addRoom(Room room);
-	void getInformation();
-	int willGoToRoom(int direction, int currentLocation);
-	void goToRoom(int roomID);
-	void getNowRoomInformation(int currentLocation);
+	vector<Room> getRoomsVector();
+	Room getRoomFindById(int id);
+	bool findRoomById(int );
 private:
 	vector<Room> roomsVector;
 	vector <Object> objectVector;
 	vector <NPC> npcVector;
 	string name;
+	int roomNowIndex;
 	void addObjectToRoom(string fileName);
 	void addNPCToRoom(string fileName);
+	
 };
 
 

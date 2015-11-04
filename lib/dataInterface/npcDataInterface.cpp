@@ -35,6 +35,9 @@ using namespace std;
 	string npcDataInterface::getShortDescription (const int& index) {
 		return npcVector[index].getName();
 	}
+	vector<NPC> npcDataInterface::getNPCVector(){
+		return npcVector;
+	}
 
 
 	///////////////////////////////////

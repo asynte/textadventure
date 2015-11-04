@@ -22,7 +22,6 @@ Object::Object(int id, string extraDesc, vector<string> extraKeywords, vector<st
     widgetName = shortDesc;
     wearable = false;
 }
-
 string Object::getLongDesc() const {
     return objLongDesc;
 }

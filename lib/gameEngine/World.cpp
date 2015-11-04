@@ -20,6 +20,7 @@
 // };
 World::World(string name){
 	this->name=name;
+	roomNowIndex=0;
 	initializeWorld(name);
 }
 
@@ -33,6 +34,30 @@ void World::initializeWorld(string name){
 	addObjectToRoom(fileName);
 	addNPCToRoom(fileName);
 }
+
+string World::getName(){
+	return name;
+}
+vector<Room> World:: getRoomsVector(){
+	return roomsVector;
+}
+Room World::getRoomFindById(int id){
+		return roomsVector.at(roomNowIndex);
+}
+
+
+
+bool World::findRoomById(int roomId){
+	for(int i=0;i<roomsVector.size();i++){
+		if(roomsVector.at(i).getID()==roomId){
+			roomNowIndex=i;
+			return true;
+		}
+	}
+	return false;
+}
+
+
 void World::addObjectToRoom(string fileName){
 	objDataInterface object(fileName);
 	object.loadAll();
@@ -48,74 +73,17 @@ void World::addObjectToRoom(string fileName){
 	}
 }
 void World::addNPCToRoom(string fileName){
-	// npcDataInterface npc(fileName);
-	// npc.loadAll();
-	// npc.printAll();
-	// npcVector=npc.getNPCVector();
-	// for(int i=0;i<npcVector.size();i++){
-	// 	int id=npcVector.at(i).getId();
-	// 	for(int j=0;j<roomsVector.size();j++){
-	// 		int roomId=roomsVector.at(j).getID();
-	// 		if(roomId==id){
-	// 			roomsVector.at(j).addNPC(npcVector.at(i));
-	// 		}
-	// 	}
-	// }
-}
-string World::getName(){
-	return name;
-}
-void World::getInformation(){
-	for(Room r:roomsVector){
-		cout<<r.getName()<<endl;
-	}	
-}
-vector<Room> World:: getRoomsVector(){
-	return roomsVector;
-}
-
-// int World::willGoToRoom(int direction, int currentLocation){
-// 	Room nowRoom=roomsVector[currentLocation];
-// 	Door door;
-// 	if(nowRoom.isRoomAvailable(direction)){
-// 		door=nowRoom.getDoorWantToGo(direction);
-// 	}
-// 	door.getInformation();
-// 	return door.getToID();
-// }
-/*void World::goToRoom(int id){
-	for(int i=0;i<roomsVector.size();i++){
-		if(roomsVector[i].getID()==id){
-			roomIndex=i;
+	npcDataInterface npc(fileName);
+	npc.loadAll();
+	npcVector=npc.getNPCVector();
+	for(int i=0;i<npcVector.size();i++){
+		int id=npcVector.at(i).getId();
+		for(int j=0;j<roomsVector.size();j++){
+			int roomId=roomsVector.at(j).getID();
+			if(roomId==id){
+				roomsVector.at(j).addNPC(npcVector.at(i));
+			}
 		}
 	}
-	getNowRoomInformation();
-}*/
-// void World::getNowRoomInformation(int currentLocation){
-// 	roomsVector[currentLocation].getInformation();
-// }
-void World::addRoom(Room room){
-	//can not do
 }
-/*
-//This function is equivalent to old function
-//vector<string> getAllWorld(vector<string> vstring)
-//Just renamed
-vector<string> CreateWorld(vector<string> vstring){
-	vector<string> filenames;
-
-	InterfaceObserver *observer = new InterfaceObserver();
-
-	for(int i=0;i<vstring.size();i++){
-		string temp=getYAMLFileName(vstring[i]);
-		if(temp.compare("")!=0){
-			filenames.push_back(temp);
-		}
-	}
-
-	UserInterface_addListener(observer);
-	
-	return filenames;
-}
-*/
 #endif

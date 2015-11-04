@@ -16,6 +16,89 @@ Room::Room(string description,vector<Door> doorsList,vector<Extended> extendedLi
 	this->name=name;
 	this->ID=ID;
 }
+vector<string> Room::getObjectAllKeyWords(){
+	vector<string> objectAllKeywords;
+	objectAllKeywords.push_back("Objects keyword: ");
+	for(Object o:objectList){
+		vector<string> objectKeywords=o.getKeyWords();
+		for(string s:objectKeywords){
+			objectAllKeywords.push_back(s);
+		}
+	}
+	return objectAllKeywords;
+}
+vector<string> Room::getNPCAllKeyWords(){
+	vector<string> npcAllKeywords;
+	npcAllKeywords.push_back("NPC keyword: ");
+	for(NPC n:npcList){
+		vector<string> npcKeywords=n.getKeyWords();
+		for(string s:npcKeywords){
+			npcAllKeywords.push_back(s);
+		}
+	}
+	return npcAllKeywords;
+}
+vector<string> Room::getDoorAllKeywords(){
+	vector<string> doorAllKeywords;
+	doorAllKeywords.push_back("Door keyword: ");
+	for(Door d:doorsList){
+		vector<string> doorKeywords=d.getKeywords();
+		for(string s:doorKeywords){
+			doorAllKeywords.push_back(s);
+		}
+	}
+	return doorAllKeywords;
+}
+vector<string>Room::getAllKeyWords(){
+	vector<string> objectAllKeywords=getObjectAllKeyWords();
+	vector<string> npcAllKeywords=getNPCAllKeyWords();
+	vector<string> doorAllKeywords=getDoorAllKeywords();
+	vector<string> allKeywords;
+	for(string s:objectAllKeywords){
+		allKeywords.push_back(s);
+	}
+	for(string s:npcAllKeywords){
+		allKeywords.push_back(s);
+	}
+	for(string s:doorAllKeywords){
+		allKeywords.push_back(s);
+	}
+	return allKeywords;
+}
+vector <Object> Room::getObjectAssociatedKeyword(string keyword){
+	vector <Object> objectKey;
+	for(int i=0;i<objectList.size();i++){
+		vector <string> objKeyword=objectList.at(i).getKeyWords();
+
+		for(string s:objKeyword){
+			if(s==keyword){
+				objectKey.push_back(objectList.at(i));
+			}
+		}
+	}
+	return objectKey;
+}
+vector <NPC> Room::getNPCAssociatedKeyword(string keyword){
+	vector <NPC> NPCkey;
+	for(int i=0;i<objectList.size();i++){
+		vector <string> npcKeyword=npcList.at(i).getKeyWords();
+
+		for(string s:npcKeyword){
+			if(s==keyword){
+				NPCkey.push_back(npcList.at(i));
+			}
+		}
+	}
+	return NPCkey;
+}
+
+vector <int>Room::lookAtExit(){
+	vector <int> exits;
+	for(Door d:doorsList){
+		exits.push_back(d.getToID());
+	}
+	return exits;
+}
 string Room::getDescription(){
 	return description;
 }

@@ -7,7 +7,6 @@ using namespace std;
 #include "gameEngineHeaders/Widget.h"
 #include "gameEngineHeaders/Object.h"
 #include "gameEngineHeaders/NPC.h"
-
 #include <vector>
 
 #include "Extended.h"
@@ -27,6 +26,13 @@ public:
 	void addNPC(const NPC& npc);
 	vector <Object> getObjectList();
 	vector <NPC> getNPCList();
+	vector<string> getObjectAllKeyWords();
+	vector<string> getNPCAllKeyWords();
+	vector<string> getDoorAllKeywords();
+	vector<string>getAllKeyWords();
+	vector <Object>getObjectAssociatedKeyword(string keyword);
+	vector <NPC> getNPCAssociatedKeyword(string keyword);
+	vector <int>lookAtExit();
 private:
 	string description;
 	vector<Door> doorsList;
