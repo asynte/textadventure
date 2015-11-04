@@ -97,11 +97,6 @@ void dataEmitter::printToFile () {
 
 }
 
-void dataEmitter::setAreaName () {
-	emitter << YAML::Key << "name";
-	cout << "What is the name of the Area? ";
-	emitMapValue();
-}
 
 void dataEmitter::startArea () {
 	// AREA BEGIN
@@ -109,10 +104,10 @@ void dataEmitter::startArea () {
 	emitter << YAML::BeginMap;
 }
 
-void dataEmitter::emitArea () {
-
-	setAreaName();
-
+void dataEmitter::setAreaName () {
+	emitter << YAML::Key << "name";
+	cout << "What is the name of the Area? ";
+	emitMapValue();
 }
 
 void dataEmitter::endArea () {
@@ -291,9 +286,6 @@ void dataEmitter::setResetRoom () {
 void dataEmitter::emitReset () {
 	
 	// RESETS BEGIN
-	emitter << YAML::Key << "RESETS";
-
-	emitter << YAML::BeginSeq;
 	emitter << YAML::BeginMap;
 
 	// 	RESETS action
@@ -317,13 +309,17 @@ void dataEmitter::emitReset () {
 	setResetRoom();
 
 	emitter << YAML::EndMap;
-	emitter << YAML::EndSeq;
 
 	// RESETS END
 
 }
 
 
+void dataEmitter::setRoomDescription () {
+	cout << "What is the description of the room (-1 to finish)? ";
+	emitSequenceValues();
+
+}
 
 void dataEmitter::setDoorDescription () {
 	cout << "What is the description of the door (-1 to finish)? ";
@@ -451,14 +447,11 @@ void dataEmitter::setRoomName () {
 
 void dataEmitter::emitRoom () {
 	// ROOMS BEGIN
-	emitter << YAML::Key << "ROOMS";
-
-	emitter << YAML::BeginSeq;
 	emitter << YAML::BeginMap;
 
 	// 	ROOM description
 	emitter << YAML::Key << "desc";
-	emitter << YAML::Value << YAML::BeginSeq << "It is quite heavy.  The blade is made of some metal that you can't even" << YAML::EndSeq;
+	setRoomDescription();
 
 	// 	ROOM door
 	emitter << YAML::Key << "doors";
@@ -477,4 +470,75 @@ void dataEmitter::emitRoom () {
 	setRoomName();
 
 	// ROOM END
+}
+
+
+
+void dataEmitter::startEmittingToYamlFile () {
+
+	bool done = false;
+
+	startArea();
+	setAreaName();
+	endArea();
+
+	cout << "\nEmitting NPC \nPress Enter to Start";
+	getLine<string>();
+	startSequence("NPCS");
+	while (!done)  {
+		emitNPC();
+
+		cout << "Add another NPC (y/n)? "; 
+		if (getLine<string>() == "n" )
+			done = true;
+		}
+	endSequence();
+
+
+
+
+	done = false;
+	cout << "\n\nEmitting Objects\n Press Enter to Start";
+	getLine<string>();
+	startSequence("OBJECTS");
+	while (!done)  {
+		emitObject();
+
+		cout << "Add another Object (y/n)? "; 
+		if (getLine<string>() == "n" ) {
+			done = true;
+		}		
+	}
+	endSequence();
+
+
+	done = false;
+	cout << "\n\nEmitting Resets\n Press Enter to Start";
+	getLine<string>();
+	startSequence("RESETS");
+	while (!done)  {
+		emitReset();
+
+		cout << "Add another Reset (y/n)? "; 
+		if (getLine<string>() == "n" ) {
+			done = true;
+		}	
+	}
+	endSequence();
+
+	done = false;
+	cout << "\n\nEmitting Rooms\n Press Enter to Start";
+	getLine<string>();
+	startSequence("ROOMS");
+	while (!done)  {
+		emitRoom();
+		cout << "Add another Room (y/n)? "; 
+		if (getLine<string>() == "n" ) {
+			done = true;
+		}	
+	}
+	endSequence();
+
+	printToFile();
+
 }

@@ -543,9 +543,8 @@ public:
 	virtual void loopEmit ( int & loopCount, void (*setFunction)() ) ;
 
 
-	virtual void setAreaName ();
 	virtual void startArea ();
-	virtual void emitArea ();
+	virtual void setAreaName ();
 	virtual void endArea ();
 
 	virtual void startSequence ( const string& s ) ;
@@ -571,6 +570,7 @@ public:
 	virtual void setResetRoom ();
 	virtual void emitReset ();
 
+	virtual void setRoomDescription ();
 	virtual void setDoorDescription ();
 	virtual void setDoorDirection ();
 	virtual void setDoorKeyWords ();
@@ -584,7 +584,7 @@ public:
 	virtual void setRoomName ();
 	virtual void emitRoom ();
 
-
+	virtual void startEmittingToYamlFile ();
 };
 
 
