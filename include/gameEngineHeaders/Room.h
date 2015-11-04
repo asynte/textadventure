@@ -1,31 +1,40 @@
-#include <iostream>
-#include "Door.h"
-#include "Widget.h"
 using namespace std;
 
 #ifndef ROOM_H
 #define ROOM_H
 
+
+#include <iostream>
+#include "gameEngineHeaders/Door.h"
+#include "gameEngineHeaders/Widget.h"
+#include "gameEngineHeaders/Object.h"
+#include "gameEngineHeaders/NPC.h"
+#include <vector>
+#include "gameEngineHeaders/Extended.h"
+
 class Room{
 public:
 	Room();
-	Room(string,vector<Door>,string,int);
+	Room(string,vector<Door>,vector<Extended>,string,int);
 	string getDescription();
-	vector<Door> getDoorsList();
+	vector<Door> getDoorsList() const;
+	vector<Extended> getExtended();
 	Door getDoorWantToGo(int direction);
-	string getName();
-	int getID();
+	string getName() const;
+	int getID() const;
 	void getInformation();
-        vector<Widget> getWidgetVector();
-        void setWidgetVector(int, Widget);
 	bool isRoomAvailable(int direction);
+
+	vector<string> getPossibleDirections();
+
+
 private:
 	string description;
 	vector<Door> doorsList;
-	//string extended_descriptions;
+	vector<Extended> extendedList;
 	int ID;
 	string name;
-        vector<Widget> widgetVector;
+    vector<Widget> widgetVector;
 };
 
 #endif

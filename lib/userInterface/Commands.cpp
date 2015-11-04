@@ -1,7 +1,6 @@
-#include "userInterfaceHeaders/Commands.h"
-
 #ifndef _COMMANDS_CPP_
 #define _COMMANDS_CPP_
+#include "userInterfaceHeaders/Commands.h"
 
 static const string SPACER = "  ";
 
@@ -16,8 +15,9 @@ static vector<string> options;
 static map<string, string> menuCommands;
 static map<string, string> gameCommands;
 
+static bool isRuntimeMatch = false;
 
-vector<string> Commands_getMatches(const string &input, int n) {
+static vector<string> getMatches(const vector<string> &options, const string &input, int n) {
 	vector<string> matches;
 
 	for(auto itr = options.begin(); itr != options.end(); ++itr) {
@@ -28,6 +28,19 @@ vector<string> Commands_getMatches(const string &input, int n) {
 		}
 	}
 
+	return matches;
+}
+
+
+vector<string> Commands_getMatches(const string &input, int n) {
+	vector<string> matches = getMatches(options, input, n);
+
+	if (matches.size() == 0) {
+		isRuntimeMatch = true;
+		return getMatches(UserInterface_getPossibleDirections(), input, n);
+	}
+
+	isRuntimeMatch = false;
 	return matches;
 }
 
@@ -54,47 +67,57 @@ bool isMenuCommand(const string &str) {
 }
 
 static void move(const string &str) {
-	cout << "move" << endl;
+	UserInterface_println("move");
+
+	vector<string> directions = UserInterface_getPossibleDirections();
+
+	if ( find(directions.begin(), directions.end(), str) != directions.end() ) {
+		UserInterface_println("invalid direction: " + str);
+	}
 }
 
 static void move(void) {
-	cout << "requires a direction to move to!" << endl
-		 << SPACER << "\"move <direction>\"" << endl
-		 << SPACER <<  "use \"help move\" "
-		 << "to see more details" << endl;
+	vector<string> directions = UserInterface_getPossibleDirections();
+
+	UserInterface_println("requires a direction to move to!");
+	UserInterface_println(SPACER + "\"move <direction>\"");
+	UserInterface_println(SPACER + "use \"help move\" to see more details");
+	UserInterface_println(SPACER + "possible directions are:");
+
+	for(int i = 0; directions.size() > i; ++i) {
+		UserInterface_println(SPACER + SPACER + directions.at(i));
+	}
 }
 
 static void quit(void){
 	string result;
 
-	cout << "quit game?" << endl;
-	cout << SPACER << "y/n" << endl;
+	UserInterface_println("quit game?");
+	UserInterface_println(SPACER +"y/n");
 
-	UserInterface_ignoreNext();
-	cin >> result;
+	result = UserInterface_getUserInput();
 
-	if ((result == "y") == true) {
-		cout << "quitting" << endl;
+	if ((result.substr(0,1) == "y") == true) {
+		UserInterface_println("quitting");
 		UserInterface_quit();
 	}
 }
 
 static void help(void){ 
-	cout << "use \"help <command>\" "
-		 << "to see details about a command" << endl;
+	UserInterface_println("use \"help <command>\" to see details about a command");
 }
 
 static void dummyCommand(void){ 
-	cout << "null command" << endl;
+	UserInterface_println("null command");
 }
 
 static void help(const string &str){
 	if (Commands_isValidToken(str)) {
-		cout << str << ":" << endl;
+		UserInterface_println(str + ":");
 		if (isMenuCommand(str)) {
-			cout << SPACER << menuCommands.at(str) << endl;
+			UserInterface_println(SPACER + menuCommands.at(str));
 		} else if (isGameCommand(str)) {
-			cout << SPACER << gameCommands.at(str) << endl;
+			UserInterface_println(SPACER + gameCommands.at(str));
 		} else {
 
 		}
@@ -103,15 +126,16 @@ static void help(const string &str){
 	}
 }
 
-static void list(void){ 
-	cout << "Menu Commands:" << endl;
+static void listCommand(void){ 
+	UserInterface_println("Menu Commands:");
 	for(auto itr = menuCommands.begin(); itr != menuCommands.end(); ++itr) {
-		cout << SPACER << itr->first << endl;
+		UserInterface_println(SPACER + itr->first);// endl;
 	}
 
-	cout << "\npossible Game Commands:" << endl;
+	UserInterface_println("");
+	UserInterface_println("Possible Game Commands:");
 	for(auto itr = gameCommands.begin(); itr != gameCommands.end(); ++itr) {
-		cout << SPACER << itr->first << endl;
+		UserInterface_println(SPACER + itr->first);
 	}
 }
 
@@ -122,9 +146,11 @@ static void list(void){
 void Commands_initiate() {
 	//no arguement functions
     functionMapVoid["quit"] = quit;
-    functionMapVoid["list"] = list;
+    functionMapVoid["list"] = listCommand;
     functionMapVoid["help"] = help;
     functionMapVoid["move"] = move;
+    functionMapVoid["login"] = move;
+    functionMapVoid["testworld"] = dummyCommand;
 
 	//single arguement functions
     functionMapString["help"] = help;
@@ -135,30 +161,33 @@ void Commands_initiate() {
 	menuCommands["list"] = "displays all menuCommands that are currently available";
 	menuCommands["help"] = "displays additional info about a command\n"
 		 + SPACER +"help <command>";
+	menuCommands["login"] = "displays additional info about a command\n"
+		 + SPACER +"help <command>";
 
 	//game command helper descriptions
 	gameCommands["move"] = "move to a different region in the game\n"
-		 + SPACER +"move <direction>\n"
-		 + SPACER +"possible directions are:\n"
-		 + SPACER + SPACER + "\"north\"\n"
-		 + SPACER + SPACER + "\"south\"\n"
-		 + SPACER + SPACER + "\"east\"\n"
-		 + SPACER + SPACER + "\"west\"\n"
-		 + SPACER + SPACER + "\"up\"\n"
-		 + SPACER + SPACER + "\"down\"";
+		 + SPACER +"move <direction>\n";
 
-	for(auto itr = menuCommands.begin(); itr != menuCommands.end(); ++itr) {
+	for(auto itr = functionMapVoid.begin(); itr != functionMapVoid.end(); ++itr) {
+		options.push_back(itr->first);
+	}
+
+	/*for(auto itr = menuCommands.begin(); itr != menuCommands.end(); ++itr) {
 		options.push_back(itr->first);
 	}
 	for(auto itr = gameCommands.begin(); itr != gameCommands.end(); ++itr) {
 		options.push_back(itr->first);
-	}
+	}*/
 
 
 	sort(options.begin(), options.end());
 }
 
 void Commands_callFunction(const string &funcName) {
+	if (isRuntimeMatch) {
+		return;
+	}
+
 	UserInterface_notifyListeners(funcName);
 
 	functionMapVoid[funcName]();
@@ -173,6 +202,10 @@ void Commands_callFunction(const string &funcName, const string &funcArgs) {
 
 void Commands_callFunction(const string &funcName, const vector<string> &funcArgs) {
 	int arguCount = funcArgs.size();
+
+	if (isRuntimeMatch) {
+		return;
+	}
 
 	if (isVoidFunction(funcName) && !isStringFunction(funcName)) {
 		Commands_callFunction(funcName);

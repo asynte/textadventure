@@ -1,3 +1,6 @@
+#ifndef _OBSERVER_LIST_CPP_
+#define _OBSERVER_LIST_CPP_
+
 #include "userInterfaceHeaders/ObserverList.h"
 
 
@@ -36,7 +39,7 @@ void ObserverList::removeObserver(const Observer *obs) {
 }
 
 
-
+#endif
 
 
 
