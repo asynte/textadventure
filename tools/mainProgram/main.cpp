@@ -26,6 +26,8 @@
 #include <stdlib.h>
 #include <unistd.h>
 
+#include "networkClientTest.cpp"
+
 
 using namespace std;
 
@@ -130,8 +132,7 @@ void testGameEngine(){
 	UserInterface_create();
 	roomDataInterface ROOM2("data/test.yml");
 
-	GameEngine *g = new GameEngine(); // !!!BRYAN FIX PLEASE!!!! DYNAMIC CAST ERROR!!!! std::bad_cast
-	
+	GameEngine *g = new GameEngine(); 
 
 	UserInterface_addGameEngine(g);
 
@@ -142,8 +143,18 @@ void testGameEngine(){
 
 }
 
+
+
 int main() {
+	UserInterface_create();
+
 	//testWorld();
-	testGameEngine();
+	//testGameEngine();
+
+
+	clientTest_start();
+
+	pthread_join(UserInterface_getThreadId(), NULL);
+
 	return 0;
 }	

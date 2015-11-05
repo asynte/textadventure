@@ -44,6 +44,7 @@ vector<string> UserInterface_getPossibleDirections(void);
 	//out to user
 	void UserInterface_print(const string &value);
 	void UserInterface_println(const string &value);
+	void UserInterface_printServerMessage(const string &value);
 
 	//get user input
 	string UserInterface_getUserInput(void);

@@ -35,10 +35,10 @@ static vector<string> getMatches(const vector<string> &options, const string &in
 vector<string> Commands_getMatches(const string &input, int n) {
 	vector<string> matches = getMatches(options, input, n);
 
-	if (matches.size() == 0) {
+	/*if (matches.size() == 0) {
 		isRuntimeMatch = true;
 		return getMatches(UserInterface_getPossibleDirections(), input, n);
-	}
+	}*/
 
 	isRuntimeMatch = false;
 	return matches;

@@ -37,16 +37,64 @@ static WINDOW *DISPLAY_WINDOW;
 static const int BUFFER_LENGTH = 128;
 
 static int interface_row;
-static int interface_col;
 
+static vector<string> currentDisplay;
+
+static void disableInput() {
+	IS_RUNNING = false;
+}
+
+static void exit() {
+	disableInput();
+	UserInterface_println("exiting in 3..");
+	sleep(1);
+	UserInterface_println("exiting in 2..");
+	sleep(1);
+	UserInterface_println("exiting in 1..");
+	sleep(1);
+	UserInterface_quit();
+	system("clear");
+	exit(0);
+}
+
+string C2S(const char c) {
+	stringstream ss;
+	string s;
+	ss << c;
+	ss >> s;
+	return s;
+}
+
+string I2S(const int i) {
+	stringstream ss;
+	string s;
+	ss << i;
+	ss >> s;
+	return s;
+}
+
+static bool isDeleteChar(int ch) {
+	static const int DELETE = 127;
+	return ch == DELETE;
+}
+
+static bool isNewlineChar(int ch) {
+	static const int NEWLINE = 10;
+	return ch == NEWLINE;
+}
+
+static bool isValidChar(int ch) {
+	static const int CHAR_START = 31;
+	static const int CHAR_END = 126;
+	return ch > CHAR_START && CHAR_END > ch;
+}
 
 vector<string> UserInterface_getPossibleDirections(void) {
 	UserInterface_println("getting directions...");
 	
 	if (gameEngine == NULL) {
-		UserInterface_println("null game engine");
-		UserInterface_quit();
-		exit(0);
+		UserInterface_println("ERROR: No Game Engine");
+		exit();
 	} else {
 		UserInterface_println("game engine found");
 
@@ -67,17 +115,7 @@ vector<string> UserInterface_getPossibleDirections(void) {
 	}
 }
 
-void UserInterface_print(const string &value) {
-	mvprintw(interface_row, 0, "%s", value.c_str());
-	++interface_row;
-	refresh();
-}
-
-void UserInterface_println(const string &value) {
-	UserInterface_print(value + "\n");
-}
-
-void UserInterface_printTop(const string &value) {
+static void UserInterface_printTop(const string &value) {
 	mvprintw(0, 0, "%s\n", value.c_str());
 	refresh();
 }
@@ -87,10 +125,40 @@ static void UserInterface_printRow(const string &value, const int row) {
 	refresh();
 }
 
+void UserInterface_printServerMessage(const string &value) {
+	mvprintw(1, 0, "%s", value.c_str());
+	interface_row = 2;
+
+	for(auto itr = value.begin(); itr != value.end(); ++itr) {
+		if (isNewlineChar(*itr)) {
+			++interface_row;
+		}
+	}
+
+	for(auto itr = currentDisplay.begin(); itr != currentDisplay.end(); ++itr) {
+		UserInterface_println("" + *itr);
+	}
+
+	refresh();
+}
+
+void UserInterface_print(const string &value) {
+	mvprintw(interface_row, 0, "%s", value.c_str());
+	currentDisplay.push_back(value);
+	++interface_row;
+	refresh();
+}
+
+void UserInterface_println(const string &value) {
+	UserInterface_print(value + "\n");
+}
+
+
+
 void UserInterface_addGameEngine(GameEngine *g) {
 	if (gameEngine != NULL) {
 		UserInterface_println("ERROR: already added a game engine!");
-		exit(0);
+		exit();
 	}
 
 	observers.addObserver(g);
@@ -286,8 +354,6 @@ static void interfaceLoop() {
 	UserInterface_println("  type \"list\" to display possible commands");
 
 	while(IS_RUNNING) {
-		//char str[BUFFER_LENGTH];
-		//getstr(str);
 		string input = UserInterface_getUserInput();
 
 		if (IGNORE) {
@@ -300,7 +366,7 @@ static void interfaceLoop() {
 			} else if (tokens.size() > 1) {
 				parseTokens(tokens);
 			} else {
-			//	assert(false && "invalid token count from user input");
+				//	assert(false && "invalid token count from user input");
 			}
 		}
 	}
@@ -316,7 +382,6 @@ static void startInterfaceThread(void) {
 	IGNORE = false;
 
 	UserInterface_printTop("making thread\n");
-
 
 	if ( pthread_create(&INTERFACE_THREAD, NULL, threadFunc, NULL) ) {
 		UserInterface_printTop("Error creating thread\n");
@@ -348,37 +413,7 @@ static void initNCurses(void) {
 }
 
 
-string C2S(const char c) {
-	stringstream ss;
-	string s;
-	ss << c;
-	ss >> s;
-	return s;
-}
 
-string I2S(const int i) {
-	stringstream ss;
-	string s;
-	ss << i;
-	ss >> s;
-	return s;
-}
-
-static bool isDeleteChar(int ch) {
-	static const int DELETE = 127;
-	return ch == DELETE;
-}
-
-static bool isNewlineChar(int ch) {
-	static const int NEWLINE = 10;
-	return ch == NEWLINE;
-}
-
-static bool isValidChar(int ch) {
-	static const int CHAR_START = 31;
-	static const int CHAR_END = 126;
-	return ch > CHAR_START && CHAR_END > ch;
-}
 
 static string getUserInput() {
 	char ch = getch();
@@ -411,7 +446,6 @@ static string getUserInput() {
 			input = input + ch;
 		}
 
-		//UserInterface_printTop(I2S(ch));
 		UserInterface_printRow(input, row);
 	}
 
@@ -422,6 +456,7 @@ string UserInterface_getUserInput(void) {
 
 	string input = getUserInput();
 	interface_row = 1;
+	currentDisplay.clear();
 	clear();
 	refresh();
 
@@ -436,9 +471,8 @@ void UserInterface_ignoreNext(void) {
 	IGNORE = true;
 }
 
-
 void UserInterface_quit(void) {
-	IS_RUNNING = false;
+	disableInput();
 	destroyNCurses(DISPLAY_WINDOW);
 }
 
