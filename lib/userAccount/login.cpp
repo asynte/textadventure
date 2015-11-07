@@ -1,5 +1,5 @@
 #include "userAccountHeaders/Login.h"
-
+#include "gameEngineHeaders/Character.h"
 #ifndef login_CPP
 #define login_CPP
 
@@ -32,18 +32,19 @@ class InterfaceObserver : public Observer {
         }
 };
 
-Login::Login() { }
+/*Login::Login() { 
+}
 
 Login::Login(bool temp) { 
 
 	InterfaceObserver *observer = new InterfaceObserver();
 	UserInterface_addListener(observer);
 }
-
-// void Login::init() {
-// 	InterfaceObserver *observer = new InterfaceObserver();
-// 	UserInterface_addListener(observer);
-// }
+*/
+void Login::init() {
+	InterfaceObserver *observer = new InterfaceObserver();
+	UserInterface_addListener(observer);
+}
 
 void Login::UserAuth(int choice){
 	Login user1;
@@ -57,13 +58,23 @@ void Login::UserAuth(int choice){
 }
 
 
- // User registration
+ // User registration and Character Creation 
 void Login::userRegisterDo(){
 	ofstream file;
 	file.open("data/userdata.txt",fstream::app);
 
+	//Create Character
+	Character player(username);
+	//player.printStatus();
+ 
+	// Need it to be stored somewhere......	
+
 	if(file.is_open()){
-		file<<"\n"<<"UserName:"<<username<< " " <<password;
+		file<<"\n"<<"UserName:"<<username
+			<< " password: " <<password
+			<< " Health: " <<player.getHealth()
+			<< " Level: " <<player.getLevel()
+			<< " Attack: " <<player.getAtk();		
 		file.close();
 		UserInterface_println("Hi " + username + "! You are registered now! Welcome!");
 		UserAuth(0);
@@ -107,6 +118,8 @@ void Login::userRegister(){
 	string pass1;
 	string pass2;
 	bool out = 1;
+
+
 
 	while(out){
 		UserInterface_println("Please enter a new password:");
@@ -165,6 +178,10 @@ bool Login::Loggedin(){
 			//link it to our game server
 			UserInterface_println("Welcome to the game "+user);
 			//cout << "Welcome to the game "<< user << '\n'; 
+
+
+			//Load all the character here
+
 		}else {
 			UserInterface_println("Incorrect Username and/or password !");
 			Loggedin();

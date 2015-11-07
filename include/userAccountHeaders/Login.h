@@ -11,8 +11,8 @@ using namespace std;
 class Login{
 
 public:
-    Login();
-    Login(bool);
+//    Login();
+//    Login(bool);
 
     string usernameTEMP;
     string usernameTEMP2;

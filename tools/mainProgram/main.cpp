@@ -33,7 +33,8 @@ int main() {
 
 	UserInterface_create();
 
-	Login test(true);
+	Login test;
+	test.init();
 
 	pthread_join(UserInterface_getThreadId(), NULL);
 	
