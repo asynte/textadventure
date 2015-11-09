@@ -16,7 +16,7 @@
 #include "userInterfaceHeaders/ObserverList.h"
 #include "userInterfaceHeaders/Commands.h"
 #include "userInterfaceHeaders/UserInterface.h"
-#include "pthread.h"
+#include <pthread.h>
 #include <iostream>
 #include <vector>
 #include <string>
@@ -29,8 +29,9 @@ using namespace std;
 
 static TCPClient* c_client = new TCPClient();
 static TCPDataflow* c_dataflow = NULL;
-static const char* ipAddr = "142.58.184.81";
+static const char* ipAddr = "142.58.184.66";
 static int port = 1234;
+static int port2 = 1232;
 
 void* recvMessageFromServer (void* nothing);
 void* sendMessageToServer (void* nothing);			//ready to be multithreaded just need to impliment it
@@ -75,6 +76,7 @@ int main(int argc, char** argv)
 	//sendMessageToServer(serverIp, serverPort, "hi\n");
 
 	pthread_t sendMessageThread;
+	//pthread_t recvMessageThread;
 	pthread_create(&sendMessageThread, NULL, &sendMessageToServer, NULL);
 	//pthread_create(&recvMessageThread, NULL, &recvMessageFromServer, NULL);
 	pthread_join(sendMessageThread, NULL);

@@ -16,7 +16,7 @@
 #include "userInterfaceHeaders/ObserverList.h"
 #include "userInterfaceHeaders/Commands.h"
 #include "userInterfaceHeaders/UserInterface.h"
-#include "pthread.h"
+#include <pthread.h>
 #include <iostream>
 #include <vector>
 #include <string>

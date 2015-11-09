@@ -25,11 +25,40 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-using namespace std;
+static	const char* serverIp = "142.58.184.81";
+static	int serverPort = 1234;
+TCPServer* server = NULL;
+TCPDataflow* connection = NULL;
 
-int main() {
-	UserInterface_create();
-	pthread_join(UserInterface_getThreadId(), NULL);
+void acceptConnection(){
+	server = new TCPServer(serverPort, serverIp);
+	while(true)
+	{
+		if (server->listeningConnection() == 0)
+		{
+			cout << "Waiting for a connection on IP: " << server->getIP() << " Port: " << server->getPort() << endl;
+			connection = server->acceptingConnection();
+			if(connection != NULL) 
+			{
+				ssize_t bufferLength;
+				char requestedCommand[256];
+				ostringstream outputStream;
+				while((bufferLength = connection->recvData(requestedCommand, sizeof(requestedCommand))) > 0)
+				{
+					requestedCommand[bufferLength] = 0;
+					cout << "Received: " << requestedCommand << endl;
+					outputStream << "Server sent you back: " << requestedCommand << endl;
+					string message = outputStream.str();
+					connection->sendData(message.c_str(), message.size());
+				}
+				delete connection;
+			}
+		}
+	}
+}
 
+
+int main(int argc, char** argv) {
+	acceptConnection();
 	return 0;
-}	
+}
