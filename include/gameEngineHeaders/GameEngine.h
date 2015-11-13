@@ -26,6 +26,7 @@ class GameEngine : public Observer {
 		World currentWorld;
 
 		void processUserCommand(const string &command, const string &arguement);
+		void move(Character player, int direction);
 };
 
 

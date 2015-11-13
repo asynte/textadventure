@@ -8,13 +8,13 @@ using namespace std;
 #include <iostream>
 #include <vector>
 
-int Door_getDirectionAsInt(const string &);
+
 
 class Door{
 	public:
 		Door(string,string,vector<string>,int);
 		string getDescription();
-		int getDirectionAsInt();
+		int Door_getDirectionAsInt(const string &);
 
 		string getDirection();
 		vector<string> getKeywords();

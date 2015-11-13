@@ -55,25 +55,25 @@ void GameEngine::processUserCommand(const string &command, const string &argueme
 
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-void GameEngine::parseMoveCommand(string userCommand){
-	vector<string> possibleCmds = GameEngine_getPossibleDirections();
-	locale loc;
-	string lowercase_cmd = tolower(userCommand, loc);	
-	bool validCommand = find(possibleCmds.begin(), possibleCmds.end(), lowercase_cmd) != possibleCmds.end();
+void GameEngine::parseMoveCommand(Character player, string userCommand){
 
-	if (validCommand) {
-		for (auto currentDoor : (currentPlayer.getCurrentRoom()).getDoorsList()) {
-			if (lowercase_cmd == currentDoor.getDirection()) { // convert string direction to roomID (i.e. east to 3009)
-				currentWorld.goToRoom(currentDoor.getToID(), currentPlayer);
-				UserInterface_println("You are in: " + (currentPlayer.getCurrentRoom()).getName() );
-			}
-		}
-
-		
-
+	Room currentPlayerRoom = player.getCurrentRoom();
+	//vector <string> playerMovableRooms = currentPlayerRoom.getPossibleDirections();
+	int tempcommand = Door_getDirectionAsInt(userCommand);
+	if(currentPlayerRoom.isRoomAvailable(tempcommand)){
+	// above line checks whether the command to move is a movable direction
+		move(player, tempcommand);
 	}
+	else{
+		cout<<"You cannot go in this direction because this direction does not exist"<<endl; 
+	}
+
 }
 
+void GameEngine::move(Character player, int direction){
+
+	// Move the player
+}
 
 vector<string> GameEngine::GameEngine_getPossibleDirections() {
 	// int roomId = currentPlayer.getLocation();

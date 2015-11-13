@@ -13,42 +13,37 @@ Door::Door(string description,string direction,vector<string> keywords,int toID)
 	copy(keywords.begin(),keywords.end(),back_inserter(this->keywords));
 	this->toID=toID;
 }
+
 string Door::getDescription(){
 	return description;
 }
+
 int Door_getDirectionAsInt(const string &str){
 	if(str == "south"){
 		return 2;
-	}else if(str == "north"){
+	}
+	else if(str == "north"){
 		return 1;
-	}else if(str == "up"){
+	}
+	else if(str == "up"){
 		return 5;
-	}else if(str == "east"){
+	}
+	else if(str == "east"){
 		return 4;
-	}else if(str == "west"){
+	}
+	else if(str == "west"){
 		return 3;
-	}else{
+	}
+	else if(str == "down"){
 		return 6;
+	}
+	else{
+		return 0;
+		//zero means direction not found
 	}
 }
 
-int Door::getDirectionAsInt(){
-	return Door_getDirectionAsInt(direction);
 
-	// if(direction.compare("south")==0){
-	// 	return 2;
-	// }else if(direction.compare("north")==0){
-	// 	return 1;
-	// }else if(direction.compare("up")==0){
-	// 	return 5;
-	// }else if(direction.compare("east")==0){
-	// 	return 4;
-	// }else if(direction.compare("west")==0){
-	// 	return 3;
-	// }else{
-	// 	return 6;
-	// }
-}
 string Door::getDirection(){
 	return direction;
 }
