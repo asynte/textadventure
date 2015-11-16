@@ -21,7 +21,7 @@ public:
     const int CHAR_DEFAULTHEALTH = 100;
     const int CHAR_DEFAULTATK = 10;
     const int CHAR_DEFAULTSTAT = 1;
-    const int CHAR_STARTLOCATION = 0;
+    const int CHAR_STARTLOCATION = -1;
 
     map<int, const Object> charEquipment; // maps equipmentArea to Object
     
@@ -54,8 +54,8 @@ public:
     void removeFromInventory(Object&);
     void equip(Object&);
     void unequip(Object);
-    void setLocation(Room r);
-    const Room getCurrentRoom() const;
+    void setLocation(int);
+    int getCurrentLocation() const;
     void interact(NPC);
     void interact(Object);
     void examine(Object);
@@ -75,7 +75,7 @@ protected:
     int charDexterity;
     int charCharisma;
     vector<Object> charInventory;
-    Room currentRoom;
+    int currentLocation;
     bool wantsToPVP;
 };
 

@@ -53,26 +53,26 @@ bool isMenuCommand(const string &str) {
 }
 
 static void move(const string &str) {
-	UserInterface_println("move");
+	// UserInterface_println("move");
 
-	vector<string> directions = UserInterface_getPossibleDirections();
+	// vector<string> directions = UserInterface_getPossibleDirections();
 
-	if ( find(directions.begin(), directions.end(), str) != directions.end() ) {
-		UserInterface_println("invalid direction: " + str);
-	}
+	// if ( find(directions.begin(), directions.end(), str) != directions.end() ) {
+	// 	UserInterface_println("invalid direction: " + str);
+	// }
 }
 
 static void move(void) {
-	vector<string> directions = UserInterface_getPossibleDirections();
+	// vector<string> directions = UserInterface_getPossibleDirections();
 
-	UserInterface_println("requires a direction to move to!");
-	UserInterface_println(SPACER + "\"move <direction>\"");
-	UserInterface_println(SPACER + "use \"help move\" to see more details");
-	UserInterface_println(SPACER + "possible directions are:");
+	// UserInterface_println("requires a direction to move to!");
+	// UserInterface_println(SPACER + "\"move <direction>\"");
+	// UserInterface_println(SPACER + "use \"help move\" to see more details");
+	// UserInterface_println(SPACER + "possible directions are:");
 
-	for(int i = 0; directions.size() > i; ++i) {
-		UserInterface_println(SPACER + SPACER + directions.at(i));
-	}
+	// for(int i = 0; directions.size() > i; ++i) {
+	// 	UserInterface_println(SPACER + SPACER + directions.at(i));
+	// }
 }
 
 static void quit(void){

@@ -49,24 +49,24 @@ void GameEngine::processUserCommand(const string &command, const string &argueme
 
 		// currentWorld.goToRoom(newRoomId, currentPlayer);
 
-		parseMoveCommand(arguement);
+		//parseMoveCommand(arguement);
 		//UserInterface_println("currentRoom post: " + I2S(currentPlayer.getCurrentRoom().getID()));
 	}
 
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-void GameEngine::parseMoveCommand(Character player, string userCommand){
+void GameEngine::parseMoveCommand(Character &player, string userCommand){
 
-	Room currentPlayerRoom = player.getCurrentRoom();
-	//vector <string> playerMovableRooms = currentPlayerRoom.getPossibleDirections();
-	int tempcommand = Door_getDirectionAsInt(userCommand);
-	if(currentPlayerRoom.isRoomAvailable(tempcommand)){
-	// above line checks whether the command to move is a movable direction
-		move(player, tempcommand);
-	}
-	else{
-		cout<<"You cannot go in this direction because this direction does not exist"<<endl; 
-	}
+	// Room currentPlayerRoom = player.getCurrentRoom();
+	// //vector <string> playerMovableRooms = currentPlayerRoom.getPossibleDirections();
+	// int tempcommand = Door_getDirectionAsInt(userCommand);
+	// if(currentPlayerRoom.isRoomAvailable(tempcommand)){
+	// // above line checks whether the command to move is a movable direction
+	// 	move(player, tempcommand);
+	// }
+	// else{
+	// 	cout<<"You cannot go in this direction because this direction does not exist"<<endl; 
+	// }
 
 }
 
@@ -75,44 +75,44 @@ void GameEngine::move(Character player, int direction){
 	// Move the player
 }
 
-vector<string> GameEngine::GameEngine_getPossibleDirections() {
-	// int roomId = currentPlayer.getLocation();
+// vector<string> GameEngine::GameEngine_getPossibleDirections() {
+// 	// int roomId = currentPlayer.getLocation();
 
 
-	// UserInterface_println("room: " + I2S(currentPlayer.getCurrentRoom().getID());
+// 	// UserInterface_println("room: " + I2S(currentPlayer.getCurrentRoom().getID());
 
 
-// //getName()
+// // //getName()
 
-// 	vector<Room> rooms = currentWorld.getRoomsVector();
+// // 	vector<Room> rooms = currentWorld.getRoomsVector();
 
-// 		for(int i = 0; rooms.size() > i; ++i) {
-// 			UserInterface_println(rooms.at(i).getName());
-// 		}
+// // 		for(int i = 0; rooms.size() > i; ++i) {
+// // 			UserInterface_println(rooms.at(i).getName());
+// // 		}
 
 
 
-	Room currentRoom = currentPlayer.getCurrentRoom();
+// 	Room currentRoom = currentPlayer.getCurrentRoom();
 	
 
 
-	// vector<string> dir = currentRoom.getPossibleDirections();
+// 	// vector<string> dir = currentRoom.getPossibleDirections();
 
-	// for(int i = 0; dir.size() > i; ++i) {
-	// 		UserInterface_println(dir.at(i) );
-	// }
+// 	// for(int i = 0; dir.size() > i; ++i) {
+// 	// 		UserInterface_println(dir.at(i) );
+// 	// }
 
 
-	// 	UserInterface_println("room direction count: " + I2S(dir.size()));
+// 	// 	UserInterface_println("room direction count: " + I2S(dir.size()));
 
-	// vector<string> dir;
+// 	// vector<string> dir;
 
-	// dir.push_back("derp");
+// 	// dir.push_back("derp");
 
-	// return dir;
+// 	// return dir;
 
-	return currentRoom.getPossibleDirections();
-}
+// 	return currentRoom.getPossibleDirections();
+// }
 
 GameEngine::GameEngine()  : 
 	currentPlayer(Character("Retard")), 

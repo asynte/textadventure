@@ -64,25 +64,25 @@ void Room::getInformation(){
 // void Room::setWidgetVector(int widgetIndex, Widget wid) {
 //     this->widgetVector[widgetIndex] = wid;
 // }
-bool Room::isRoomAvailable(int direction){
-	for(int i=0;i<doorsList.size();i++){
-		if(doorsList[i].getDirectionAsInt()==direction){
-			return true;
-		}
-	}
-	cout<<"You cannot go in this direction because this direction does not exist"<<endl;
-	//UserInterface_println("You cannot go in this direction because this direction does not exist");
-	return false;
-}
+// bool Room::isRoomAvailable(int direction){
+// 	for(int i=0;i<doorsList.size();i++){
+// 		if(doorsList[i].getDirectionAsInt()==direction){
+// 			return true;
+// 		}
+// 	}
+// 	cout<<"You cannot go in this direction because this direction does not exist"<<endl;
+// 	//UserInterface_println("You cannot go in this direction because this direction does not exist");
+// 	return false;
+// }
 
 
-Door Room::getDoorWantToGo(int direction){
-	for(int i=0;i<doorsList.size();i++){
-		if(doorsList[i].getDirectionAsInt()==direction){
-			return doorsList[i];
-		}
-	}
-}
+// Door Room::getDoorWantToGo(int direction){
+// 	for(int i=0;i<doorsList.size();i++){
+// 		if(doorsList[i].getDirectionAsInt()==direction){
+// 			return doorsList[i];
+// 		}
+// 	}
+// }
 
 vector<string> Room::getPossibleDirections() {
 	vector<string> directions;

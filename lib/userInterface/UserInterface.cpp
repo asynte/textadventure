@@ -44,22 +44,22 @@ static int interface_col;
 
 // }
 
-vector<string> UserInterface_getPossibleDirections(void) {
+// vector<string> UserInterface_getPossibleDirections(void) {
 
-	// GameEngine *g = new GameEngine();
+// 	// GameEngine *g = new GameEngine();
 
-	// g.getPossibleDirections();
+// 	// g.getPossibleDirections();
 
-	if (gameEngine == NULL) {
-		UserInterface_println("null game engine");
-		UserInterface_quit();
-		exit(0);
-	} else {
-		UserInterface_println("game engine found");
-		vector<string> directions = gameEngine->GameEngine_getPossibleDirections();
-		return directions;
-	}
-}
+// 	if (gameEngine == NULL) {
+// 		UserInterface_println("null game engine");
+// 		UserInterface_quit();
+// 		exit(0);
+// 	} else {
+// 		UserInterface_println("game engine found");
+// 		vector<string> directions = gameEngine->GameEngine_getPossibleDirections();
+// 		return directions;
+// 	}
+// }
 
 void UserInterface_print(const string &value) {
 	mvprintw(interface_row, 0, "%s", value.c_str());

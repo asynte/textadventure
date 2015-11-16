@@ -29,6 +29,7 @@ using namespace std;
 
 void testFight() {
 	Character player("Kid with no arms");
+    cout << "Current room ID: " + to_string(player.getCurrentLocation()) << endl;
     player.increaseExp(300);
     player.updateLevel();
     player.printStatus();
@@ -87,16 +88,16 @@ int main() {
     // roomDataInterface ROOM2("data/midgaard.yml");
     // ROOM2.loadAll();
     // ROOM2.printAll();
-    objDataInterface objParser("data/midgaard.yml");
-    objParser.loadAll();
-    objParser.printAll();
+    // objDataInterface objParser("data/midgaard.yml");
+    // objParser.loadAll();
+    // objParser.printAll();
     // npcDataInterface npcParser("data/midgaard.yml");
     // npcParser.loadAll();
     // npcParser.printAll();
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    // testFight();
+    testFight();
     // testEquip();
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////

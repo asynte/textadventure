@@ -19,7 +19,7 @@ Character::Character(string name) {
     this->setDex(CHAR_DEFAULTSTAT);
     this->setCha(CHAR_DEFAULTSTAT);
     this->setPVP(false);
-    //this->currentRoom = room;
+    this->setLocation(CHAR_STARTLOCATION);
 }
 
 void Character::printStatus() { // print Character's stats
@@ -109,12 +109,12 @@ int Character::getCha() const {
 vector<Object> Character::getInventory() const {
     return this->charInventory;
 }
-void Character::setLocation(Room room){
-    this->currentRoom = room;
+void Character::setLocation(int roomID){
+    this->currentLocation = roomID;
 }
 
-const Room Character::getCurrentRoom() const {
-    return this->currentRoom;
+int Character::getCurrentLocation() const {
+    return this->currentLocation;
 }
 
 void Character::setPVP(bool b) {

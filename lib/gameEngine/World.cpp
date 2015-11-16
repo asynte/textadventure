@@ -95,7 +95,7 @@ vector<Room> World:: getRoomsVector(){
 void World::goToRoom(int id, Character &c){
 	for(int i=0;i<roomsVector.size();i++){
 		if(roomsVector[i].getID()==id){
-			c.setLocation(roomsVector[i]);
+			c.setLocation(id);
 		}
 	}
 	// Maybe print out which room it just went into
