@@ -19,14 +19,14 @@ class GameEngine : public Observer {
 		void notify(const vector<string> &userInput);
 
 		vector<string> GameEngine_getPossibleDirections();
-		void parseMoveCommand(Character&, string userCommand);
+
 
 	private:
 		Character currentPlayer;
 		World currentWorld;
 
 		void processUserCommand(const string &command, const string &arguement);
-		void move(Character player, int direction);
+
 };
 
 

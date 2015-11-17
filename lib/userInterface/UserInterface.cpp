@@ -83,15 +83,15 @@ static void UserInterface_printRow(const string &value, const int row) {
 
 void UserInterface_addListener(Observer *obs) {
 
-	if(GameEngine* v = dynamic_cast<GameEngine*>(obs)) {
-		gameEngine = v;
-	   // old was safely casted to NewType
-	   // v->doSomething();
+	// if(GameEngine* v = dynamic_cast<GameEngine*>(obs)) {
+	// 	gameEngine = v;
+	//    // old was safely casted to NewType
+	//    // v->doSomething();
 
-		UserInterface_println("casting game engine");
-	}
+	// 	UserInterface_println("casting game engine");
+	// }
 
-	observers.addObserver(obs);
+	// observers.addObserver(obs);
 }
 
 void UserInterface_notifyListeners(const string &str) {

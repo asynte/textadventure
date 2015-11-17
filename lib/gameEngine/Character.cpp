@@ -113,7 +113,7 @@ void Character::setLocation(int roomID){
     this->currentLocation = roomID;
 }
 
-int Character::getCurrentLocation() const {
+int Character::getLocation() const {
     return this->currentLocation;
 }
 

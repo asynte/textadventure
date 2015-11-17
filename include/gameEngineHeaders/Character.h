@@ -55,7 +55,7 @@ public:
     void equip(Object&);
     void unequip(Object);
     void setLocation(int);
-    int getCurrentLocation() const;
+    int getLocation() const;
     void interact(NPC);
     void interact(Object);
     void examine(Object);

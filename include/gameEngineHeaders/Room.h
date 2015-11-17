@@ -15,6 +15,7 @@ using namespace std;
 class Room{
 public:
 	Room();
+	Room(int);
 	Room(string,vector<Door>,vector<Extended>,string,int);
 	string getDescription();
 	vector<Door> getDoorsList() const;

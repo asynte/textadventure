@@ -18,7 +18,7 @@ string Door::getDescription(){
 	return description;
 }
 
-int Door_getDirectionAsInt(const string &str){
+int Door::getDirectionAsInt(const string &str){
 	if(str == "south"){
 		return 2;
 	}
@@ -50,7 +50,7 @@ string Door::getDirection(){
 vector<string> Door::getKeywords(){
 	return keywords;
 }
-int Door::getToID(){
+int Door::getNextRoomID(){
 	return toID;
 }
 void Door::getInformation(){

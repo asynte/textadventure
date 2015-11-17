@@ -56,7 +56,7 @@ using namespace std;
 	int roomDataInterface::getDoorTO (const int& roomIndex, const int& doorIndex) {
 		Room room=roomVector[roomIndex];
 		Door door=room.getDoorsList()[doorIndex];
-		return door.getToID();
+		return door.getNextRoomID();
 	}
 
 
@@ -161,7 +161,7 @@ using namespace std;
 	void roomDataInterface::printDoorTO (const int& roomIndex, const int& doorIndex) {
 		Room room=roomVector[roomIndex];
 		Door door=room.getDoorsList()[doorIndex];
-		UserInterface_println("Door TO: " + door.getToID());
+		UserInterface_println("Door TO: " + to_string(door.getNextRoomID()));
 	}
 
 	// print extended description of ROOM struct at specified index

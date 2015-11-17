@@ -14,11 +14,11 @@ class Door{
 	public:
 		Door(string,string,vector<string>,int);
 		string getDescription();
-		int Door_getDirectionAsInt(const string &);
+		int getDirectionAsInt(const string &str);
 
 		string getDirection();
 		vector<string> getKeywords();
-		int getToID();
+		int getNextRoomID();
 		void getInformation();
 		void setDescription(string);
 		void setDirection(string);

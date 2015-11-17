@@ -28,11 +28,11 @@ class World{
 		int willGoToRoom(int direction, int currentLocation);
 		//void goToRoom(int roomID);
 		void getNowRoomInformation(int currentLocation);
-		// void parseUserInput(const string &command, const string& arguement);
-		void goToRoom(int id, Character &c);
-
+		int getRoom(int roomID);
+		void moveCharacter(Character &player, string userCommand);
+		void setCharRoom(Character &c, int roomID, int moveDirection);
 		void addCharacter(const Character &character);
-		// vector<Character> get
+		vector<Character> getCharacters();
 
 		// vector<string> 
 
