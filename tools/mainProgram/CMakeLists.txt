@@ -5,61 +5,81 @@ cmake_minimum_required(VERSION 2.8.9)
 
 
 set(EXECUTABLE_NAME alphaversion)
+set(SERVER_NAME server)
 
-add_executable(alphaversion main.cpp)
+add_executable(${EXECUTABLE_NAME} main.cpp)
+
 #yaml library
-target_link_libraries(alphaversion ${CMAKE_SOURCE_DIR}/lib/yaml/libyaml-cpp.a)
+target_link_libraries(${EXECUTABLE_NAME} ${CMAKE_SOURCE_DIR}/lib/yaml/libyaml-cpp.a)
 #networking library
-target_link_libraries(alphaversion ${CMAKE_SOURCE_DIR}/lib/networkinglibrary/libDataflow.a)
+target_link_libraries(${EXECUTABLE_NAME} ${CMAKE_SOURCE_DIR}/lib/networkinglibrary/libDataflow.a)
 
 #add all the libraries
 
 #dataInterace Libraries
-target_link_libraries(alphaversion npcDataInterface)
-target_link_libraries(alphaversion objDataInterface)
-target_link_libraries(alphaversion roomDataInterface)
-target_link_libraries(alphaversion resetDataInterface)
-target_link_libraries(alphaversion dataEmitter)
+target_link_libraries(${EXECUTABLE_NAME} npcDataInterface)
+target_link_libraries(${EXECUTABLE_NAME} objDataInterface)
+target_link_libraries(${EXECUTABLE_NAME} roomDataInterface)
+target_link_libraries(${EXECUTABLE_NAME} resetDataInterface)
+target_link_libraries(${EXECUTABLE_NAME} dataEmitter)
 
 #gameEngine Libraries
-target_link_libraries(alphaversion GameEngine)
-target_link_libraries(alphaversion Character)
-target_link_libraries(alphaversion Door)
-target_link_libraries(alphaversion NPC)
-target_link_libraries(alphaversion Object)
-target_link_libraries(alphaversion Room)
-target_link_libraries(alphaversion Widget)
-target_link_libraries(alphaversion World)
-target_link_libraries(alphaversion Extended)
+target_link_libraries(${EXECUTABLE_NAME} GameEngine)
+target_link_libraries(${EXECUTABLE_NAME} Character)
+target_link_libraries(${EXECUTABLE_NAME} Door)
+target_link_libraries(${EXECUTABLE_NAME} NPC)
+target_link_libraries(${EXECUTABLE_NAME} Object)
+target_link_libraries(${EXECUTABLE_NAME} Room)
+target_link_libraries(${EXECUTABLE_NAME} Widget)
+target_link_libraries(${EXECUTABLE_NAME} World)
+target_link_libraries(${EXECUTABLE_NAME} Extended)
 
 #userAccount Libraries
-target_link_libraries(alphaversion Login)
+target_link_libraries(${EXECUTABLE_NAME} Login)
 
 #networkingInterface Libraries
-target_link_libraries(alphaversion TCPClient)
-target_link_libraries(alphaversion TCPDataflow)
-target_link_libraries(alphaversion TCPServer)
+target_link_libraries(${EXECUTABLE_NAME} TCPClient)
+target_link_libraries(${EXECUTABLE_NAME} TCPDataflow)
+target_link_libraries(${EXECUTABLE_NAME} TCPServer)
 
 #userInterface Libraries
-target_link_libraries(alphaversion UserInterface)
-target_link_libraries(alphaversion Commands)
-target_link_libraries(alphaversion ObserverList)
+target_link_libraries(${EXECUTABLE_NAME} UserInterface)
+target_link_libraries(${EXECUTABLE_NAME} Commands)
+target_link_libraries(${EXECUTABLE_NAME} ObserverList)
+#target_link_libraries(${EXECUTABLE_NAME} Cout)
 
 #Adding Threads
 find_package(Threads REQUIRED)
 if(THREADS_HAVE_PTHREAD_ARG)
-  set_property(TARGET alphaversion PROPERTY COMPILE_OPTIONS "-pthread")
-  set_property(TARGET alphaversion PROPERTY INTERFACE_COMPILE_OPTIONS "-pthread")
+  set_property(TARGET ${EXECUTABLE_NAME} PROPERTY COMPILE_OPTIONS "-pthread")
+  set_property(TARGET ${EXECUTABLE_NAME} PROPERTY INTERFACE_COMPILE_OPTIONS "-pthread")
 endif()
 if(CMAKE_THREAD_LIBS_INIT)
-  target_link_libraries(alphaversion "${CMAKE_THREAD_LIBS_INIT}")
+  target_link_libraries(${EXECUTABLE_NAME} "${CMAKE_THREAD_LIBS_INIT}")
 endif()
 
 #Adding NCurses
 find_package(Curses REQUIRED)
 include_directories(${CURSES_INCLUDE_DIR})
-target_link_libraries(alphaversion ${CURSES_LIBRARIES})
+target_link_libraries(${EXECUTABLE_NAME} ${CURSES_LIBRARIES})
 
+
+#server linkage
+add_executable(${SERVER_NAME} networkServerTest.cpp)
+target_link_libraries(${SERVER_NAME} UserInterface)
+target_link_libraries(${SERVER_NAME} Commands)
+target_link_libraries(${SERVER_NAME} ObserverList)
+#target_link_libraries(${SERVER_NAME} Cout)
+
+target_link_libraries(${SERVER_NAME} TCPClient)
+target_link_libraries(${SERVER_NAME} TCPDataflow)
+target_link_libraries(${SERVER_NAME} TCPServer)
+
+#Adding NCurses
+target_link_libraries(${SERVER_NAME} ${CURSES_LIBRARIES})
+if(CMAKE_THREAD_LIBS_INIT)
+  target_link_libraries(${SERVER_NAME} "${CMAKE_THREAD_LIBS_INIT}")
+endif()
 
 
 
