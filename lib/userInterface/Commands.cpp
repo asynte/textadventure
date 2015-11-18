@@ -1,6 +1,7 @@
 #ifndef _COMMANDS_CPP_
 #define _COMMANDS_CPP_
 #include "userInterfaceHeaders/Commands.h"
+#include "gameEngineHeaders/GameEngine.h"
 
 static const string SPACER = "  ";
 
@@ -10,14 +11,32 @@ typedef void (*functionReferenceStrings)(const vector<string>&);
 static map<string, functionReferenceVoid> functionMapVoid;
 static map<string, functionReferenceString> functionMapString;
 static map<string, functionReferenceString> errorMapString;
-//static map<string, functionReferenceStrings> functionMapStrings;
 
 static vector<string> options;
 static vector<string> dynamicFunctions;
 static map<string, string> menuCommands;
 static map<string, string> gameCommands;
 
-//static bool hasDynamicArguements = false;
+static GameEngine *gameEngine = NULL;
+
+void Commands_addGameEngine(GameEngine *g) {
+	gameEngine = g;
+}
+
+static vector<string> getPossibleDirections(void) {
+	if (gameEngine == NULL) {
+		UserInterface_println("ERROR: No Game Engine");
+		UserInterface_exit();
+	} else {
+		vector<string> derp;
+		derp.push_back("up");
+		derp.push_back("down");
+		return derp;
+
+		vector<string> directions = gameEngine->getPossibleDirections();
+		return directions;
+	}
+}
 
 static vector<string> getMatches(const vector<string> &options, const string &input, int n) {
 	vector<string> matches;
@@ -40,31 +59,20 @@ bool Commands_hasDynamicArguements(const string &input) {
 
 vector<string> Commands_getMatches(const string &input, int n, bool dynamic, int type) {
 	if (dynamic) {
-		return getMatches(UserInterface_getPossibleDirections(), input, n);
+
+		if (type == DYNAMIC_MOVE_COMMAND) {
+			return getMatches(getPossibleDirections(), input, n);
+		}
+
+		if (type == DYNAMIC_LOOK_COMMAND) {
+			UserInterface_println("UNIMPLEMENTED: LOOK LIST");
+			
+			//need another function to get possible objects to look at
+			//return getMatches(UserInterface_getPossibleDirections(), input, n);
+		}
 	}
 
 	return getMatches(options, input, n);
-
-	/*
-	vector<string> matches = getMatches(options, input, n);
-
-	if (dynamic && matches.size() == 0) {
-		vector<string> test = getMatches(UserInterface_getPossibleDirections(), input, n);
-
-		/a*
-		vector<string> directions = UserInterface_getPossibleDirections();
-
-		UserInterface_println("directions returned: ");
-		for(int i = 0; directions.size() > i; ++i)	{
-			UserInterface_println(SPACER + directions.at(i));
-		}
-		*a/
-
-		return test;
-	}
-
-	return matches;
-	*/
 }
 
 
@@ -93,7 +101,7 @@ static void move(const string &str) {
 }
 
 static void moveError(const string &str) {
-	vector<string> directions = UserInterface_getPossibleDirections();
+	vector<string> directions = getPossibleDirections();
 
 	UserInterface_println("Invalid direction: " + str);
 	UserInterface_println(SPACER + "possible directions are:");
@@ -104,7 +112,7 @@ static void moveError(const string &str) {
 }
 
 static void move(void) {
-	vector<string> directions = UserInterface_getPossibleDirections();
+	vector<string> directions = getPossibleDirections();
 
 	UserInterface_println("requires a direction to move to!");
 	UserInterface_println(SPACER + "\"move <direction>\"");
@@ -183,6 +191,7 @@ void Commands_initiate() {
     functionMapString["help"] = help;
     functionMapString["move"] = move;
 
+	//dynamic functions
 	errorMapString["move"] = moveError;
 
 	//menu command helper descriptions
@@ -205,24 +214,13 @@ void Commands_initiate() {
 		dynamicFunctions.push_back(itr->first);
 	}
 
-	/*for(auto itr = menuCommands.begin(); itr != menuCommands.end(); ++itr) {
-		options.push_back(itr->first);
-	}
-	for(auto itr = gameCommands.begin(); itr != gameCommands.end(); ++itr) {
-		options.push_back(itr->first);
-	}*/
 
 
 	sort(options.begin(), options.end());
 }
 
 void Commands_callFunction(const string &funcName) {
-	//if (isRuntimeMatch) {
-	//	return;
-	//}
-
 	UserInterface_notifyListeners(funcName);
-
 	functionMapVoid[funcName]();
 }
 
@@ -238,10 +236,6 @@ void Commands_callError(const string &funcName, const string &funcArgs) {
 
 void Commands_callFunction(const string &funcName, const vector<string> &funcArgs) {
 	int arguCount = funcArgs.size();
-
-	//if (isRuntimeMatch) {
-	//	return;
-	//}
 
 	if (isVoidFunction(funcName) && !isStringFunction(funcName)) {
 		Commands_callFunction(funcName);

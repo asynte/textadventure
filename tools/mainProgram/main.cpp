@@ -15,6 +15,7 @@
 #include "userInterfaceHeaders/ObserverList.h"
 #include "userInterfaceHeaders/Commands.h"
 #include "userInterfaceHeaders/UserInterface.h"
+#include "userInterfaceHeaders/GameEngineFunctions.h"
 #include "pthread.h"
 #include <iostream>
 #include <vector>
@@ -111,23 +112,14 @@ void testEquip() {
 }*/
 
 int main() {
-
-	//Constructs object
-	// cout<< " Nigger initiate" << endl;
-	// roomDataInterface Hell{""};
-
 	UserInterface_create();
-	//roomDataInterfaceTest1();
-	cout<< "NIGGGGGGG" << endl;
+
 	roomDataInterface ROOM2("data/test.yml");
 
-	cout << "more niggers" << endl;
-	GameEngine *g = new GameEngine(); // !!!BRYAN FIX PLEASE!!!! DYNAMIC CAST ERROR!!!! std::bad_cast
-	UserInterface_addListener(g);
+	GameEngine *g = new GameEngine();
+	UserInterface_addGameEngine(g);
 
 	pthread_join(UserInterface_getThreadId(), NULL);
-	// testSwitch();
-	//dataEmitterTest1();
 
 	return 0;
 }	

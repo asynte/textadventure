@@ -19,10 +19,10 @@ using namespace std;
 
 #include "Commands.h"
 #include "ObserverList.h"
-//#include "userInterfaceHeaders/Cout.cpp"
 
 void UserInterface_create(void);
 void UserInterface_quit(void);
+void UserInterface_exit(void);
 pthread_t& UserInterface_getThreadId(void);
 
 bool UserInterface_isActive(void);
@@ -37,7 +37,7 @@ void UserInterface_addListener(Observer *obs);
 void UserInterface_notifyListeners(const string &);
 void UserInterface_notifyListeners(const vector<string> &);
 
-vector<string> UserInterface_getPossibleDirections(void);
+//vector<string> UserInterface_getPossibleDirections(void);
 
 
 //I/O functions

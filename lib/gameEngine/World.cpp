@@ -19,6 +19,23 @@ World::World(string name){
 
 }
 
+World::World(const World& from)
+{
+
+/*
+		vector<Room> roomsVector;
+		vector<Character> characters;
+		string name;
+
+  nlanes = from.nlanes;
+  lanes = new Color[nlanes];
+  for (int i = 0; i < nlanes; ++i)
+  {
+    lanes[i] = from.lanes[i];
+  }
+*/
+}
+
 void World::addCharacter(const Character &character) {
 	characters.push_back(character);
 }

@@ -10,7 +10,6 @@ using namespace std;
 
 
 
-
 void GameEngine::notify(const string &userInput) {
 	processUserCommand(userInput, "");
 }
@@ -26,13 +25,13 @@ void GameEngine::notify(const vector<string> &userInput) {
 // THIS IS ONLY THING I NEED TO EDIT
 void GameEngine::processUserCommand(const string &command, const string &arguement) {
 
-	// string usrcmd;
-	// int temp = arguement.copy(usrcmd, arguement.length());
-	UserInterface_println("command: " + command + " arguement:" + arguement);
+	UserInterface_println("command: " + command + " arguement: " + arguement);
 
-	// if (command == "move" && arguement.length() > 0) {
-	if (command == "move") {
+	if (command == "move" && arguement.length() > 0) {
 		UserInterface_println("entered the move command!");
+
+		UserInterface_println("name: " + currentPlayer.getName());
+
 
 		// Room currentRoom = currentPlayer.getLocation();
 		//int directionId = 
@@ -96,9 +95,17 @@ void GameEngine::processUserCommand(const string &command, const string &argueme
 // 	return currentRoom.getPossibleDirections();
 // }
 
-GameEngine::GameEngine()  : 
-	currentPlayer(Character("Retard")), 
-	currentWorld(World("test")) 
+void GameEngine::addWorld(World w) {
+	World derp("test");
+
+	//currentWorld = derp;
+
+	//this->currentWorld = w;
+}
+
+GameEngine::GameEngine() : 
+	currentPlayer(Character("no character")), 
+	currentWorld(World("default")) 
 	{
 		currentWorld.printRoomNames();
 	}

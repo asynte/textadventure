@@ -3,6 +3,7 @@
 
 #include "gameEngineHeaders/GameEngine.h"
 
-void UserInterface_addGameEngine(GameEngine *g) ;
+void UserInterface_addGameEngine(GameEngine *g);
+void Commands_addGameEngine(GameEngine *g);
 
 #endif

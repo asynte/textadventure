@@ -7,6 +7,7 @@
 
 #include "userInterfaceHeaders/UserInterface.h"
 #include "gameEngineHeaders/GameEngine.h"
+#include "userInterfaceHeaders/GameEngineFunctions.h"
  
 
 using namespace std;
@@ -46,7 +47,7 @@ static void disableInput() {
 	IS_RUNNING = false;
 }
 
-static void exit() {
+void UserInterface_exit() {
 	disableInput();
 	UserInterface_println("exiting in 3..");
 	sleep(1);
@@ -91,15 +92,12 @@ static bool isValidChar(int ch) {
 	return ch > CHAR_START && CHAR_END > ch;
 }
 
+/*
 vector<string> UserInterface_getPossibleDirections(void) {
-	//UserInterface_println("getting directions...");
-	
 	if (gameEngine == NULL) {
 		UserInterface_println("ERROR: No Game Engine");
 		exit();
 	} else {
-		//UserInterface_println("game engine found");
-
 		vector<string> derp;
 		derp.push_back("up");
 		derp.push_back("down");
@@ -109,6 +107,7 @@ vector<string> UserInterface_getPossibleDirections(void) {
 		return directions;
 	}
 }
+*/
 
 static void UserInterface_printTop(const string &value) {
 	mvprintw(0, 0, "%s\n", value.c_str());
@@ -167,10 +166,14 @@ void UserInterface_print(const string &value) {
 void UserInterface_addGameEngine(GameEngine *g) {
 	if (gameEngine != NULL) {
 		UserInterface_println("ERROR: already added a game engine!");
-		exit();
+		UserInterface_exit();
+	} else {
+		UserInterface_println("adding game engine");
 	}
 
 	observers.addObserver(g);
+	Commands_addGameEngine(g);
+
 	gameEngine = g;
 }
 
@@ -225,9 +228,9 @@ static int getDynamicType(const string &firstToken) {
 	if (firstToken == "move")	{
 		return DYNAMIC_MOVE_COMMAND;
 	}
-	/*if (firstToken == "move")	{
-		return DYNAMIC_MOVE_COMMAND;
-	}*/
+	if (firstToken == "look")	{
+		return DYNAMIC_LOOK_COMMAND;
+	}
 
 	return -1;
 }
@@ -239,8 +242,6 @@ static struct parsedResults parseSubToken(const string &token, bool dynamic, con
 	result.matchCount = result.matches.size();
 	result.isMatch = result.matchCount > 0;
 
-	//print("parsing: " + token + " valid: " + I2S(result.isMatch) + "\n");
-
 	return result;
 }
 
@@ -249,6 +250,7 @@ static struct parsedResults parseSubToken(const string &token, bool dynamic, con
 static bool processSubToken(const vector<string> &inputs, vector<string> &tokens, int index) {
 	string token = inputs.at(index);
 	bool dynamic = false;
+	struct parsedResults results;
 
 	if (tokens.size() > 0) {
 		dynamic = Commands_hasDynamicArguements(tokens.at(0));
@@ -259,9 +261,10 @@ static bool processSubToken(const vector<string> &inputs, vector<string> &tokens
 			print("n: " + tokens.at(0) + "  " + token + "\n");
 		}
 		*/
-		struct parsedResults results = parseSubToken(token, dynamic, tokens.at(0));
+		results = parseSubToken(token, dynamic, tokens.at(0));
+	} else {
+		results = parseSubToken(token, dynamic, "");
 	}
-	struct parsedResults results = parseSubToken(token, dynamic, "");
 
 	if (results.isMatch) {
 		if (results.matchCount == 1) {

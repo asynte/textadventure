@@ -26,6 +26,8 @@ public:
     map<int, const Object> charEquipment; // maps equipmentArea to Object
     
     Character(string);
+    Character(const Character &from);
+
     void printStatus();
     void setHealth(int);
     int getHealth() const;

@@ -17,6 +17,7 @@ using namespace std;
 class World{
 	public:
 		World();
+		World(const World &from);
 		World(string name);
 		//void build(string name);
 		void initializeWorld(string name);

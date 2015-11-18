@@ -8,6 +8,22 @@
 // Character::Character() {
 // }
 
+
+Character::Character(const Character &from) {
+    this->setName(from.getName());
+    this->setLevel(from.getLevel());
+    this->setHealth(from.getHealth());
+    this->setExp(from.experience);
+    this->setAtk(from.charAtk);
+    this->setStr(from.charStrength);
+    this->setInt(from.charIntelligence);
+    this->setDex(from.charDexterity);
+    this->setCha(from.charCharisma);
+    this->setPVP(from.wantsToPVP);
+    this->setLocation(from.currentLocation);
+}
+
+
 Character::Character(string name) {
     this->setName(name);
     this->setLevel(1);
