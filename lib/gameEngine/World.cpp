@@ -21,19 +21,17 @@ World::World(string name){
 
 World::World(const World& from)
 {
+	copy(from);
+}
 
-/*
-		vector<Room> roomsVector;
-		vector<Character> characters;
-		string name;
-
-  nlanes = from.nlanes;
-  lanes = new Color[nlanes];
-  for (int i = 0; i < nlanes; ++i)
-  {
-    lanes[i] = from.lanes[i];
-  }
-*/
+void World::copy(const World& from) {
+	for(auto itr = from.roomsVector.begin(); itr !=from.roomsVector.end(); ++itr) {
+		roomsVector.push_back(*itr);
+	}
+	for(auto itr = from.characters.begin(); itr !=from.characters.end(); ++itr) {
+		characters.push_back(*itr);
+	}
+	name = from.name;
 }
 
 void World::addCharacter(const Character &character) {

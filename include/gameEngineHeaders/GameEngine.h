@@ -18,12 +18,13 @@ class GameEngine : public Observer {
 		void notify(const string &userInput) ;
 		void notify(const vector<string> &userInput);
 
-		vector<string> getPossibleDirections();
+		vector<string> getPossibleDirections() const;
 
-		void addWorld(World w);
+		void addWorld(const World &w);
+		void addCharacter(const Character &c);
 
 	private:
-		Character currentPlayer;
+		//Character currentPlayer;
 		World currentWorld;
 
 		void processUserCommand(const string &command, const string &arguement);

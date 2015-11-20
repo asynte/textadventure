@@ -106,6 +106,7 @@ void testEquip() {
 				break;
 			case -1:
 				loop = false;
+	
 				break;
 		}
 	}
@@ -117,6 +118,12 @@ int main() {
 	roomDataInterface ROOM2("data/test.yml");
 
 	GameEngine *g = new GameEngine();
+	g->addWorld(World("test"));
+
+	g->addCharacter(Character("herp"));
+	g->addCharacter(Character("derp"));
+
+
 	UserInterface_addGameEngine(g);
 
 	pthread_join(UserInterface_getThreadId(), NULL);

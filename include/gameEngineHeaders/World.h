@@ -35,6 +35,8 @@ class World{
 		void addCharacter(const Character &character);
 		vector<Character> getCharacters();
 
+		void copy(const World &);
+
 		// vector<string> 
 
 
@@ -42,6 +44,7 @@ class World{
 
 	private:
 		Room getCurrentRoom(const Character &character);
+
 		vector<Room> roomsVector;
 		vector<Character> characters;
 		string name;

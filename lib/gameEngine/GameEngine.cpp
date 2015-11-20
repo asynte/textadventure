@@ -30,7 +30,13 @@ void GameEngine::processUserCommand(const string &command, const string &argueme
 	if (command == "move" && arguement.length() > 0) {
 		UserInterface_println("entered the move command!");
 
-		UserInterface_println("name: " + currentPlayer.getName());
+		vector<Character> characters = currentWorld.getCharacters();
+
+		for(auto itr = characters.begin(); itr != characters.end(); ++itr) {
+			UserInterface_println(itr->getName() + " " + I2S(itr->getLocation()));
+		}
+
+		//UserInterface_println("name: " + currentPlayer.getName());
 
 
 		// Room currentRoom = currentPlayer.getLocation();
@@ -95,17 +101,18 @@ void GameEngine::processUserCommand(const string &command, const string &argueme
 // 	return currentRoom.getPossibleDirections();
 // }
 
-void GameEngine::addWorld(World w) {
-	World derp("test");
-
-	//currentWorld = derp;
-
-	//this->currentWorld = w;
+void GameEngine::addWorld(const World &w) {
+	currentWorld.copy(w);
 }
 
+void GameEngine::addCharacter(const Character &c) {
+	currentWorld.addCharacter(c);
+}
+
+
 GameEngine::GameEngine() : 
-	currentPlayer(Character("no character")), 
-	currentWorld(World("default")) 
+//	currentPlayer(Character("no character"))
+	currentWorld(World("test"))
 	{
 		currentWorld.printRoomNames();
 	}
