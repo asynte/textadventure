@@ -30,6 +30,8 @@ target_link_libraries(${EXECUTABLE_NAME} Room)
 target_link_libraries(${EXECUTABLE_NAME} Widget)
 target_link_libraries(${EXECUTABLE_NAME} World)
 target_link_libraries(${EXECUTABLE_NAME} Extended)
+target_link_libraries(${EXECUTABLE_NAME} Spell)
+target_link_libraries(${EXECUTABLE_NAME} HealSpell)
 
 #userAccount Libraries
 target_link_libraries(${EXECUTABLE_NAME} Login)

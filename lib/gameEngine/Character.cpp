@@ -12,6 +12,8 @@ Character::Character(string name) {
     this->setName(name);
     this->setLevel(1);
     this->setHealth(CHAR_DEFAULTHEALTH);
+    this->setMana(CHAR_DEFAULTMANA);
+    this->setGold(CHAR_DEFAULTGOLD);
     this->setExp(0);
     this->setAtk(CHAR_DEFAULTATK);
     this->setStr(CHAR_DEFAULTSTAT);
@@ -48,6 +50,14 @@ void Character::setMana(int mp) {
 
 int Character::getMana() const {
     return this->charMana;
+}
+
+void Character::setGold(int gold) {
+    this->charGold = gold;
+}
+
+int Character::getGold() const {
+    return this->charGold;
 }
 
 void Character::setExp(int exp) {
@@ -126,6 +136,15 @@ int Character::getLocation() const {
     return this->currentLocation;
 }
 
+void Character::addHealSpell(HealSpell sp) {
+    this->charHealSpells.push_back(sp);
+    cout << sp.getName() + " acquired!" << endl;
+}
+
+vector<HealSpell> Character::getHealSpells() const {
+    return this->charHealSpells;
+}
+
 void Character::setPVP(bool b) {
     this->wantsToPVP = b;
 }
@@ -199,6 +218,7 @@ void Character::equip(Object &item) {
             this->charEquipment.insert( {item.getEquipArea(), item} );
             cout << item.getName() + " has been equipped." << endl;
             this->removeFromInventory(item); 
+            this->updateStats();
         } else { // something equipped in this area
             cout << this->charEquipment[areaIsEquipped].getName() + " is already equipped! Please unequip first." << endl;
         }

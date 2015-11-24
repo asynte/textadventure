@@ -7,6 +7,7 @@
 #include "gameEngineHeaders/Widget.h"
 #include "gameEngineHeaders/World.h"
 #include "gameEngineHeaders/GameEngine.h"
+#include "gameEngineHeaders/HealSpell.h"
 #include "userAccountHeaders/Login.h"
 #include "networkingHeaders/TCPClient.h"
 #include "networkingHeaders/TCPDataflow.h"
@@ -56,7 +57,6 @@ void testEquip() {
     player.interact(sword);
     player.interact(rock);
     player.equip(sword);
-    player.updateStats();
     cout << "Char attack: " + to_string(player.getAtk()) << endl;
     player.examine(sword);
     player.showInventory();
@@ -68,7 +68,14 @@ void testEquip() {
     player.showInventory();
 }
 
-
+void testSpells() {
+    Character player("Kilgrave");
+    player.printStatus();
+    HealSpell weakHeal("Weak Heal Spell", 1, 20, 50);
+    player.addHealSpell(weakHeal);
+    (player.getHealSpells()[0]).castSpell(player);
+    player.printStatus();
+}
 
 int main() {
 
@@ -100,7 +107,7 @@ int main() {
     // cin >> direction;
     // sfu.moveCharacter(player, direction);
 
-    //ROOM2.printAll();
+    // ROOM2.printAll();
     // objDataInterface objParser("data/midgaard.yml");
     // objParser.loadAll();
     // objParser.printAll();
@@ -112,7 +119,7 @@ int main() {
 
     // testFight();
     // testEquip();
-
+    testSpells();
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////
     

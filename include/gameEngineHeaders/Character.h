@@ -13,16 +13,21 @@
 #include "gameEngineHeaders/NPC.h"
 #include "gameEngineHeaders/Object.h"
 #include "gameEngineHeaders/Room.h"
+#include "gameEngineHeaders/Spell.h"
+#include "gameEngineHeaders/HealSpell.h"
+
+class HealSpell;
 
 using namespace std;
 
 class Character : public Widget {
 public:
-    const int CHAR_DEFAULTHEALTH = 100;
-    const int CHAR_DEFAULTMANA = 100;
-    const int CHAR_DEFAULTATK = 10;
-    const int CHAR_DEFAULTSTAT = 1;
-    const int CHAR_STARTLOCATION = -1;
+    static const int CHAR_DEFAULTHEALTH = 100;
+    static const int CHAR_DEFAULTMANA = 100;
+    static const int CHAR_DEFAULTATK = 10;
+    static const int CHAR_DEFAULTSTAT = 1;
+    static const int CHAR_DEFAULTGOLD = 1000;
+    static const int CHAR_STARTLOCATION = -1;
 
     map<int, const Object> charEquipment; // maps equipmentArea to Object
     
@@ -32,6 +37,8 @@ public:
     int getHealth() const;
     void setMana(int);
     int getMana() const;
+    void setGold(int);
+    int getGold() const;
     void setExp(int);
     void increaseExp(int);
     int getExp() const;
@@ -50,6 +57,8 @@ public:
     int getCha() const;
     void setPVP(bool);
     bool getPVP() const;
+    void addHealSpell(HealSpell);
+    vector<HealSpell> getHealSpells() const;
     void togglePVP();
     void updateStats();
     vector<Object> getInventory() const;
@@ -72,6 +81,7 @@ public:
 protected:
     int charHealth;
     int charMana;
+    int charGold;
     int experience;
     int charLevel;
     int charAtk;
@@ -80,6 +90,7 @@ protected:
     int charDexterity;
     int charCharisma;
     vector<Object> charInventory;
+    vector<HealSpell> charHealSpells;
     int currentLocation;
     bool wantsToPVP;
 };
