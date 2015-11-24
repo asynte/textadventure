@@ -25,6 +25,7 @@ Character::Character(string name) {
 void Character::printStatus() { // print Character's stats
     cout << "\nName: " + this->getName();
     cout << "\nHealth: " + to_string(this->getHealth());
+    cout << "\nMana: " + to_string(this->getMana());
     cout << "\nLevel: " + to_string(this->getLevel());
     cout << "\nPVP: " + to_string(this->getPVP());
     cout << "\nEquipment: \n";
@@ -39,6 +40,14 @@ void Character::setHealth(int hp) {
 
 int Character::getHealth() const {
     return this->charHealth;
+}
+
+void Character::setMana(int mp) {
+    this->charMana = mp;
+}
+
+int Character::getMana() const {
+    return this->charMana;
 }
 
 void Character::setExp(int exp) {
@@ -132,6 +141,26 @@ void Character::togglePVP() {
         this->wantsToPVP = true;
     }
 
+}
+
+void Character::updateStats() {
+    map<int, const Object>::iterator it;
+    // set default values
+    this->charStrength = CHAR_DEFAULTSTAT;
+    this->charDexterity = CHAR_DEFAULTSTAT;
+    this->charCharisma = CHAR_DEFAULTSTAT;
+    this->charIntelligence = CHAR_DEFAULTSTAT;
+    for (it = this->charEquipment.begin(); it != this->charEquipment.end(); it++) {
+        if (it->first == 5) { //weapon
+            this->charStrength += (it->second.getName()).length();
+        }
+        else if (it->first == 6) { //shield
+            this->charDexterity += (it->second.getName()).length();
+        }
+    }
+    this->charAtk = CHAR_DEFAULTATK + this->charStrength;
+    this->charHealth = CHAR_DEFAULTHEALTH + this->charDexterity;
+    this->charMana = CHAR_DEFAULTMANA + this->charIntelligence;
 }
 
 void Character::addToInventory(Object obj) {

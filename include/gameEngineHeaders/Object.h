@@ -30,6 +30,7 @@ protected:
 	vector<string> objExtraKeyWords;
         bool wearable;
         equipmentArea equippedOn;
+        int objStats;
 };
 
 #endif

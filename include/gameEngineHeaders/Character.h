@@ -19,6 +19,7 @@ using namespace std;
 class Character : public Widget {
 public:
     const int CHAR_DEFAULTHEALTH = 100;
+    const int CHAR_DEFAULTMANA = 100;
     const int CHAR_DEFAULTATK = 10;
     const int CHAR_DEFAULTSTAT = 1;
     const int CHAR_STARTLOCATION = -1;
@@ -29,6 +30,8 @@ public:
     void printStatus();
     void setHealth(int);
     int getHealth() const;
+    void setMana(int);
+    int getMana() const;
     void setExp(int);
     void increaseExp(int);
     int getExp() const;
@@ -48,6 +51,7 @@ public:
     void setPVP(bool);
     bool getPVP() const;
     void togglePVP();
+    void updateStats();
     vector<Object> getInventory() const;
     void addToInventory(Object);
     void showInventory() const;
@@ -67,6 +71,7 @@ public:
     
 protected:
     int charHealth;
+    int charMana;
     int experience;
     int charLevel;
     int charAtk;
