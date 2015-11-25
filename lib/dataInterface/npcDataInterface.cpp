@@ -49,7 +49,7 @@ using namespace std;
 
 	// print id of NPC struct at specified index
 	void npcDataInterface::printID (const int& index) {
-		cout << "ID: " + npcVector[index].getId() << "\n";
+		cout << "ID: " << npcVector[index].getId() << "\n";
 	}
 
 	// print key word of NPC struct at specified index

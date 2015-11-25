@@ -1,4 +1,3 @@
-
 #include <fstream>
 #include <string>
 #include <vector>
@@ -12,6 +11,41 @@ void cinIgnore() {
 	cin.ignore (std::numeric_limits<std::streamsize>::max(), '\n'); 
 }
 
+void emptyInputStream() {
+	// empties the input stream
+	cin.clear();
+	cinIgnore();
+}
+
+bool digitsOnly ( const string& s) {
+	// checks whether each char in string is digit or space
+	std::all_of(s.begin(), s.end(), 
+	[](const char& c) {
+        return isdigit(c) || isspace(c);
+    });
+}
+
+string stringInputCheck (string& s) {
+	bool inputCheck;
+  	
+  	if (digitsOnly(s)) {
+  		
+		while (!inputCheck) {
+
+  			cout << "Error: invalid input\nEnter again: ";
+
+  			std::getline(std::cin, s);
+
+  			if (!digitsOnly(s)) {
+  				inputCheck = true;
+  			}
+  		
+  		}
+  	}
+
+  	return s;
+}
+
 template<typename T>
 	T const get () {
 		T result;
@@ -23,6 +57,9 @@ template<typename T>
 T const getLine () {
 	T result;
 	std::getline(std::cin, result);
+
+	stringInputCheck(result);
+
 	return result;
 }
 
@@ -34,9 +71,29 @@ void const dataEmitter::getLineWhile () {
 		}
 
 		emitter << result;
+
 	}
 }
 
+
+int intInputCheck (int &x, string s, string s2) {
+	bool inputCheck;
+
+	while (!inputCheck) {
+		cout << "How many " << s << " for this " << s2 << "? ";
+		std::cin >> x;
+
+		if (cin.fail()) {
+			emptyInputStream();
+		}
+
+		else if (cin) {
+			inputCheck = true;
+		}
+	}
+
+	return x;
+}
 
 void dataEmitter::emitMapValue () {
 	emitter << YAML::Value << getLine<string>();
@@ -65,7 +122,7 @@ void dataEmitter::loopEmit ( int & loopCount, void (*setFunction)() ) {
 // 	cinIgnore();
 
 // 	if ( loopCount == 0 ) {
-// 		emitter << YAML::Value << "[]";
+// 		emitter << YAML::Value << YAML::EndSeq;
 // 	}
 
 // 	else {
@@ -201,28 +258,26 @@ void dataEmitter::setObjectExtra() {
 	emitter << YAML::EndMap;
 }
 
+
 void dataEmitter::objectExtraLoop () {
 	int extraDescCount;
-	cout << "How many extra descriptions for this object? ";
-	std::cin >> extraDescCount;
+
+
+	intInputCheck(extraDescCount, "extra descriptions", "object");
 
 	// use this method every time getLine is used after cin
 	cinIgnore();
 
-	if ( extraDescCount == 0 ) {
-		emitter << YAML::Value << "[]";
+
+	emitter << YAML::BeginSeq;
+
+	while ( extraDescCount != 0 ) {	
+		setObjectExtra();
+		extraDescCount--;
 	}
 
-	else {
-		emitter << YAML::BeginSeq;
-
-		while ( extraDescCount != 0 ) {	
-			setObjectExtra();
-			extraDescCount--;
-		}
-
-		emitter << YAML::EndSeq;
-	}
+	emitter << YAML::EndSeq;
+	
 }
 
 void dataEmitter::setObjectLongDescription () {
@@ -367,26 +422,23 @@ void dataEmitter::setRoomDoor () {
 
 void dataEmitter::roomDoorLoop () {
 	int roomDoorCount;
-	cout << "How many doors for this room? ";
-	std::cin >> roomDoorCount;
+
+	intInputCheck(roomDoorCount, "doors", "room");
+
 
 	// use this method every time getLine is used after cin
 	cinIgnore();
 
-	if ( roomDoorCount == 0 ) {
-		emitter << YAML::Value << "[]";
+
+	emitter << YAML::BeginSeq;
+
+	while ( roomDoorCount != 0 ) {	
+		setRoomDoor();
+		roomDoorCount--;
 	}
 
-	else {
-		emitter << YAML::BeginSeq;
-
-		while ( roomDoorCount != 0 ) {	
-			setRoomDoor();
-			roomDoorCount--;
-		}
-
-		emitter << YAML::EndSeq;
-	}
+	emitter << YAML::EndSeq;
+	
 
 }
 
@@ -418,26 +470,23 @@ void dataEmitter::setRoomExtended () {
 
 void dataEmitter::roomExtendedLoop () {
 	int roomExtendedCount;
-	cout << "How many extended descriptions for this room? ";
-	std::cin >> roomExtendedCount;
+
+	intInputCheck(roomExtendedCount, "extended descriptions", "room");
+
 
 	// use this method every time getLine is used after cin
 	cinIgnore();
 
-	if ( roomExtendedCount == 0 ) {
-		emitter << YAML::Value << "[]";
+
+	emitter << YAML::BeginSeq;
+
+	while ( roomExtendedCount != 0 ) {	
+		setRoomExtended();
+		roomExtendedCount--;
 	}
 
-	else {
-		emitter << YAML::BeginSeq;
-
-		while ( roomExtendedCount != 0 ) {	
-			setRoomExtended();
-			roomExtendedCount--;
-		}
-
-		emitter << YAML::EndSeq;
-	}
+	emitter << YAML::EndSeq;
+	
 }
 
 void dataEmitter::setRoomName () {
@@ -473,71 +522,86 @@ void dataEmitter::emitRoom () {
 }
 
 
+void checkIfDone ( bool& flag) {
+	bool done;
+
+	while (!done) {
+
+		string answer = getLine<string>();
+
+		if (answer == "n" || answer == "N") {
+			flag = true;
+			done = true;
+		}
+
+		else if (answer == "y" || answer == "Y") {
+			done = true;
+		}
+
+		else {
+			cout << "Error: Invalid input\n Add another (y/n)? ";
+		}
+	}
+}
 
 void dataEmitter::startEmittingToYamlFile () {
 
 	bool done = false;
-
+	
+	cout << "\nEmitting Area \n";
 	startArea();
 	setAreaName();
 	endArea();
 
-	cout << "\nEmitting NPC \nPress Enter to Start";
-	getLine<string>();
+
+	cout << "\nEmitting NPC \n";
 	startSequence("NPCS");
 	while (!done)  {
 		emitNPC();
 
 		cout << "Add another NPC (y/n)? "; 
-		if (getLine<string>() == "n" )
-			done = true;
-		}
+		checkIfDone(done);
+	}
 	endSequence();
 
 
 
 
 	done = false;
-	cout << "\n\nEmitting Objects\n Press Enter to Start";
-	getLine<string>();
+	cout << "\n\nEmitting Objects\n";
 	startSequence("OBJECTS");
 	while (!done)  {
 		emitObject();
 
 		cout << "Add another Object (y/n)? "; 
-		if (getLine<string>() == "n" ) {
-			done = true;
-		}		
+		checkIfDone(done);		
 	}
 	endSequence();
 
-
+/*
 	done = false;
-	cout << "\n\nEmitting Resets\n Press Enter to Start";
-	getLine<string>();
+	cout << "\n\nEmitting Resets\n;
 	startSequence("RESETS");
 	while (!done)  {
 		emitReset();
 
 		cout << "Add another Reset (y/n)? "; 
-		if (getLine<string>() == "n" ) {
-			done = true;
-		}	
+		checkIfDone(done);
 	}
 	endSequence();
 
-	done = false;
-	cout << "\n\nEmitting Rooms\n Press Enter to Start";
-	getLine<string>();
-	startSequence("ROOMS");
-	while (!done)  {
-		emitRoom();
-		cout << "Add another Room (y/n)? "; 
-		if (getLine<string>() == "n" ) {
-			done = true;
-		}	
-	}
-	endSequence();
+*/
+
+
+	// done = false;
+	// cout << "\n\nEmitting Rooms\n;
+	// startSequence("ROOMS");
+	// while (!done)  {
+	// 	emitRoom();
+	// 	cout << "Add another Room (y/n)? "; 
+	// 	checkIfDone(done);
+	// }
+	// endSequence();
 
 	printToFile();
 
