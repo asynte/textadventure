@@ -34,7 +34,7 @@ public:
 	void addCharacter(const Character &character);
 
 	vector<string> getAllDirections(Character &player); // Used for UserInterface
-	vector<string> getAllKeywords(Character &player); // Used for UserInterface
+	vector<string> getAllKeywords(); // Used for UserInterface
 private:
 	vector<Room> roomsVector;
 	vector <Object> objectVector;

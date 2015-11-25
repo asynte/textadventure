@@ -32,7 +32,7 @@ public:
     map<int, const Object> charEquipment; // maps equipmentArea to Object
     
     Character();
-    Character(string);
+    Character(string,int);
     void printStatus();
     void setHealth(int);
     int getHealth() const;
@@ -79,8 +79,12 @@ public:
     void attack(Character&);
     void battleSequence(NPC&);
     bool equals(const Character &);
-    
+    void turnLeft();
+    void turnRight();
+    void turnBack();
+    string getDirection();
 protected:
+    int direction;
     int charHealth;
     int charMana;
     int charGold;

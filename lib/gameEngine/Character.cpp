@@ -25,7 +25,7 @@ Character::Character() {
     this->setLocation(CHAR_STARTLOCATION);
 }
 
-Character::Character(string name) {
+Character::Character(string name,int currentLocation) {
     this->setName(name);
     this->setLevel(1);
     this->setHealth(CHAR_DEFAULTHEALTH);
@@ -38,7 +38,8 @@ Character::Character(string name) {
     this->setDex(CHAR_DEFAULTSTAT);
     this->setCha(CHAR_DEFAULTSTAT);
     this->setPVP(false);
-    this->setLocation(CHAR_STARTLOCATION);
+    this->setLocation(currentLocation);
+    this->direction=0;
 }
 
 bool Character::equals(const Character &other) {
@@ -53,7 +54,9 @@ void Character::printStatus() { // print Character's stats
     cout << "\nMana: " + to_string(this->getMana());
     cout << "\nLevel: " + to_string(this->getLevel());
     cout << "\nPVP: " + to_string(this->getPVP());
+    cout <<"\n Direction: "+ getDirection();
     cout << "\nEquipment: \n";
+
     for (auto wornItem : this->charEquipment) {
         cout << "\t" + wornItem.second.getName() << endl;
     }
@@ -158,7 +161,32 @@ void Character::setLocation(int roomID){
 int Character::getLocation() const {
     return this->currentLocation;
 }
+void Character::turnLeft(){
+    direction++;
+    direction%=4;
+}
+void Character::turnRight(){
+    direction--;
+    direction%=4;
+}
+void Character::turnBack(){
+    direction+=2;
+    direction%=4;
 
+}
+string Character::getDirection(){
+    if(direction==0){
+        return "North";
+    }else if(direction==1){
+        return "West";
+    }else if(direction==2){
+        return "South";
+    }else if(direction==3){
+        return "East";
+    }else{
+        return "Wrong";
+    }
+}
 // void Character::addHealSpell(HealSpell sp) {
 //     this->charHealSpells.push_back(sp);
 //     cout << sp.getName() + " acquired!" << endl;

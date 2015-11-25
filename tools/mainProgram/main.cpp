@@ -31,83 +31,18 @@ int init(){
 	objDataInterface objParser("data/midgaard.yml");
 	npcDataInterface npcParser("data/midgaard.yml");
 }
-// void printObjectkeywordInRoom(Room room){
-// 	vector<string> keyword=room.getObjectAllKeyWords();
-// 	for(string s:keyword){
-// 		cout<<s<<" ";
-// 	}
-// }
-// void printNPCkeywordInRoom(Room room){
-// 	vector<string> keyword=room.getNPCAllKeyWords();
-// 	for(string s:keyword){
-// 		cout<<s<<" ";
-// 	}
-// }
-// void printAllkeywordInRoom(Room room){
-// 	vector<string> keyword=room.getAllKeyWords();
-// 	for(string s:keyword){
-// 		cout<<s<<" ";
-// 	}
-// 	cout<<endl;
-// }
-// void printAllObjectNameKeyword(Room room,string keyword){
-// 	cout<<"Keyword: "<<keyword<<" associated object name:"<<endl;
-// 	vector<Object> objects=room.getObjectAssociatedKeyword(keyword);
-// 	for(Object o:objects){
-// 		cout<<o.getName()<<endl;
-// 	}
-// 	if(objects.size()==0){
-// 		cout<<"Sorry, there is no keyword "<<keyword<<" in this room Object."<<endl;
-// 	}
-// }
-// void printAllNPCNameKeyword(Room room,string keyword){
-// 	cout<<"Keyword: "<<keyword<<" associated object name:"<<endl;
-// 	vector<NPC> NPCs=room.getNPCAssociatedKeyword(keyword);
-// 	for(NPC npc:NPCs){
-// 		cout<<npc.getName()<<endl;
-// 	}
-// 	if(NPCs.size()==0){
-// 		cout<<"Sorry, there is no keyword "<<keyword<<" in this room NPC."<<endl;
-// 	}
-// }
-// void printAllExitDoor(Room room){
-// 	vector <int> exits=room.lookAtExit();
-// 	cout<<"Room "<<room.getID() <<" Exit: ";
-// 	for(int i:exits){
-// 		cout<<i<<" ";
-// 	}
-// 	cout<<endl;
-// }
+
 
 int main() {
-
-    World sfu("midgaard");
-   
-    Character player("Akame");
-    player.setLocation(3001);
-    string direction;
-    cout<<"Enter direction: " << endl;
-    cin >> direction;
-    sfu.moveCharacter(player, direction);
-
-
-	// World world("midgaard");
-	// int roomrightID=3001;
-	// int roomfalseID=3000;//no room id is 3000
-	// if(world.findRoomById(roomrightID)){
-	// 	Room room=world.getRoomFindById(3001);
-	// 	printObjectkeywordInRoom(room);
-	// 	printNPCkeywordInRoom(room);
-	// 	printAllkeywordInRoom(room);
-	// 	printAllObjectNameKeyword(room,"b");
-	// 	printAllObjectNameKeyword(room,"bottle");
-	// 	printAllNPCNameKeyword(room,"baker");
-	// 	//printAllExitDoor(room);
-
-	// }
-	// if(!world.findRoomById(roomfalseID)){
-	// 	cout<<"Sorry cannot find room"<<endl;
-	// }
+	Character Player("a", 3001);
+	for (int i=0;i<5;i++){
+			cout<<Player.getDirection()<<endl;
+			Player.turnLeft();
+			cout<<Player.getDirection()<<endl;
+			Player.turnRight();
+			cout<<Player.getDirection()<<endl;
+			Player.turnBack();
+	}
 	return 0;
 }
 
