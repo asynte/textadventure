@@ -32,17 +32,20 @@ public:
 	void moveCharacter(Character &player, string userCommand);
 	void setCharRoom(Character &c, int roomID, int moveDirection);
 	void addCharacter(const Character &character);
+
+	vector<string> getAllDirections(Character &player); // Used for UserInterface
+	vector<string> getAllKeywords(Character &player); // Used for UserInterface
 private:
 	vector<Room> roomsVector;
 	vector <Object> objectVector;
 	vector <NPC> npcVector;
 	vector<Character> characters;
-	Room getCurrentRoom(const Character &character);
 
 	string name;
 	int roomNowIndex;
 	void addObjectToRoom(string fileName);
 	void addNPCToRoom(string fileName);
+	Room getCurrentRoom(Character &player);
 	
 };
 #endif

@@ -1,5 +1,7 @@
 using namespace std;
 
+
+
 #ifndef ROOM_H
 #define ROOM_H
 #include <vector>
@@ -28,24 +30,30 @@ public:
 
 	void addObject(const Object& o);
 	void addNPC(const NPC& npc);
+	void addCharacter(const Character& player);
+	void removeCharacter(const Character& player);
 	vector <Object> getObjectList();
 	vector <NPC> getNPCList();
+	vector <Character> getCharacterList();
 	vector<string> getObjectAllKeyWords();
 	vector<string> getNPCAllKeyWords();
 	vector<string> getDoorAllKeywords();
 	//vector<string> getCharacterAllKeyWords();
-	vector<string>getAllKeyWords();
-	vector <Object>getObjectAssociatedKeyword(string keyword);
+	vector<string> getAllKeyWords();
+	vector <Object> getObjectAssociatedKeyword(string keyword);
 	vector <NPC> getNPCAssociatedKeyword(string keyword);
 	//vector <int>lookAtExit();
-	vector<string> getPossibleDirections();
+	vector<string> getAllDirections(); // Used for UserInterface
+
+	//void test(Character c);
 private:
 	string description;
 	vector<Door> doorsList;
 	vector<Extended> extendedList;
 	vector<Object>objectList;
 	vector<NPC>npcList;
-	//vector<Character> characterList;
+	vector<Character> characterList;
+
 	int ID;
 	string name;
 

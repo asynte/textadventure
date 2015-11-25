@@ -24,14 +24,6 @@ void World::addCharacter(const Character &character) {
 	characters.push_back(character);
 }
 
-Room World::getCurrentRoom(const Character &character) {
-	//int currentRoomId = character.getLocation();
-	int currentRoomId = 0;
-	Room currentRoom = roomsVector[currentRoomId];
-
-	return currentRoom;
-}
-
 //function to replace the commented build() function, this is to call all of louie's yaml parsing
 void World::initializeWorld(string name){
  	string fileName="data/"+name+".yml";
@@ -109,30 +101,40 @@ int World::getRoom(int roomID) {
 		if (this->getRoomsVector()[i].getID() == roomID) {
 			return i;
 		}
-		else {
-			return -1; //room not found
-		}
 	}
+
+	return -1;
+}
+
+Room World::getCurrentRoom(Character &player) {
+	int currentRoomIndex = this->getRoom(player.getLocation()); // get index of player's current room
+
+	cout << "index: " << currentRoomIndex << endl;
+
+	if (currentRoomIndex == -1) {
+		cout << "Room does not exist!" << endl;
+		exit(0);
+	}
+	return roomsVector[currentRoomIndex];
 }
 
 void World::moveCharacter(Character &player, string userCommand){
-
 	int currentRoomIndex = this->getRoom(player.getLocation()); // get index of player's current room
-	if (currentRoomIndex == -1) {
-		cout << "Room does not exist!" << endl;
-		return;
-	}
-	Room currentRoom = roomsVector[currentRoomIndex];
+	Room currentRoom = this->getCurrentRoom(player);
+
 	int moveDirection = currentRoom.getDoorsList()[0].getDirectionAsInt(userCommand);
 	if (currentRoom.isRoomAvailable(moveDirection)) {
 	// above line checks whether the command to move is a movable direction
+
+		currentRoom.removeCharacter(player);
+
 		this->setCharRoom(player, currentRoomIndex, moveDirection);
 		cout << "You have moved to " + to_string(player.getLocation()) << endl;
+		this->getCurrentRoom(player).addCharacter(player);
 	}
 	else{
 		cout<<"You cannot go in this direction because this direction does not exist"<<endl; 
 	}
-
 }
 
 vector<Character> World::getCharacters() {
@@ -154,6 +156,14 @@ void World::addRoom(Room room){
 }
 
 
+vector<string> World::getAllDirections(Character &player) { // Used for UserInterface
+	Room currentRoom = getCurrentRoom(player);
+	return currentRoom.getAllDirections();
+}
+vector<string> World::getAllKeywords(Character &player) { // Used for UserInterface
+	Room currentRoom = getCurrentRoom(player);
+	return currentRoom.getAllKeyWords();
+}
 
 
 

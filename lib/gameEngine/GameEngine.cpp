@@ -30,8 +30,8 @@ void GameEngine::processUserCommand(const string &command, const string &argueme
 	// int temp = arguement.copy(usrcmd, arguement.length());
 	UserInterface_println("command: " + command + " arguement:" + arguement);
 
-	// if (command == "move" && arguement.length() > 0) {
-	if (command == "move") {
+	if (command == "move" && arguement.length() > 0) {
+	//if (command == "move") {
 		UserInterface_println("entered the move command!");
 
 		// Room currentRoom = currentPlayer.getLocation();
@@ -57,21 +57,12 @@ void GameEngine::processUserCommand(const string &command, const string &argueme
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-// vector<string> GameEngine::GameEngine_getPossibleDirections() {
-// 	// int roomId = currentPlayer.getLocation();
-
-
-// 	// UserInterface_println("room: " + I2S(currentPlayer.getCurrentRoom().getID());
-
-
-// // //getName()
-
-// // 	vector<Room> rooms = currentWorld.getRoomsVector();
-
-// // 		for(int i = 0; rooms.size() > i; ++i) {
-// // 			UserInterface_println(rooms.at(i).getName());
-// // 		}
-
+vector<string> GameEngine::GameEngine_getPossibleDirections() {
+	return currentWorld.getAllDirections(currentPlayer);
+}
+vector<string> GameEngine::GameEngine_getPossibleKeywords() {
+	return currentWorld.getAllDirections(currentPlayer);
+}
 
 
 // 	Room currentRoom = currentPlayer.getCurrentRoom();

@@ -8,6 +8,23 @@
 // Character::Character() {
 // }
 
+
+Character::Character() {
+    this->setName("");
+    this->setLevel(1);
+    this->setHealth(CHAR_DEFAULTHEALTH);
+    this->setMana(CHAR_DEFAULTMANA);
+    this->setGold(CHAR_DEFAULTGOLD);
+    this->setExp(0);
+    this->setAtk(CHAR_DEFAULTATK);
+    this->setStr(CHAR_DEFAULTSTAT);
+    this->setInt(CHAR_DEFAULTSTAT);
+    this->setDex(CHAR_DEFAULTSTAT);
+    this->setCha(CHAR_DEFAULTSTAT);
+    this->setPVP(false);
+    this->setLocation(CHAR_STARTLOCATION);
+}
+
 Character::Character(string name) {
     this->setName(name);
     this->setLevel(1);
@@ -22,6 +39,12 @@ Character::Character(string name) {
     this->setCha(CHAR_DEFAULTSTAT);
     this->setPVP(false);
     this->setLocation(CHAR_STARTLOCATION);
+}
+
+bool Character::equals(const Character &other) {
+    return this->widgetName == other.widgetName
+        && this->widgetId == other.widgetId
+    ; 
 }
 
 void Character::printStatus() { // print Character's stats
@@ -136,14 +159,14 @@ int Character::getLocation() const {
     return this->currentLocation;
 }
 
-void Character::addHealSpell(HealSpell sp) {
-    this->charHealSpells.push_back(sp);
-    cout << sp.getName() + " acquired!" << endl;
-}
+// void Character::addHealSpell(HealSpell sp) {
+//     this->charHealSpells.push_back(sp);
+//     cout << sp.getName() + " acquired!" << endl;
+// }
 
-vector<HealSpell> Character::getHealSpells() const {
-    return this->charHealSpells;
-}
+// vector<HealSpell> Character::getHealSpells() const {
+//     return this->charHealSpells;
+// }
 
 void Character::setPVP(bool b) {
     this->wantsToPVP = b;

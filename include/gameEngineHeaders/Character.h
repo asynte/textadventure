@@ -9,10 +9,10 @@
 #include <map>
 #include <regex>
 #include <stdlib.h>
+
 #include "gameEngineHeaders/Widget.h"
 #include "gameEngineHeaders/NPC.h"
 #include "gameEngineHeaders/Object.h"
-#include "gameEngineHeaders/Room.h"
 #include "gameEngineHeaders/Spell.h"
 #include "gameEngineHeaders/HealSpell.h"
 
@@ -31,6 +31,7 @@ public:
 
     map<int, const Object> charEquipment; // maps equipmentArea to Object
     
+    Character();
     Character(string);
     void printStatus();
     void setHealth(int);
@@ -57,8 +58,8 @@ public:
     int getCha() const;
     void setPVP(bool);
     bool getPVP() const;
-    void addHealSpell(HealSpell);
-    vector<HealSpell> getHealSpells() const;
+    // void addHealSpell(HealSpell);
+    // vector<HealSpell> getHealSpells() const;
     void togglePVP();
     void updateStats();
     vector<Object> getInventory() const;
@@ -77,6 +78,7 @@ public:
     void attack(NPC);
     void attack(Character&);
     void battleSequence(NPC&);
+    bool equals(const Character &);
     
 protected:
     int charHealth;
