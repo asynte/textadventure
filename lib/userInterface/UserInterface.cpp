@@ -1,7 +1,14 @@
-#include "userInterfaceHeaders/UserInterface.h"
+
 
 #ifndef _USER_INTERFACE_CPP_
 #define _USER_INTERFACE_CPP_
+
+
+
+#include "userInterfaceHeaders/UserInterface.h"
+#include "gameEngineHeaders/GameEngine.h"
+
+
 
 using namespace std;
 
@@ -21,7 +28,7 @@ using namespace std;
 static InterfaceObserver observer;*/
 
 
-
+static GameEngine *gameEngine = NULL;
 static ObserverList observers;
 static bool IS_RUNNING;
 static bool IGNORE;
@@ -32,7 +39,27 @@ static const int BUFFER_LENGTH = 128;
 static int interface_row;
 static int interface_col;
 
+// void UserInterface_addGameEngine(GameEngine g) {
+// 	// GameEngine *g = (GameEngine) ptr;
 
+// }
+
+// vector<string> UserInterface_getPossibleDirections(void) {
+
+// 	// GameEngine *g = new GameEngine();
+
+// 	// g.getPossibleDirections();
+
+// 	if (gameEngine == NULL) {
+// 		UserInterface_println("null game engine");
+// 		UserInterface_quit();
+// 		exit(0);
+// 	} else {
+// 		UserInterface_println("game engine found");
+// 		vector<string> directions = gameEngine->GameEngine_getPossibleDirections();
+// 		return directions;
+// 	}
+// }
 
 void UserInterface_print(const string &value) {
 	mvprintw(interface_row, 0, "%s", value.c_str());
@@ -55,7 +82,16 @@ static void UserInterface_printRow(const string &value, const int row) {
 }
 
 void UserInterface_addListener(Observer *obs) {
-	observers.addObserver(obs);
+
+	// if(GameEngine* v = dynamic_cast<GameEngine*>(obs)) {
+	// 	gameEngine = v;
+	//    // old was safely casted to NewType
+	//    // v->doSomething();
+
+	// 	UserInterface_println("casting game engine");
+	// }
+
+	// observers.addObserver(obs);
 }
 
 void UserInterface_notifyListeners(const string &str) {

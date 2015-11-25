@@ -6,6 +6,7 @@
 #include "gameEngineHeaders/Room.h"
 #include "gameEngineHeaders/Widget.h"
 #include "gameEngineHeaders/World.h"
+#include "gameEngineHeaders/GameEngine.h"
 #include "userAccountHeaders/Login.h"
 #include "networkingHeaders/TCPClient.h"
 #include "networkingHeaders/TCPDataflow.h"
@@ -29,7 +30,6 @@ int init(){
 	roomDataInterface roomParser("data/midgaard.yml");
 	objDataInterface objParser("data/midgaard.yml");
 	npcDataInterface npcParser("data/midgaard.yml");
-
 }
 void printObjectkeywordInRoom(Room room){
 	vector<string> keyword=room.getObjectAllKeyWords();
@@ -70,14 +70,14 @@ void printAllNPCNameKeyword(Room room,string keyword){
 		cout<<"Sorry, there is no keyword "<<keyword<<" in this room NPC."<<endl;
 	}
 }
-void printAllExitDoor(Room room){
-	vector <int> exits=room.lookAtExit();
-	cout<<"Room "<<room.getID() <<" Exit: ";
-	for(int i:exits){
-		cout<<i<<" ";
-	}
-	cout<<endl;
-}
+// void printAllExitDoor(Room room){
+// 	vector <int> exits=room.lookAtExit();
+// 	cout<<"Room "<<room.getID() <<" Exit: ";
+// 	for(int i:exits){
+// 		cout<<i<<" ";
+// 	}
+// 	cout<<endl;
+// }
 
 int main() {
 
@@ -93,13 +93,11 @@ int main() {
 		printAllObjectNameKeyword(room,"b");
 		printAllObjectNameKeyword(room,"bottle");
 		printAllNPCNameKeyword(room,"baker");
-		printAllExitDoor(room);
+		//printAllExitDoor(room);
 
 	}
 	if(!world.findRoomById(roomfalseID)){
 		cout<<"Sorry cannot find room"<<endl;
 	}
+}
 
-	
-	return 0;
-}	

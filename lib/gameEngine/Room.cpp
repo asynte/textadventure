@@ -1,16 +1,15 @@
 #ifndef ROOM_CPP
 #define ROOM_CPP
-#include "gameEngineHeaders/Room.h"
-#include "userInterfaceHeaders/UserInterface.h"
 
-Room::Room(){
-	description = "";
-	//this->extended_descriptions = extended_descriptions;
-	ID=0;
-	name="";
-	Room *test = this;
-	characterList.push_back(Character("default", *test));
+
+#include <algorithm>
+#include "gameEngineHeaders/Room.h"
+
+
+Room::Room(int ID) {
+	this->ID = ID;
 }
+
 Room::Room(string description,vector<Door> doorsList,vector<Extended> extendedList,string name,int ID) {
 	this->description = description;
 	this->doorsList=doorsList;
@@ -52,22 +51,22 @@ vector<string> Room::getDoorAllKeywords(){
 	return doorAllKeywords;
 }
 //Character not in room, did not test
-vector<string> Room::getCharacterAllKeyWords(){
-	vector<string> characterAllKeywords;
-	characterAllKeywords.push_back("\nCharacter keyword: ");
-	for(Character c:characterList){
-		vector<string> chararcterKeywords=c.getKeyWords();
-		for(string s:chararcterKeywords){
-			characterAllKeywords.push_back(s);
-		}
-	}
-	return characterAllKeywords;
-}
+// vector<string> Room::getCharacterAllKeyWords(){
+// 	vector<string> characterAllKeywords;
+// 	characterAllKeywords.push_back("\nCharacter keyword: ");
+// 	for(Character c:characterList){
+// 		vector<string> chararcterKeywords=c.getKeyWords();
+// 		for(string s:chararcterKeywords){
+// 			characterAllKeywords.push_back(s);
+// 		}
+// 	}
+// 	return characterAllKeywords;
+// }
 vector<string>Room::getAllKeyWords(){
 	vector<string> objectAllKeywords=getObjectAllKeyWords();
 	vector<string> npcAllKeywords=getNPCAllKeyWords();
 	vector<string> doorAllKeywords=getDoorAllKeywords();
-	vector<string> characterAllKeywords=getCharacterAllKeyWords();
+	//vector<string> characterAllKeywords=getCharacterAllKeyWords();
 	vector<string> allKeywords;
 	for(string s:objectAllKeywords){
 		allKeywords.push_back(s);
@@ -78,9 +77,9 @@ vector<string>Room::getAllKeyWords(){
 	for(string s:doorAllKeywords){
 		allKeywords.push_back(s);
 	}
-	for(string s:characterAllKeywords){
-		allKeywords.push_back(s);
-	}
+	// for(string s:characterAllKeywords){
+	// 	allKeywords.push_back(s);
+	// }
 	return allKeywords;
 }
 vector <Object> Room::getObjectAssociatedKeyword(string keyword){
@@ -110,26 +109,26 @@ vector <NPC> Room::getNPCAssociatedKeyword(string keyword){
 	return NPCkey;
 }
 
-vector <int>Room::lookAtExit(){
-	vector <int> exits;
-	for(Door d:doorsList){
-		exits.push_back(d.getToID());
-	}
-	return exits;
-}
+// vector <int>Room::lookAtExit(){
+// 	vector <int> exits;
+// 	for(Door d:doorsList){
+// 		exits.push_back(d.getToID());
+// 	}
+// 	return exits;
+// }
 string Room::getDescription(){
 	return description;
 }
-vector<Door> Room::getDoorsList(){
+vector<Door> Room::getDoorsList() const {
 	return doorsList;
 }
 vector<Extended> Room::getExtended(){
 	return extendedList;
 }
-string Room::getName(){
+string Room::getName() const{
 	return name;
 }
-int Room::getID(){
+int Room::getID() const{
 	return ID;
 }
 void Room::addObject(const Object& o){
@@ -149,18 +148,35 @@ vector<NPC> Room::getNPCList(){
 }
 bool Room::isRoomAvailable(int direction){
 	for(int i=0;i<doorsList.size();i++){
-		if(doorsList[i].getDirectionAsInt()==direction){
-			return true;
-		}
-	}
-	
-	return false;
+ 		if(doorsList[i].getDirectionAsInt(doorsList[i].getDirection()) == direction){
+ 			return true;
+ 		}
+ 	}
+ 	cout<<"You cannot go in this direction because this direction does not exist"<<endl;
+ 	//UserInterface_println("You cannot go in this direction because this direction does not exist");
+ 	return false;
+
 }
-Door Room::getDoorWantToGo(int direction){
+
+
+vector<string> Room::getPossibleDirections() {
+	vector<string> directions;
+
 	for(int i=0;i<doorsList.size();i++){
-		if(doorsList[i].getDirectionAsInt()==direction){
-			return doorsList[i];
-		}
+		Door door = doorsList[i];
+		string direction = door.getDirection();
+
+		// if ( find(directions.begin(), directions.end(), direction) != directions.end() ) {
+
+		//cout << "adding: " << direction;
+
+		directions.push_back(direction);
+		// }
 	}
+
+	return directions;
 }
+
+
+
 #endif

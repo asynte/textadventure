@@ -1,7 +1,6 @@
-#include "userInterfaceHeaders/Commands.h"
-
 #ifndef _COMMANDS_CPP_
 #define _COMMANDS_CPP_
+#include "userInterfaceHeaders/Commands.h"
 
 static const string SPACER = "  ";
 
@@ -54,13 +53,26 @@ bool isMenuCommand(const string &str) {
 }
 
 static void move(const string &str) {
-	UserInterface_println("move");
+	// UserInterface_println("move");
+
+	// vector<string> directions = UserInterface_getPossibleDirections();
+
+	// if ( find(directions.begin(), directions.end(), str) != directions.end() ) {
+	// 	UserInterface_println("invalid direction: " + str);
+	// }
 }
 
 static void move(void) {
-	UserInterface_println("requires a direction to move to!");
-	UserInterface_println(SPACER + "\"move <direction>\"");
-	UserInterface_println(SPACER + "use \"help move\" to see more details");
+	// vector<string> directions = UserInterface_getPossibleDirections();
+
+	// UserInterface_println("requires a direction to move to!");
+	// UserInterface_println(SPACER + "\"move <direction>\"");
+	// UserInterface_println(SPACER + "use \"help move\" to see more details");
+	// UserInterface_println(SPACER + "possible directions are:");
+
+	// for(int i = 0; directions.size() > i; ++i) {
+	// 	UserInterface_println(SPACER + SPACER + directions.at(i));
+	// }
 }
 
 static void quit(void){
@@ -73,7 +85,7 @@ static void quit(void){
 	//cin >> result;
 	result = UserInterface_getUserInput();
 
-	if ((result == "y") == true) {
+	if ((result.substr(0,1) == "y") == true) {
 		UserInterface_println("quitting");
 		UserInterface_quit();
 	}
@@ -102,7 +114,7 @@ static void help(const string &str){
 	}
 }
 
-static void list(void){ 
+static void listCommand(void){ 
 	UserInterface_println("Menu Commands:");
 	for(auto itr = menuCommands.begin(); itr != menuCommands.end(); ++itr) {
 		UserInterface_println(SPACER + itr->first);// endl;
@@ -122,7 +134,7 @@ static void list(void){
 void Commands_initiate() {
 	//no arguement functions
     functionMapVoid["quit"] = quit;
-    functionMapVoid["list"] = list;
+    functionMapVoid["list"] = listCommand;
     functionMapVoid["help"] = help;
     functionMapVoid["move"] = move;
     functionMapVoid["login"] = move;

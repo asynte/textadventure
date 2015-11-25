@@ -16,7 +16,7 @@ void cinClear(){
 
 
 void dataEmitter::searchLine (const string& phrase) {
-	// string line;
+	// string line;z
 	// size_t pos;
 	// while (getline(outFile, line)) {
 	// 	pos = line.find(phrase);
@@ -275,4 +275,3 @@ void dataEmitter::emitNPC () {
 
 	outFile << emitter.c_str();
 }
-

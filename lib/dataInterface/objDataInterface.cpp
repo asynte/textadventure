@@ -45,6 +45,7 @@ using namespace std;
 	// return short description of OBJECT struct at specified index
 	string objDataInterface::getShortDescription (const int& index) {
 		return objVector[index].getName();
+
 	}
 	vector<Object> objDataInterface::getObjVector(){
 		return objVector;

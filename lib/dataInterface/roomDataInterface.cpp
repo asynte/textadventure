@@ -4,6 +4,7 @@
 #include "yaml-cpp/yaml.h"
 #include "dataInterfaceHeaders/dataInterfaceBase.h"
 #include "yaml-cpp/yaml.h"
+#include "userInterfaceHeaders/UserInterface.h"
 using namespace std;
 
 	///////////////////////////////////
@@ -55,7 +56,7 @@ using namespace std;
 	int roomDataInterface::getDoorTO (const int& roomIndex, const int& doorIndex) {
 		Room room=roomVector[roomIndex];
 		Door door=room.getDoorsList()[doorIndex];
-		return door.getToID();
+		return door.getNextRoomID();
 	}
 
 
@@ -89,7 +90,15 @@ using namespace std;
 	}
 
 
+	int roomDataInterface::getRoomSize () {
 
+		return roomVector.size();
+	}
+
+	int roomDataInterface::getDoorSize (const int& index) {
+
+		return roomVector[index].getDoorsList().size();
+	}
 
 
 	///////////////////////////////////
@@ -100,9 +109,9 @@ using namespace std;
 	void roomDataInterface::printDescription (const int& index) {
 		Room room=roomVector[index];
 		// for all strings at ROOM description vector
-		cout << "Description\n";
+		UserInterface_println("Description");
 		
-		cout << "- " << room.getDescription() << "\n";
+		UserInterface_println("- " + room.getDescription());
 		
 	}
 
@@ -110,12 +119,12 @@ using namespace std;
 	void roomDataInterface::printID (const int& index) {
 		Room room=roomVector[index];
 
-		cout << "ID: " << room.getID() << "\n";
+		UserInterface_println("ID: " + room.getID());
 	}
 
 	void roomDataInterface::printName (const int& index) {
 		Room room=roomVector[index];
-		cout << "Name: " << room.getName() << "\n";
+		UserInterface_println("Name: " + room.getName());
 	}
 
 
@@ -123,10 +132,10 @@ using namespace std;
 
 	void roomDataInterface::printDoorDescription (const int& roomIndex, const int& doorIndex) {
 		// for all strings at DOOR description vector
-		cout << "Door description\n";
+		UserInterface_println("Door description");
 		Room room=roomVector[roomIndex];
 		Door door=room.getDoorsList()[doorIndex];
-		cout << "- " << door.getDescription() << "\n";
+		UserInterface_println("- " + door.getDescription());
 
 	}
 
@@ -134,17 +143,17 @@ using namespace std;
 	void roomDataInterface::printDoorDirection (const int& roomIndex, const int& doorIndex) {
 		Room room=roomVector[roomIndex];
 		Door door=room.getDoorsList()[doorIndex];
-		cout << "Door direction: " << door.getDirection() << "\n";
+		UserInterface_println("Door direction: " + door.getDirection());
 	}
 
 	// print key word of ROOM struct at specified index
 	void roomDataInterface::printDoorKeyWord (const int& roomIndex, const int& doorIndex) {
 		// for all strings at ROOM keywords vector
-		cout << "Door keywords\n";
+		UserInterface_println("Door keywords");
 		Room room=roomVector[roomIndex];
 		Door door=room.getDoorsList()[doorIndex];
 		for (string s : door.getKeywords()){
-			cout << "- " << s << "\n";
+			UserInterface_println("- " + s);
 		}
 	}
 
@@ -152,26 +161,26 @@ using namespace std;
 	void roomDataInterface::printDoorTO (const int& roomIndex, const int& doorIndex) {
 		Room room=roomVector[roomIndex];
 		Door door=room.getDoorsList()[doorIndex];
-		cout << "Door TO: " << door.getToID() << "\n";
+		UserInterface_println("Door TO: " + to_string(door.getNextRoomID()));
 	}
 
 	// print extended description of ROOM struct at specified index
 	void roomDataInterface::printExtendedDescription (const int& roomIndex, const int& extendedIndex) {
 		// for all strings at ROOM long description vector
-		cout << "Extended description\n";
+		UserInterface_println("Extended description");
 		Room room=roomVector[roomIndex];
 		Extended extended=room.getExtended()[extendedIndex];
 		
-		cout << "- " << extended.getDescription() << "\n";
+		UserInterface_println("- " + extended.getDescription());
 	}
 
 	// print keyword of ROOM struct at specified index
 	void roomDataInterface::printExtendedKeyWord (const int& roomIndex, const int& extendedIndex) {
-		cout << "Extended keywords\n";
+		UserInterface_println("Extended keywords");
 		Room room=roomVector[roomIndex];
 		Extended extended=room.getExtended()[extendedIndex];
 		for (string s : extended.getKeyWord()){
-			cout << "- " << s << "\n";
+			UserInterface_println("- " + s);
 		}	
 	}
 
@@ -196,7 +205,7 @@ using namespace std;
 
 		printID(index);	
 		printName(index);
-		cout << "\n";
+		UserInterface_println("\n");
 	}
 
 
@@ -284,7 +293,7 @@ using namespace std;
 		if (count > roomNode.size()) {
 
 			// cout error message and return from function
-			cout << "Error: count cannot be greater than node size.\n";
+			UserInterface_println("Error: count cannot be greater than node size.");
 			return;
 		}
 

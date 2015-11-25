@@ -34,6 +34,7 @@ using namespace std;
 	// return short description of NPC struct at specified index
 	string npcDataInterface::getShortDescription (const int& index) {
 		return npcVector[index].getName();
+
 	}
 	vector<NPC> npcDataInterface::getNPCVector(){
 		return npcVector;
