@@ -7,10 +7,16 @@ Object::Object() {
     
 }
 
-Object::Object(int id, string name) { // for testing use only
-    widgetName = name;
+// Object::Object(int id, string name) { // for testing use only
+//     widgetName = name;
+//     widgetId = id;
+//     wearable = false;
+// }
+
+Object::Object(int id, vector<string> keywords){ //testing
     widgetId = id;
-    wearable = false;
+    objKeyWords = keywords;
+    wearable = this->isWearable();
 }
 
 Object::Object(int id, string extraDesc, vector<string> extraKeywords, vector<string> keywords, string longDesc, string shortDesc) {
@@ -20,7 +26,7 @@ Object::Object(int id, string extraDesc, vector<string> extraKeywords, vector<st
     objKeyWords = keywords;
     objLongDesc = longDesc;
     widgetName = shortDesc;
-    wearable = false;
+    wearable = this->isWearable();
     objStats = this->widgetName.length();
 }
 
@@ -48,8 +54,22 @@ void Object::setWearable(bool w) {
     this->wearable = w;
 }
 
-bool Object::isWearable() const {
-    return this->wearable;
+bool Object::isWearable() {
+    for(int i = 0; i < this->objKeyWords.size(); i++){
+        if(this->objKeyWords[i] == "axe" || this->objKeyWords[i] == "wand"){
+            this->setEquipArea(Widget::WEAPON);
+            return true;
+        } 
+        else if(this->objKeyWords[i] == "glasses" || this->objKeyWords[i] == "necklace"){
+            this->setEquipArea(Widget::ACCESSORY);
+            return true;
+        } 
+        else if(this->objKeyWords[i] == "hat"){
+            this->setEquipArea(Widget::HEAD);
+            return true;
+        }
+    }
+    return false;
 }
 
 void Object::setEquipArea(equipmentArea ea) {

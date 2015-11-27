@@ -6,7 +6,9 @@ cmake_minimum_required(VERSION 2.8.9)
 
 set(EXECUTABLE_NAME alphaversion)
 
-add_executable(alphaversion main.cpp)
+#add_executable(alphaversion main.cpp)
+add_executable(alphaversion gameEngineTest.cpp)
+
 #yaml library
 target_link_libraries(alphaversion ${CMAKE_SOURCE_DIR}/lib/yaml/libyaml-cpp.a)
 #networking library

@@ -12,6 +12,7 @@ class Object : public Widget {
 public:
 	Object();
         Object(int, string);
+        Object(int id, vector<string> keywords); // testing
 	Object(int, string, vector<string>, vector<string>, string, string);
         void setLongDesc(string);
 	string getLongDesc() const;
@@ -19,7 +20,7 @@ public:
 	vector<string> getExtraKeyWords() const;
 	string getExtraDesc() const;
         void setWearable(bool);
-	bool isWearable() const;
+	bool isWearable();
         void setEquipArea(equipmentArea);
         equipmentArea getEquipArea() const;
 
