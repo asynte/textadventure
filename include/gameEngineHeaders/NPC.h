@@ -11,12 +11,12 @@ class NPC : public Widget {
 
 public:
     NPC();
-	NPC(int, string, vector<string>, string, string);
-	string getLongDesc() const;
+    NPC(int, string, vector<string>, string, string);
+    string getLongDesc() const;
         void setLongDesc(string);
-	vector<string> getKeyWords() const;
-	string getDesc() const;
-	void setHealth(int);
+    vector<string> getKeyWords() const;
+    string getDesc() const;
+    void setHealth(int);
     int getHealth() const;
     void setAtk(int);
     int getAtk() const;

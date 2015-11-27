@@ -26,108 +26,23 @@
 
 
 using namespace std;
-
-void dataEmitterTest1() {
-	dataEmitter emit{"example"};
-	emit.emitNPC();
-	emit.printToFile();
-
+int init(){
+	roomDataInterface roomParser("data/midgaard.yml");
+	objDataInterface objParser("data/midgaard.yml");
+	npcDataInterface npcParser("data/midgaard.yml");
 }
 
-void testFight() {
-	Character player("Retard");
-    player.increaseExp(300);
-    player.updateLevel();
-    player.printStatus();
-    Character player2("Downy");
-    NPC smurf;
-    smurf.setName("Smurfy Timmeh");
-    smurf.setLongDesc("An orphan smurf with no friends.");
-    player.examine(player2);
-    player.examine(smurf);
-    player.attack(smurf);
-}
-
-void testEquip() {
-	Character player("Retard");
-    player.increaseExp(300);
-    player.updateLevel();
-    player.printStatus();
-    player.togglePVP();
-    Object rock(69, "shiny rock");
-    Object sword(100, "Excalibur");
-    sword.setLongDesc("A legendary sword.");
-    sword.setWearable(true);
-    sword.setEquipArea(Widget::WEAPON);
-    player.interact(sword);
-    player.interact(rock);
-    player.equip(sword);
-    player.examine(sword);
-    player.showInventory();
-    player.printStatus();
-    player.unequip(sword);
-    player.printStatus();
-    player.removeFromInventory(rock);
-    player.removeFromInventory(sword);
-    player.showInventory();
-}
-/*void testSwitch() {
-	while (loop)
-	{
-		cout << "Command: ";
-		cin >> i;
-		switch(i) {
-			case 1:
-				cout << "\n";
-				npcDataInterfaceTest1();
-				break;
-			case 2:
-				cout << "\n";
-				objDataInterfaceTest1();
-				break;
-			case 3:
-				cout << "\n";
-				roomDataInterfaceTest1();
-				break;
-			case 4:
-				cout << "\n";
-				resetDataInterfaceTest1();
-				break;
-			case 5:
-				cout << "\n";
-				npcDataInterfaceTest2();
-				break;
-			case 6:
-				dataEmitterTest1();
-				break;
-			default:
-				cout << "\nWrong numba, Psych!\n";
-				break;
-			case -1:
-				loop = false;
-				break;
-		}
-	}
-}*/
 
 int main() {
+	    World sfu("midgaard");
+   
+    Character player("Akame",3001);
 
-	//Constructs object
-	// cout<< " Nigger initiate" << endl;
-	// roomDataInterface Hell{""};
-
-	UserInterface_create();
-	//roomDataInterfaceTest1();
-	cout<< "NIGGGGGGG" << endl;
-	roomDataInterface ROOM2("data/test.yml");
-
-	cout << "more niggers" << endl;
-	GameEngine *g = new GameEngine(); // !!!BRYAN FIX PLEASE!!!! DYNAMIC CAST ERROR!!!! std::bad_cast
-	UserInterface_addListener(g);
-
-	pthread_join(UserInterface_getThreadId(), NULL);
-	// testSwitch();
-	//dataEmitterTest1();
+    string direction;
+    cout<<"Enter direction: " << endl;
+    cin >> direction;
+    sfu.moveCharacter(player, direction);
 
 	return 0;
-}	
+}
+

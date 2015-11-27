@@ -275,4 +275,3 @@ void dataEmitter::emitNPC () {
 
 	outFile << emitter.c_str();
 }
-

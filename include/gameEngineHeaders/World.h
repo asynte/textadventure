@@ -8,44 +8,45 @@ using namespace std;
 
 #include "gameEngineHeaders/Room.h"
 #include "gameEngineHeaders/Door.h"
+#include "gameEngineHeaders/NPC.h"
 #include "gameEngineHeaders/Character.h"
 #include "gameEngineHeaders/Widget.h"
-
 #include "dataInterfaceHeaders/dataInterfaceBase.h"
-
-
-class World{
-	public:
-		World();
-		World(string name);
-		//void build(string name);
-		void initializeWorld(string name);
-		vector<Room> getRoomsVector();
-		string getName();
-		void setRoomIndex(int roomIndex);
-		void addRoom(Room room);
-		void printRoomNames();
-		int willGoToRoom(int direction, int currentLocation);
-		//void goToRoom(int roomID);
-		void getNowRoomInformation(int currentLocation);
-		int getRoom(int roomID);
-		void moveCharacter(Character &player, string userCommand);
-		void setCharRoom(Character &c, int roomID, int moveDirection);
-		void addCharacter(const Character &character);
-		vector<Character> getCharacters();
-
-		// vector<string> 
-
-
-
-
-	private:
-		Room getCurrentRoom(const Character &character);
-		vector<Room> roomsVector;
-		vector<Character> characters;
-		string name;
-};
-
 #include "userInterfaceHeaders/UserInterface.h"
 
+class World{
+
+public:
+	World();
+	World(string name);
+	//void build(string name);
+	void initializeWorld(string name);
+	string getName();
+	vector<Character> getCharacters();
+	vector<Room> getRoomsVector();
+	Room getRoomFindById(int id);
+	bool findRoomById(int );
+	void addRoom(Room room);
+	void printRoomNames();
+	int getRoom(int roomID);
+	void moveCharacter(Character &player, string userCommand);
+	void setCharRoom(Character &c, int roomID, int moveDirection);
+	void addCharacter(const Character &character);
+
+	vector<string> getAllDirections(Character &player); // Used for UserInterface
+	vector<string> getAllKeywords(Character &player); // Used for UserInterface
+private:
+	vector<Room> roomsVector;
+	vector <Object> objectVector;
+	vector <NPC> npcVector;
+	vector<Character> characters;
+
+	string name;
+	int roomNowIndex;
+	string getCharacterMoveDirection(Character &player, string userCommand);
+	void addObjectToRoom(string fileName);
+	void addNPCToRoom(string fileName);
+	Room getCurrentRoom(Character &player);
+	
+};
 #endif

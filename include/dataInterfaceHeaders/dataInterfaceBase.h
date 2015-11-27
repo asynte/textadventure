@@ -82,7 +82,7 @@ public:
     //    Returns the description of NPC struct at specified index
 
 	string getDescription (const int& index);
-
+	vector <NPC> getNPCVector();
 	// Pre-condition:
     //    0 <= index < npcNode.size()
     // Post-condition:
@@ -185,7 +185,7 @@ public:
 	string getExtraDescription (const int& objIndex);
 
 	vector<string> getExtraKeyWord(const int& objIndex);
-
+	vector<Object> getObjVector();
 	// Pre-condition:
     //    0 <= index < objNode.size()
     // Post-condition:

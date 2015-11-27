@@ -7,8 +7,8 @@
 
 #include "userInterfaceHeaders/UserInterface.h"
 #include "gameEngineHeaders/GameEngine.h"
-
-
+#include "userInterfaceHeaders/GameEngineFunctions.h"
+ 
 
 using namespace std;
 
@@ -24,9 +24,9 @@ using namespace std;
 			//do more stuff with the parsed strings
 			//like call a function with arguements...
 		}
-};
-static InterfaceObserver observer;*/
+};*/
 
+//static UICout UIcout;
 
 static GameEngine *gameEngine = NULL;
 static ObserverList observers;
@@ -37,41 +37,79 @@ static WINDOW *DISPLAY_WINDOW;
 static const int BUFFER_LENGTH = 128;
 
 static int interface_row;
-static int interface_col;
+static vector<string> currentDisplay;
 
-// void UserInterface_addGameEngine(GameEngine g) {
-// 	// GameEngine *g = (GameEngine) ptr;
 
-// }
 
-// vector<string> UserInterface_getPossibleDirections(void) {
 
-// 	// GameEngine *g = new GameEngine();
 
-// 	// g.getPossibleDirections();
-
-// 	if (gameEngine == NULL) {
-// 		UserInterface_println("null game engine");
-// 		UserInterface_quit();
-// 		exit(0);
-// 	} else {
-// 		UserInterface_println("game engine found");
-// 		vector<string> directions = gameEngine->GameEngine_getPossibleDirections();
-// 		return directions;
-// 	}
-// }
-
-void UserInterface_print(const string &value) {
-	mvprintw(interface_row, 0, "%s", value.c_str());
-	++interface_row;
-	refresh();
+static void disableInput() {
+	IS_RUNNING = false;
 }
 
-void UserInterface_println(const string &value) {
-	UserInterface_print(value + "\n");
+void UserInterface_exit() {
+	disableInput();
+	UserInterface_println("exiting in 3..");
+	sleep(1);
+	UserInterface_println("exiting in 2..");
+	sleep(1);
+	UserInterface_println("exiting in 1..");
+	sleep(1);
+	UserInterface_quit();
+	system("clear");
+	exit(0);
 }
 
-void UserInterface_printTop(const string &value) {
+string C2S(const char c) {
+	stringstream ss;
+	string s;
+	ss << c;
+	ss >> s;
+	return s;
+}
+
+string I2S(const int i) {
+	stringstream ss;
+	string s;
+	ss << i;
+	ss >> s;
+	return s;
+}
+
+static bool isDeleteChar(int ch) {
+	static const int DELETE = 127;
+	return ch == DELETE;
+}
+
+static bool isNewlineChar(int ch) {
+	static const int NEWLINE = 10;
+	return ch == NEWLINE;
+}
+
+static bool isValidChar(int ch) {
+	static const int CHAR_START = 31;
+	static const int CHAR_END = 126;
+	return ch > CHAR_START && CHAR_END > ch;
+}
+
+/*
+vector<string> UserInterface_getPossibleDirections(void) {
+	if (gameEngine == NULL) {
+		UserInterface_println("ERROR: No Game Engine");
+		exit();
+	} else {
+		vector<string> derp;
+		derp.push_back("up");
+		derp.push_back("down");
+		return derp;
+
+		vector<string> directions = gameEngine->GameEngine_getPossibleDirections();
+		return directions;
+	}
+}
+*/
+
+static void UserInterface_printTop(const string &value) {
 	mvprintw(0, 0, "%s\n", value.c_str());
 	refresh();
 }
@@ -81,17 +119,66 @@ static void UserInterface_printRow(const string &value, const int row) {
 	refresh();
 }
 
+void UserInterface_printServerMessage(const string &value) {
+	mvprintw(1, 0, "%s", value.c_str());
+	interface_row = 2;
+
+	for(auto itr = value.begin(); itr != value.end(); ++itr) {
+		if (isNewlineChar(*itr)) {
+			++interface_row;
+		}
+	}
+
+	for(auto itr = currentDisplay.begin(); itr != currentDisplay.end(); ++itr) {
+		UserInterface_println("" + *itr);
+	}
+
+	refresh();
+}
+
+static void print(const string &value) {
+	mvprintw(interface_row, 0, "%s", value.c_str());
+	currentDisplay.push_back(value);
+	++interface_row;
+	refresh();
+}
+
+void UserInterface_println(const string &value) {
+	print(value + "\n");
+}
+
+void UserInterface_print(const string &value) {
+	string sub = "";
+	int prev = 0;
+
+	for(int i = 0; value.length() > i; ++i)	{
+		char c = value[i];
+
+		if (isNewlineChar(c)) {
+			sub = value.substr(prev, i - 1);
+			prev = i + 1;
+			print(sub + "\n");
+		}
+	}
+}
+
+
+void UserInterface_addGameEngine(GameEngine *g) {
+	if (gameEngine != NULL) {
+		UserInterface_println("ERROR: already added a game engine!");
+		UserInterface_exit();
+	} else {
+		UserInterface_println("adding game engine");
+	}
+
+	observers.addObserver(g);
+	Commands_addGameEngine(g);
+
+	gameEngine = g;
+}
+
 void UserInterface_addListener(Observer *obs) {
-
-	// if(GameEngine* v = dynamic_cast<GameEngine*>(obs)) {
-	// 	gameEngine = v;
-	//    // old was safely casted to NewType
-	//    // v->doSomething();
-
-	// 	UserInterface_println("casting game engine");
-	// }
-
-	// observers.addObserver(obs);
+	observers.addObserver(obs);
 }
 
 void UserInterface_notifyListeners(const string &str) {
@@ -102,15 +189,9 @@ void UserInterface_notifyListeners(const vector<string> &str) {
 }
 
 void UserInterface_invalidInput(const string &str) {
-	UserInterface_println("\"" + str + "\" does not match any commands...\nuse \"list\" to see available commands\nuse \"help <command>\" to see details about a command");
-
-
-
-	/*
-	cout << "\"" << str << "\" does not match any commands..." << endl
-		 << "use \"list\" to see available commands" << endl
-		 << "use \"help <command>\" to see details about a command" << endl;
-	*/
+	UserInterface_println("\"" + str + "\" does not match any commands...");
+	UserInterface_println("use \"list\" to see available commands");
+	UserInterface_println("use \"help <command>\" to see details about a command");
 }
 
 
@@ -128,16 +209,36 @@ static void displayMatches(const vector<string> &matches, const string &input) {
 
 
 
+void printVector(const vector<string> &v) {
+	UserInterface_println("printing...");
+
+	for( int i; v.size() > i; ++i ) {
+		UserInterface_println(v.at(i));
+	}
+}
+
+
 struct parsedResults {
 	bool isMatch;
 	int matchCount;
 	vector<string> matches;
 };
 
-static struct parsedResults parseSubToken(const string &token) {
+static int getDynamicType(const string &firstToken) {
+	if (firstToken == "move")	{
+		return DYNAMIC_MOVE_COMMAND;
+	}
+	if (firstToken == "look")	{
+		return DYNAMIC_LOOK_COMMAND;
+	}
+
+	return -1;
+}
+
+static struct parsedResults parseSubToken(const string &token, bool dynamic, const string &firstToken) {
 	struct parsedResults result;
 
-	result.matches = Commands_getMatches(token, token.size());
+	result.matches = Commands_getMatches(token, token.size(), dynamic, getDynamicType(firstToken));
 	result.matchCount = result.matches.size();
 	result.isMatch = result.matchCount > 0;
 
@@ -145,9 +246,25 @@ static struct parsedResults parseSubToken(const string &token) {
 }
 
 
+
 static bool processSubToken(const vector<string> &inputs, vector<string> &tokens, int index) {
 	string token = inputs.at(index);
-	struct parsedResults results = parseSubToken(token);
+	bool dynamic = false;
+	struct parsedResults results;
+
+	if (tokens.size() > 0) {
+		dynamic = Commands_hasDynamicArguements(tokens.at(0));
+		/*
+		if (dynamic) {
+			print("d: " + tokens.at(0) + "  " + token + "\n");
+		} else {
+			print("n: " + tokens.at(0) + "  " + token + "\n");
+		}
+		*/
+		results = parseSubToken(token, dynamic, tokens.at(0));
+	} else {
+		results = parseSubToken(token, dynamic, "");
+	}
 
 	if (results.isMatch) {
 		if (results.matchCount == 1) {
@@ -171,9 +288,12 @@ static bool processSubToken(const vector<string> &inputs, vector<string> &tokens
 		}
 
 		return true;
+	} else if (dynamic) {
+		//issue dynamic error
+		Commands_callError(tokens.at(0), token);
+		return false;
 	}
 
-	
 	//if (index == tokens.size() && index > 0) {
 		UserInterface_invalidInput(token);
 	//}
@@ -186,7 +306,6 @@ static bool processSubToken(const vector<string> &inputs) {
 }
 
 static void parseTokens(const vector<string> &tokens) {
-
 	for(auto itr = tokens.begin(); itr != tokens.end(); ++itr) {
 		string token = *itr;
 
@@ -274,8 +393,6 @@ static void interfaceLoop() {
 	UserInterface_println("  type \"list\" to display possible commands");
 
 	while(IS_RUNNING) {
-		//char str[BUFFER_LENGTH];
-		//getstr(str);
 		string input = UserInterface_getUserInput();
 
 		if (IGNORE) {
@@ -288,7 +405,7 @@ static void interfaceLoop() {
 			} else if (tokens.size() > 1) {
 				parseTokens(tokens);
 			} else {
-			//	assert(false && "invalid token count from user input");
+				//	assert(false && "invalid token count from user input");
 			}
 		}
 	}
@@ -304,7 +421,6 @@ static void startInterfaceThread(void) {
 	IGNORE = false;
 
 	UserInterface_printTop("making thread\n");
-
 
 	if ( pthread_create(&INTERFACE_THREAD, NULL, threadFunc, NULL) ) {
 		UserInterface_printTop("Error creating thread\n");
@@ -325,48 +441,20 @@ static void initNCurses(void) {
 	DISPLAY_WINDOW = initscr();
 
 	if (DISPLAY_WINDOW == NULL) {
+		//UIcout << "failure initiating NCurse Window" << endl
+		//	 << "exiting program" << endl;
+
 		cout << "failure initiating NCurse Window" << endl
 			 << "exiting program" << endl;
 		endwin();
 		exit(-1);
 	}
 
-	//raw();
 	noecho();
 }
 
 
-string C2S(const char c) {
-	stringstream ss;
-	string s;
-	ss << c;
-	ss >> s;
-	return s;
-}
 
-string I2S(const int i) {
-	stringstream ss;
-	string s;
-	ss << i;
-	ss >> s;
-	return s;
-}
-
-static bool isDeleteChar(int ch) {
-	static const int DELETE = 127;
-	return ch == DELETE;
-}
-
-static bool isNewlineChar(int ch) {
-	static const int NEWLINE = 10;
-	return ch == NEWLINE;
-}
-
-static bool isValidChar(int ch) {
-	static const int CHAR_START = 31;
-	static const int CHAR_END = 126;
-	return ch > CHAR_START && CHAR_END > ch;
-}
 
 static string getUserInput() {
 	char ch = getch();
@@ -399,7 +487,6 @@ static string getUserInput() {
 			input = input + ch;
 		}
 
-		//UserInterface_printTop(I2S(ch));
 		UserInterface_printRow(input, row);
 	}
 
@@ -410,31 +497,11 @@ string UserInterface_getUserInput(void) {
 
 	string input = getUserInput();
 	interface_row = 1;
+	currentDisplay.clear();
 	clear();
 	refresh();
 
 	return input;
-
-/*
-	//UserInterface_println(getUserInput());
-	//sleep(10);
-
-	char str[BUFFER_LENGTH];
-	char ch = getch();
-
-	++interface_row;
-	getstr(str);
-
-	string input(str);
-	input = ch + input;
-
-
-
-	return input;
-	//return string(ch + str);
-*/
-
-
 }
 
 bool UserInterface_isActive(void) {
@@ -445,9 +512,8 @@ void UserInterface_ignoreNext(void) {
 	IGNORE = true;
 }
 
-
 void UserInterface_quit(void) {
-	IS_RUNNING = false;
+	disableInput();
 	destroyNCurses(DISPLAY_WINDOW);
 }
 
@@ -455,48 +521,33 @@ pthread_t& UserInterface_getThreadId(void) {
 	return INTERFACE_THREAD;
 }
 
-
-
-/*
-struct MyCout {};
-extern MyCout myCout;
-
-template <typename T>
-MyCout& operator<< (MyCout &s, const T &x) {
-  //format x as you please
-	//printw("%s", value.c_str());
-
-
-	cout << "meh " << x;
-	return s;
-}
-
-MyCout& operator<< (MyCout &s, std::ostream& (*f)(std::ostream &)) {
-  f(std::cout);
-  return s;
-}
-
-MyCout& operator<< (MyCout &s, std::ostream& (*f)(std::ios &)) {
-  f(std::cout);
-  return s;
-}
-
-MyCout& operator<< (MyCout &s, std::ostream& (*f)(std::ios_base &)) {
-  f(std::cout);
-  return s;
-}
-
- 	//MyCout cout;
-	//cout << "test" << endl;
-
-*/
-
-
 void UserInterface_create(void) {
 	initNCurses();
 	Commands_initiate();
 	startInterfaceThread();
 }
+
+/*
+namespace ui {
+	template <typename T>
+	ostream& operator<<(ostream& os, const T& x)
+	{
+		stringstream ss;
+		ss << x;
+		string str = ss.str();
+
+	 	UserInterface_print(str);
+
+		//os << dt.mo << '/' << dt.da << '/' << dt.yr;
+		return os;
+	}
+}
+
+void testCout() {
+	using namespace ui;
+	cout << "testing" << endl;
+}*/
+
 
 #endif
 

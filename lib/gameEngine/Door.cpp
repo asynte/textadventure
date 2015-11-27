@@ -23,16 +23,16 @@ int Door::getDirectionAsInt(const string &str){
 		return 2;
 	}
 	else if(str == "north"){
-		return 1;
+		return 0;
 	}
 	else if(str == "up"){
 		return 5;
 	}
 	else if(str == "east"){
-		return 4;
+		return 3;
 	}
 	else if(str == "west"){
-		return 3;
+		return 1;
 	}
 	else if(str == "down"){
 		return 6;

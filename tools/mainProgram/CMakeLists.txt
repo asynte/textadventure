@@ -59,7 +59,3 @@ endif()
 find_package(Curses REQUIRED)
 include_directories(${CURSES_INCLUDE_DIR})
 target_link_libraries(alphaversion ${CURSES_LIBRARIES})
-
-
-
-

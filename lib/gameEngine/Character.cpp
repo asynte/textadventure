@@ -8,10 +8,13 @@
 // Character::Character() {
 // }
 
-Character::Character(string name) {
-    this->setName(name);
+
+Character::Character() {
+    this->setName("");
     this->setLevel(1);
     this->setHealth(CHAR_DEFAULTHEALTH);
+    this->setMana(CHAR_DEFAULTMANA);
+    this->setGold(CHAR_DEFAULTGOLD);
     this->setExp(0);
     this->setAtk(CHAR_DEFAULTATK);
     this->setStr(CHAR_DEFAULTSTAT);
@@ -22,12 +25,38 @@ Character::Character(string name) {
     this->setLocation(CHAR_STARTLOCATION);
 }
 
+Character::Character(string name,int currentLocation) {
+    this->setName(name);
+    this->setLevel(1);
+    this->setHealth(CHAR_DEFAULTHEALTH);
+    this->setMana(CHAR_DEFAULTMANA);
+    this->setGold(CHAR_DEFAULTGOLD);
+    this->setExp(0);
+    this->setAtk(CHAR_DEFAULTATK);
+    this->setStr(CHAR_DEFAULTSTAT);
+    this->setInt(CHAR_DEFAULTSTAT);
+    this->setDex(CHAR_DEFAULTSTAT);
+    this->setCha(CHAR_DEFAULTSTAT);
+    this->setPVP(false);
+    this->setLocation(currentLocation);
+    this->direction=0;
+}
+
+bool Character::equals(const Character &other) {
+    return this->widgetName == other.widgetName
+        && this->widgetId == other.widgetId
+    ; 
+}
+
 void Character::printStatus() { // print Character's stats
     cout << "\nName: " + this->getName();
     cout << "\nHealth: " + to_string(this->getHealth());
+    cout << "\nMana: " + to_string(this->getMana());
     cout << "\nLevel: " + to_string(this->getLevel());
     cout << "\nPVP: " + to_string(this->getPVP());
+    cout <<"\n Direction: "+ getDirection();
     cout << "\nEquipment: \n";
+
     for (auto wornItem : this->charEquipment) {
         cout << "\t" + wornItem.second.getName() << endl;
     }
@@ -39,6 +68,22 @@ void Character::setHealth(int hp) {
 
 int Character::getHealth() const {
     return this->charHealth;
+}
+
+void Character::setMana(int mp) {
+    this->charMana = mp;
+}
+
+int Character::getMana() const {
+    return this->charMana;
+}
+
+void Character::setGold(int gold) {
+    this->charGold = gold;
+}
+
+int Character::getGold() const {
+    return this->charGold;
 }
 
 void Character::setExp(int exp) {
@@ -116,6 +161,44 @@ void Character::setLocation(int roomID){
 int Character::getLocation() const {
     return this->currentLocation;
 }
+void Character::turnLeft(){
+    direction++;
+    direction%=4;
+}
+void Character::turnRight(){
+    direction--;
+    if(direction<0){
+        direction+=4;
+    }
+    direction%=4;
+}
+void Character::turnBack(){
+    direction+=2;
+    direction%=4;
+
+}
+string Character::getDirection(){
+    if(direction==0){
+        return "north";
+    }else if(direction==1){
+        return "west";
+    }else if(direction==2){
+        return "south";
+    }else if(direction==3){
+        return "east";
+    }else{
+        return "Wrong";
+    }
+}
+
+// void Character::addHealSpell(HealSpell sp) {
+//     this->charHealSpells.push_back(sp);
+//     cout << sp.getName() + " acquired!" << endl;
+// }
+
+// vector<HealSpell> Character::getHealSpells() const {
+//     return this->charHealSpells;
+// }
 
 void Character::setPVP(bool b) {
     this->wantsToPVP = b;
@@ -132,6 +215,26 @@ void Character::togglePVP() {
         this->wantsToPVP = true;
     }
 
+}
+
+void Character::updateStats() {
+    map<int, const Object>::iterator it;
+    // set default values
+    this->charStrength = CHAR_DEFAULTSTAT;
+    this->charDexterity = CHAR_DEFAULTSTAT;
+    this->charCharisma = CHAR_DEFAULTSTAT;
+    this->charIntelligence = CHAR_DEFAULTSTAT;
+    for (it = this->charEquipment.begin(); it != this->charEquipment.end(); it++) {
+        if (it->first == 5) { //weapon
+            this->charStrength += (it->second.getName()).length();
+        }
+        else if (it->first == 6) { //shield
+            this->charDexterity += (it->second.getName()).length();
+        }
+    }
+    this->charAtk = CHAR_DEFAULTATK + this->charStrength;
+    this->charHealth = CHAR_DEFAULTHEALTH + this->charDexterity;
+    this->charMana = CHAR_DEFAULTMANA + this->charIntelligence;
 }
 
 void Character::addToInventory(Object obj) {
@@ -170,6 +273,7 @@ void Character::equip(Object &item) {
             this->charEquipment.insert( {item.getEquipArea(), item} );
             cout << item.getName() + " has been equipped." << endl;
             this->removeFromInventory(item); 
+            this->updateStats();
         } else { // something equipped in this area
             cout << this->charEquipment[areaIsEquipped].getName() + " is already equipped! Please unequip first." << endl;
         }
