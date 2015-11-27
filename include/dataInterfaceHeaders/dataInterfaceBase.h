@@ -467,6 +467,63 @@ public:
 
 };
 
+class spellDataInterface{
+private: 
+
+	struct DEFSPELL {
+		int duration;
+		string effect;
+		string hitChar;
+		string hitVict;
+		int mana;
+		int minLevel;
+		string name;
+		string wearOff;
+	};
+
+	struct OFFSPELL {
+		string damMsg;
+		int duration;
+		int mana;
+		int minLevel;
+		string name;
+		string damage;
+	};
+
+	// store each node on vector
+	vector<DEFSPELL> defSpellVector;
+	vector<OFFSPELL> offSpellVector;
+
+	// node where root of yaml file will be set
+	YAML::Node baseNode;
+
+	// node where SPELL sequence of yaml file will be set
+	YAML::Node offenseNode, defenseNode;
+
+public:
+
+	// spell constructor
+	spellDataInterface(const string& file)
+	: baseNode(YAML::LoadFile(file)), defenseNode(baseNode["defense"]), offenseNode(baseNode["offense"]){
+
+	}
+
+	// spell deconstructor
+	~spellDataInterface() {}
+
+
+	///////////////////////////////////
+	// 		   LOAD FUNCTIONS        //
+	///////////////////////////////////
+
+	virtual void pushDef (const int& index);
+	virtual void pushOff (const int& index);
+
+	virtual void loadAllDefenseSpell();
+	virtual void loadAllOffenseSpell();
+
+};
+
 
 class dataEmitter {
 private: 
@@ -527,16 +584,12 @@ public:
 	}
 
 	virtual void const getLineWhile ();
-
-	virtual void searchLine (const string& s);
-
 	virtual void printToFile ();
-
 	virtual void emitMapValue () ;
-
 	virtual void emitOneSequenceValue () ;
-
 	virtual void emitSequenceValues () ;
+	virtual void startSequence ( const string& s ) ;
+	virtual void endSequence ();
 
 	virtual void setID ( int& ID ) ;
 
@@ -547,8 +600,6 @@ public:
 	virtual void setAreaName ();
 	virtual void endArea ();
 
-	virtual void startSequence ( const string& s ) ;
-	virtual void endSequence ();
 
 	virtual void setNPCDescription () ;
 	virtual void setNPCKeyWords () ;

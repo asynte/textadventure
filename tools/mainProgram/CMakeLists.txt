@@ -17,6 +17,7 @@ target_link_libraries(alphaversion npcDataInterface)
 target_link_libraries(alphaversion objDataInterface)
 target_link_libraries(alphaversion roomDataInterface)
 target_link_libraries(alphaversion resetDataInterface)
+target_link_libraries(alphaversion spellDataInterface)
 target_link_libraries(alphaversion dataEmitter)
 
 #gameEngine Libraries

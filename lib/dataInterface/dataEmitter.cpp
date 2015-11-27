@@ -137,15 +137,7 @@ void dataEmitter::loopEmit ( int & loopCount, void (*setFunction)() ) {
 // 	}
 }
 
-void dataEmitter::searchLine (const string& phrase) {
-	// string line;
-	// size_t pos;
-	// while (getline(outFile, line)) {
-	// 	pos = line.find(phrase);
 
-
-	// }
-}
 
 void dataEmitter::printToFile () {	
 

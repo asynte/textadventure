@@ -36,7 +36,11 @@ void dataEmitterTest1() {
 int main() {
 
 	// testSwitch();
-	dataEmitterTest1();
+	// dataEmitterTest1();
+
+	spellDataInterface spells{"spells.yml"};
+	spells.loadAllOffenseSpell();
+	spells.loadAllDefenseSpell();
 
 	return 0;
 }	
