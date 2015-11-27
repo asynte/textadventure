@@ -2,6 +2,7 @@
 #define _COMMANDS_CPP_
 #include "userInterfaceHeaders/Commands.h"
 #include "gameEngineHeaders/GameEngine.h"
+#include "userAccountHeaders/Login.h"
 
 static const string SPACER = "  ";
 
@@ -124,6 +125,13 @@ static void move(void) {
 	}
 }
 
+
+/*static void login(void) {
+	Login test;
+	test.init();
+}*/
+
+
 static void quit(void){
 	string result;
 
@@ -145,6 +153,11 @@ static void help(void){
 static void dummyCommand(void){ 
 	UserInterface_println("null command");
 }
+
+static void login(void){ 
+	
+}
+
 
 static void help(const string &str){
 	if (Commands_isValidToken(str)) {
@@ -184,7 +197,8 @@ void Commands_initiate() {
     functionMapVoid["list"] = listCommand;
     functionMapVoid["help"] = help;
     functionMapVoid["move"] = move;
-    functionMapVoid["login"] = dummyCommand;
+    functionMapVoid["login"] = login;
+    functionMapVoid["register"] = login;
     functionMapVoid["testworld"] = dummyCommand;
 
 	//single arguement functions

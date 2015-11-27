@@ -114,6 +114,8 @@ void testEquip() {
 
 int main() {
 	UserInterface_create();
+	Login test;
+	test.init();
 
 	roomDataInterface ROOM2("data/test.yml");
 
