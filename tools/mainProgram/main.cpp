@@ -39,8 +39,10 @@ int main() {
 	// dataEmitterTest1();
 
 	spellDataInterface spells{"spells.yml"};
-	spells.loadAllOffenseSpell();
+	// spells.loadAllOffenseSpell();
 	spells.loadAllDefenseSpell();
-
+	spells.loadAllOffenseSpell();
+	spells.printAll();
+	
 	return 0;
 }	

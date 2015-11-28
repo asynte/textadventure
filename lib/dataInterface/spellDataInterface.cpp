@@ -6,48 +6,119 @@
 
 using namespace std;
 
-	
+	///////////////////////////////////
+	// 		  PRINT FUNCTIONS	     //
+	///////////////////////////////////
+
+	void spellDataInterface::printDefDuration (const int& index) {
+		cout << "Duration: " << defSpellVector[index].duration << "\n";
+	}
+
+	void spellDataInterface::printEffect (const int& index) {
+		cout << "Effect: " << defSpellVector[index].effect << "\n";
+	}
+
+	void spellDataInterface::printHitChar (const int& index) {
+		cout << "HitChar: " << defSpellVector[index].hitChar << "\n";
+	}
+
+	void spellDataInterface::printHitVict (const int& index) {
+		cout << "HitVict: " << defSpellVector[index].hitVict << "\n";
+	}
+
+	void spellDataInterface::printDefMana (const int& index) {
+		cout << "Mana: " << defSpellVector[index].mana << "\n";
+	}
+
+	void spellDataInterface::printDefMinLevel (const int& index) {
+		cout << "MinLevel: " << defSpellVector[index].minLevel << "\n";
+	}
+
+	void spellDataInterface::printDefName (const int& index) {
+		cout << "Name: " << defSpellVector[index].name << "\n";
+	}
+
+
+	void spellDataInterface::printDamMsg (const int& index) {
+		cout << "DmgMsg: " << offSpellVector[index].damMsg << "\n";
+	}
+
+	void spellDataInterface::printOffDuration (const int& index) {
+		cout << "Duration: " << offSpellVector[index].duration << "\n";
+	}
+
+	void spellDataInterface::printOffMana (const int& index) {
+		cout << "Mana: " << offSpellVector[index].mana << "\n";
+	}
+
+	void spellDataInterface::printOffMinLevel (const int& index) {
+		cout << "MinLevel: " << offSpellVector[index].minLevel << "\n";
+	}
+
+	void spellDataInterface::printOffName (const int& index) {
+		cout << "Name: " << offSpellVector[index].name << "\n";
+	}
+
+	void spellDataInterface::printDamage (const int& index) {
+		cout << "Damage: " << offSpellVector[index].damage << "\n";
+	}
+
+	void spellDataInterface::printAtIndexDefense (const int& index) {
+		printDefDuration(index);
+		printEffect(index);	
+		printHitChar(index);
+		printHitVict(index);
+		printDefMana(index);
+		printDefMinLevel(index);
+		printDefName(index);
+		cout << "\n";
+	}
+
+	void spellDataInterface::printAtIndexOffense (const int& index) {
+		printDamMsg(index);
+		printOffDuration(index);	
+		printOffMana(index);
+		printOffMinLevel(index);
+		printOffName(index);
+		printDamage(index);
+		cout << "\n";
+	}
+	void spellDataInterface::printAll () {
+
+		for (int i = 0; i < defSpellVector.size(); i++) {
+			printAtIndexDefense(i);
+		}	
+
+		for (int i = 0; i < offSpellVector.size(); i++) {
+			printAtIndexOffense(i);
+		}		
+	}
+
 	///////////////////////////////////
 	// 		  LOAD FUNCTIONS	     //
 	///////////////////////////////////
 
 	void spellDataInterface::pushDef (const int& index) {
 
-		// for cure light spell
-		if (defenseNode[index]["Name"].as<string>() == "cure light") {
-			string wearOff = defenseNode[index]["Wearoff"].as<string>();
-			
-			// change DEFSPELL to Spell class constructor
-			defSpellVector.push_back(DEFSPELL{
-				defenseNode[index]["Duration"].as<int>(),
-				defenseNode[index]["Effect"].as<string>(),
-				defenseNode[index]["Hitchar"].as<string>(),
-				defenseNode[index]["Hitvict"].as<string>(),
-				defenseNode[index]["Mana"].as<int>(),
-				defenseNode[index]["Minlevel"].as<int>(),
-				defenseNode[index]["Name"].as<string>(),
-				wearOff
-			});	
-
-		}
-
-		// for the four other defense spells
+		// for the five  defense spells
 		if (defenseNode[index]["Name"].as<string>() == "cure critical" ||
 			defenseNode[index]["Name"].as<string>() == "cure serious" ||
 			defenseNode[index]["Name"].as<string>() == "heal" ||
-			defenseNode[index]["Name"].as<string>() == "hezekiahs cure") {
-			string wearOff = "";
+			defenseNode[index]["Name"].as<string>() == "hezekiahs cure" ||
+			defenseNode[index]["Name"].as<string>() == "cure light") {
 			
+			string effect = defenseNode[index]["Effect"].as<string>();
+			string eff = effect.substr(7, effect.length()-11);
+
 			// change DeFSPELL to Spell class constructor
 			defSpellVector.push_back(DEFSPELL{
 				defenseNode[index]["Duration"].as<int>(),
-				defenseNode[index]["Effect"].as<string>(),
+				eff,
 				defenseNode[index]["Hitchar"].as<string>(),
 				defenseNode[index]["Hitvict"].as<string>(),
 				defenseNode[index]["Mana"].as<int>(),
 				defenseNode[index]["Minlevel"].as<int>(),
-				defenseNode[index]["Name"].as<string>(),
-				wearOff
+				defenseNode[index]["Name"].as<string>()
 			});	
 		}
 		

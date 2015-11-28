@@ -43,6 +43,10 @@ using namespace std;
 		return resetVector[index].slot;
 	}
 
+	string resetDataInterface::getState (const int& index) {
+		return resetVector[index].state;
+	}
+
 	///////////////////////////////////
 	// 		  PRINT FUNCTIONS	     //
 	///////////////////////////////////
@@ -77,6 +81,10 @@ using namespace std;
 		cout << "Slot: " << resetVector[index].slot << "\n";
 	}
 
+	void resetDataInterface::printState (const int& index) {
+		if (getState(index) == "locked") {cout << "State: " << resetVector[index].state << "\n";}
+	}
+
 	// print elements of RESET struct at specified index
 	void resetDataInterface::printAtIndex (const int& index) {
 		printAction(index);
@@ -85,6 +93,7 @@ using namespace std;
 		printLimit(index);
 		printRoom(index);
 		printSlot(index);
+		printState(index);
 		cout << "\n";
 	}
 
@@ -130,6 +139,7 @@ using namespace std;
 		int limit = 0;
 		int room = 0;
 		int slot = 0;
+		string state = "unlocked";
 
 		if (resetNode[index]["comment"] != NULL) {
 			comment = resetNode[index]["comment"].as<string>();
@@ -147,13 +157,18 @@ using namespace std;
 			slot = resetNode[index]["slot"].as<int>();
 		}
 
+		if (resetNode[index]["state"] != NULL) {
+			state = resetNode[index]["state"].as<string>();
+		}
+
 		resetVector.push_back(RESET{
 			resetNode[index]["action"].as<string>(), 
 			comment, 
 			resetNode[index]["id"].as<int>(),
 			limit, 
 			room,
-			slot
+			slot,
+			state
 		});
 	}
 

@@ -391,6 +391,7 @@ private:
 		int limit;
 		int room;
 		int slot;
+		string state;
 	};
 
 	// store each node on vector
@@ -429,6 +430,8 @@ public:
 
 	int getSlot (const int& index);
 
+	string getState (const int& index);
+
 	///////////////////////////////////
 	// 		  PRINT FUNCTIONS        //
 	///////////////////////////////////
@@ -444,6 +447,8 @@ public:
 	void printRoom (const int& index);
 
 	void printSlot (const int& index);
+
+	void printState (const int& index);
 
 	virtual void printAtIndex (const int& index);
 
@@ -511,6 +516,25 @@ public:
 	// spell deconstructor
 	~spellDataInterface() {}
 
+
+	virtual void printDefDuration(const int& index);
+	virtual void printEffect(const int& index);
+	virtual void printHitChar(const int& index);
+	virtual void printHitVict(const int& index);
+	virtual void printDefMana(const int& index);
+	virtual void printDefMinLevel(const int& index);
+	virtual void printDefName(const int& index);
+
+	virtual void printDamMsg(const int& index);
+	virtual void printOffDuration(const int& index);
+	virtual void printOffMana(const int& index);
+	virtual void printOffMinLevel(const int& index);
+	virtual void printOffName(const int& index);
+	virtual void printDamage(const int& index);
+
+	virtual void printAtIndexDefense(const int& index);
+	virtual void printAtIndexOffense(const int& index);
+	virtual void printAll();
 
 	///////////////////////////////////
 	// 		   LOAD FUNCTIONS        //
