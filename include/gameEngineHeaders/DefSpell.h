@@ -1,19 +1,21 @@
-#include <cmath>
+#include <string>
 #include "gameEngineHeaders/Spell.h"
 
-#ifndef HEALSPELL_H
-#define HEALSPELL_H
+#ifndef DEFSPELL_H
+#define DEFSPELL_H
 
 using namespace std;
 
-class HealSpell : public Spell {
+class DefSpell : public Spell {
 public:
-	HealSpell(string, int, int, int);
+	DefSpell(string, int, int, int);
 	void setHealAmount(int);
 	int getHealAmount() const;
 	void castSpell(Character&);
 private:
 	int healAmount;
+	string hitChar;
+	string hitVict;
 };
 
 #endif

@@ -5,7 +5,7 @@
 
 Spell::Spell(string name, int lvl, int mana, int gold) {
 	this->spellName = name;
-	this->spellLevel = lvl;
+	this->minLevel = lvl;
 	this->manaCost = mana;
 	this->goldCost = gold;
 }
@@ -18,12 +18,12 @@ string Spell::getName() const {
 	return this->spellName;
 }
 
-void Spell::setSpellLevel(int lvl) {
-	this->spellLevel = lvl;
+void Spell::setMinLevel(int lvl) {
+	this->minLevel = lvl;
 }
 
-int Spell::getSpellLevel() const {
-	return this->spellLevel;
+int Spell::getMinLevel() const {
+	return this->minLevel;
 }
 
 void Spell::setManaCost(int mcost) {

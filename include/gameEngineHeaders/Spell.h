@@ -13,8 +13,8 @@ public:
 	Spell(string, int, int, int);
 	void setName(string);
 	string getName() const;
-	void setSpellLevel(int);
-	int getSpellLevel() const;
+	void setMinLevel(int);
+	int getMinLevel() const;
 	void setManaCost(int);
 	int getManaCost() const;
 	void setGoldCost(int);
@@ -22,9 +22,9 @@ public:
 
 private:
 	string spellName;
-	int spellLevel;
 	int manaCost;
 	int goldCost;
+	int minLevel;
 };
 
 #endif

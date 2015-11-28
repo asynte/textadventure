@@ -7,7 +7,7 @@ cmake_minimum_required(VERSION 2.8.9)
 set(EXECUTABLE_NAME alphaversion)
 
 add_executable(alphaversion main.cpp)
-add_executable(gameEngineTest gameEngineTest.cpp)
+#add_executable(gameEngineTest gameEngineTest.cpp)
 
 #yaml library
 target_link_libraries(alphaversion ${CMAKE_SOURCE_DIR}/lib/yaml/libyaml-cpp.a)
@@ -33,6 +33,9 @@ target_link_libraries(alphaversion Room)
 target_link_libraries(alphaversion Widget)
 target_link_libraries(alphaversion World)
 target_link_libraries(alphaversion Extended)
+target_link_libraries(alphaversion Spell)
+target_link_libraries(alphaversion OffSpell)
+target_link_libraries(alphaversion DefSpell)
 
 #userAccount Libraries
 target_link_libraries(alphaversion Login)

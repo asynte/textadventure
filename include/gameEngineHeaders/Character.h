@@ -14,9 +14,8 @@
 #include "gameEngineHeaders/NPC.h"
 #include "gameEngineHeaders/Object.h"
 #include "gameEngineHeaders/Spell.h"
-#include "gameEngineHeaders/HealSpell.h"
-
-//class HealSpell;
+#include "gameEngineHeaders/DefSpell.h"
+#include "gameEngineHeaders/OffSpell.h"
 
 using namespace std;
 
@@ -96,7 +95,8 @@ protected:
     int charDexterity;
     int charCharisma;
     vector<Object> charInventory;
-    vector<HealSpell> charHealSpells;
+    vector<DefSpell> charDefSpells;
+    vector<OffSpell> charOffSpells;
     int currentLocation;
     bool wantsToPVP;
 };

@@ -11,6 +11,9 @@ add_library(Widget Widget.cpp)
 add_library(World World.cpp)
 add_library(Extended Extended.cpp)
 add_library(GameEngine GameEngine.cpp)
+add_library(Spell Spell.cpp)
+add_library(OffSpell OffSpell.cpp)
+add_library(DefSpell DefSpell.cpp)
 
 
 target_link_libraries(World ${CMAKE_SOURCE_DIR}/lib/yaml/libyaml-cpp.a)
