@@ -12,36 +12,44 @@ using namespace std;
 
 	// return action of RESET struct at specified index
 	string resetDataInterface::getAction (const int& index) {
-		return resetVector[index].action;
+		return resetVector[index].getAction();
 	}
 
 	// return comment of RESET struct at specified index
 	string resetDataInterface::getComment (const int& index) {
-		return resetVector[index].comment;
+		return resetVector[index].getComment();
 	}
 
 	// return id of RESET struct at specifiedindex
 	int resetDataInterface::getID (const int& index) {
-		return resetVector[index].id;
+		return resetVector[index].getId();
 	}
 
 
 	// return limit of RESET struct at specifiedindex
 	int resetDataInterface::getLimit (const int& index) {
-		return resetVector[index].limit;
+		return resetVector[index].getLimit();
 	}
 
 
 	// return room of RESET struct at specifiedindex
 	int resetDataInterface::getRoom (const int& index) {
-		return resetVector[index].room;
+		return resetVector[index].getRoom();
 	}
 
 
 	// return slot of RESET struct at specifiedindex
 	int resetDataInterface::getSlot (const int& index) {
-		return resetVector[index].slot;
+		return resetVector[index].getSlot();
 	}
+
+	string resetDataInterface::getState (const int& index) {
+		return resetVector[index].getState();
+	}
+	vector<Reset> resetDataInterface::getResetVector(){
+		return resetVector;
+	}
+
 
 	///////////////////////////////////
 	// 		  PRINT FUNCTIONS	     //
@@ -49,32 +57,36 @@ using namespace std;
 
 	// print action of RESET struct at specified index
 	void resetDataInterface::printAction (const int& index) {
-		cout << "Action: " << resetVector[index].action << "\n";
+		cout << "Action: " << resetVector[index].getAction() << "\n";
 	}
 
 	// print comment of RESET struct at specified index
 	void resetDataInterface::printComment (const int& index) {
-		cout << "Comment: " << resetVector[index].comment << "\n";
+		cout << "Comment: " << resetVector[index].getComment() << "\n";
 	}
 
 	// print ID of RESET struct at specified index
 	void resetDataInterface::printID (const int& index) {
-		cout << "ID: " << resetVector[index].id << "\n";
+		cout << "ID: " << resetVector[index].getId() << "\n";
 	}
 
 	// print limit of RESET struct at specified index
 	void resetDataInterface::printLimit (const int& index) {
-		cout << "Limit: " << resetVector[index].limit << "\n";
+		cout << "Limit: " << resetVector[index].getLimit() << "\n";
 	}
 
 	// print room of RESET struct at specified index
 	void resetDataInterface::printRoom (const int& index) {
-		cout << "Room: " << resetVector[index].room << "\n";
+		cout << "Room: " << resetVector[index].getRoom() << "\n";
 	}
 
 		// print slot of RESET struct at specified index
 	void resetDataInterface::printSlot (const int& index) {
-		cout << "Slot: " << resetVector[index].slot << "\n";
+		cout << "Slot: " << resetVector[index].getSlot() << "\n";
+	}
+
+	void resetDataInterface::printState (const int& index) {
+		if (getState(index) == "locked") {cout << "State: " << resetVector[index].getState() << "\n";}
 	}
 
 	// print elements of RESET struct at specified index
@@ -85,6 +97,7 @@ using namespace std;
 		printLimit(index);
 		printRoom(index);
 		printSlot(index);
+		printState(index);
 		cout << "\n";
 	}
 
@@ -130,6 +143,7 @@ using namespace std;
 		int limit = 0;
 		int room = 0;
 		int slot = 0;
+		string state = "unlocked";
 
 		if (resetNode[index]["comment"] != NULL) {
 			comment = resetNode[index]["comment"].as<string>();
@@ -147,14 +161,19 @@ using namespace std;
 			slot = resetNode[index]["slot"].as<int>();
 		}
 
-		resetVector.push_back(RESET{
+		if (resetNode[index]["state"] != NULL) {
+			state = resetNode[index]["state"].as<string>();
+		}
+
+		resetVector.push_back(Reset(
 			resetNode[index]["action"].as<string>(), 
 			comment, 
 			resetNode[index]["id"].as<int>(),
 			limit, 
 			room,
-			slot
-		});
+			slot,
+			state
+		));
 	}
 
 	// push "count" amount of nodes into resetVector
@@ -217,6 +236,3 @@ using namespace std;
 			push(i);
 		}
 	}
-
-
-

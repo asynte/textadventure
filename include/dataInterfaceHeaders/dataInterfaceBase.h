@@ -8,6 +8,8 @@
 #include "../gameEngineHeaders/Room.h"
 #include "../gameEngineHeaders/Door.h"
 #include "../gameEngineHeaders/Extended.h"
+#include "../gameEngineHeaders/Reset.h"
+
 #include "gameEngineHeaders/NPC.h"
 #include "gameEngineHeaders/Object.h"
 
@@ -82,7 +84,7 @@ public:
     //    Returns the description of NPC struct at specified index
 
 	string getDescription (const int& index);
-	vector <NPC> getNPCVector();
+
 	// Pre-condition:
     //    0 <= index < npcNode.size()
     // Post-condition:
@@ -185,7 +187,7 @@ public:
 	string getExtraDescription (const int& objIndex);
 
 	vector<string> getExtraKeyWord(const int& objIndex);
-	vector<Object> getObjVector();
+
 	// Pre-condition:
     //    0 <= index < objNode.size()
     // Post-condition:
@@ -354,17 +356,8 @@ public:
 class resetDataInterface : public dataInterfaceBase{
 private: 
 
-	struct RESET {
-		string action;
-		string comment;
-		int id;
-		int limit;
-		int room;
-		int slot;
-	};
-
 	// store each node on vector
-	vector<RESET> resetVector;
+	vector<Reset> resetVector;
 
 	// node where root of yaml file will be set
 	YAML::Node baseNode;
@@ -399,6 +392,9 @@ public:
 
 	int getSlot (const int& index);
 
+	string getState (const int& index);
+
+	vector<Reset> getResetVector();
 	///////////////////////////////////
 	// 		  PRINT FUNCTIONS        //
 	///////////////////////////////////
@@ -414,6 +410,8 @@ public:
 	void printRoom (const int& index);
 
 	void printSlot (const int& index);
+
+	void printState (const int& index);
 
 	virtual void printAtIndex (const int& index);
 
