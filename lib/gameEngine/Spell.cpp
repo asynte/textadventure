@@ -3,8 +3,17 @@
 #ifndef SPELL_CPP
 #define SPELL_CPP
 
-Spell::Spell(string name, int lvl, int mana, int gold) {
+Spell::Spell(string name, int duration, int lvl, int mana) {
 	this->spellName = name;
+	this->duration = duration;
+	this->minLevel = lvl;
+	this->manaCost = mana;
+
+}
+
+Spell::Spell(string name, int duration, int lvl, int mana, int gold) {
+	this->spellName = name;
+	this->duration = duration;
 	this->minLevel = lvl;
 	this->manaCost = mana;
 	this->goldCost = gold;
@@ -42,4 +51,7 @@ int Spell::getGoldCost() const {
 	return this->goldCost;
 }
 
+int Spell::getDuration() const{
+	return this->duration;
+}
 #endif

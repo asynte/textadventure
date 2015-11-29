@@ -10,6 +10,8 @@
 #include "../gameEngineHeaders/Extended.h"
 #include "gameEngineHeaders/NPC.h"
 #include "gameEngineHeaders/Object.h"
+#include "gameEngineHeaders/DefSpell.h"
+#include "gameEngineHeaders/OffSpell.h"
 
 using namespace std;
 
@@ -517,5 +519,86 @@ public:
 };
 
 
+class spellDataInterface{
+private: 
+
+	// struct DEFSPELL {
+	// 	int duration;
+	// 	string effect;
+	// 	string hitChar;
+	// 	string hitVict;
+	// 	int mana;
+	// 	int minLevel;
+	// 	string name;
+	// 	string wearOff;
+	// };
+
+	// struct OFFSPELL {
+	// 	string damMsg;
+	// 	int duration;
+	// 	int mana;
+	// 	int minLevel;
+	// 	string name;
+	// 	string damage;
+	// };
+
+	// store each node on vector
+	vector <DefSpell> defSpellVector;
+	vector <OffSpell> offSpellVector;
+
+	// node where root of yaml file will be set
+	YAML::Node baseNode;
+
+	// node where SPELL sequence of yaml file will be set
+	YAML::Node offenseNode, defenseNode;
+
+public:
+
+	// spell constructor
+	spellDataInterface(const string& file)
+	: baseNode(YAML::LoadFile(file)), defenseNode(baseNode["defense"]), offenseNode(baseNode["offense"]){
+
+	}
+
+	// spell deconstructor
+	~spellDataInterface() {}
+
+
+	virtual void printDefDuration(const int& index);
+	virtual void printEffect(const int& index);
+	virtual void printHitChar(const int& index);
+	virtual void printHitVict(const int& index);
+	virtual void printDefMana(const int& index);
+	virtual void printDefMinLevel(const int& index);
+	virtual void printDefName(const int& index);
+
+	virtual void printDamMsg(const int& index);
+	virtual void printOffDuration(const int& index);
+	virtual void printOffMana(const int& index);
+	virtual void printOffMinLevel(const int& index);
+	virtual void printOffName(const int& index);
+	virtual void printDamage(const int& index);
+
+	virtual void printAtIndexDefense(const int& index);
+	virtual void printAtIndexOffense(const int& index);
+	virtual void printAll();
+
+	///////////////////////////////////
+	// 		   LOAD FUNCTIONS        //
+	///////////////////////////////////
+
+	virtual void pushDef (const int& index);
+	virtual void pushOff (const int& index);
+
+	virtual void loadAllDefenseSpell();
+	virtual void loadAllOffenseSpell();
+
+	///////////////////////////////////
+	// 		   GET FUNCTIONS         //
+	///////////////////////////////////
+
+	vector <DefSpell> getDefVector();
+	vector <OffSpell> getOffVector();
+};
 
 #endif

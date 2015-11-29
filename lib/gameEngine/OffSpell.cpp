@@ -5,21 +5,34 @@
 #ifndef OFFSPELL_CPP
 #define OFFSPELL_CPP
 
-OffSpell::OffSpell(string name, int lvl, int mana, int gold)
-	: Spell(name, lvl, mana, gold) { 
-	this->setDamage(this->getName());
-}	
+// OffSpell::OffSpell(string name, int lvl, int mana, int gold)
+// 	: Spell(name, lvl, mana, gold) { 
+// 	this->setDamage(this->getName());
+// }	
 
-void OffSpell::setDamage(string) {
-	
+OffSpell::OffSpell(string damMsg, int duration, int manaCost, int minLevel, string name, string damage)
+	: Spell(name, duration, minLevel, manaCost) {
+		this->damMsg = damMsg;
+		this->damage = damage;
 }
 
-int OffSpell::getDamage() const {
+string OffSpell::getDamage() const{
 	return this->damage;
 }
 
-void OffSpell::castSpell(Character &player) {
-
+string OffSpell::getDamMsg() const{
+	return this->damMsg;
 }
+// void OffSpell::setDamage(string) {
+	
+//}
+
+// int OffSpell::getDamage() const {
+// 	return this->damage;
+// }
+
+// void OffSpell::castSpell(Character &player) {
+
+// }
 
 #endif

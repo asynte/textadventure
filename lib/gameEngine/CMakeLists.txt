@@ -30,6 +30,9 @@ target_link_libraries(Widget NPC)
 target_link_libraries(Widget Object)
 target_link_libraries(Widget Character)
 
+target_link_libraries(OffSpell Spell)
+target_link_libraries(DefSpell Spell)
+
 
 #target_link_libraries(Character Widget)
 #target_link_libraries(Character NPC)

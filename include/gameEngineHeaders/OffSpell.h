@@ -8,14 +8,18 @@ using namespace std;
 
 class OffSpell : public Spell {
 public:
-	OffSpell(string, int, int, int);
-	void setDamage(string);
-	int getDamage() const;
-	void castSpell(Character&);
+	//OffSpell(string name, int lvl, int mana, int gold);
+	OffSpell(string damMsg, int duration, int manaCost, int minLevel, string name, string damage);
+	// void setDamage(string);
+	// int getDamage() const;
+	// void castSpell(Character&);
+	string getDamage() const;
+	string getDamMsg() const;
+
 private:
-	int damage;
+	string damage;
 	string damMsg;
-	string damageFormula;
+	string damageFormula; // Jason's part
 };
 
 #endif

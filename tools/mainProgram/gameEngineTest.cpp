@@ -30,29 +30,41 @@ int init(){
 	roomDataInterface roomParser("data/smurf.yml");
 	objDataInterface objParser("data/smurf.yml");
 	npcDataInterface npcParser("data/smurf.yml");
+	spellDataInterface spellParser("data/spellstest.yml");
 }
 
 
 int main() {
-
-
-	objDataInterface objParser{"data/smurf.yml"};
-	objParser.loadAll();
-	//objParser.printAll();
-	Character player("Dude",101);
-	for (auto obj : objParser.getObjVector()) {
-		cout << obj.getName() << endl;
-		cout << obj.isWearable() << endl;
-		if (obj.isWearable()) {
-			cout << obj.getEquipArea() << endl;
-		}
+	spellDataInterface spellParser("data/spellstest.yml");
+	spellParser.loadAllDefenseSpell();
+	spellParser.loadAllOffenseSpell();
+	//spellParser.printAll();
+	for(int i = 0 ; i < spellParser.getDefVector().size() ; i++ ){
+		cout << spellParser.getDefVector().at(i).getName() << endl;
 	}
-	// Object axe();
-	// axe.setEquipArea(Widget::WEAPON);
-	// player.interact(axe);
-	// player.equip(axe);
-	// player.printStatus();
-	// player.examine(axe);
+
+
+
+
+
+
+
+
+
+
+
+	// objDataInterface objParser{"data/smurf.yml"};
+	// objParser.loadAll();
+	// //objParser.printAll();
+	// Character player("Dude",101);
+	// for (auto obj : objParser.getObjVector()) {
+	// 	cout << obj.getName() << endl;
+	// 	cout << obj.isWearable() << endl;
+	// 	if (obj.isWearable()) {
+	// 		cout << obj.getEquipArea() << endl;
+	// 	}
+	// }
+
 
 	return 0;
 }

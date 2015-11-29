@@ -10,7 +10,8 @@ using namespace std;
 
 class Spell {
 public:
-	Spell(string, int, int, int);
+	Spell(string name, int duration, int lvl, int mana);
+	Spell(string name, int duration, int lvl, int mana, int gold);
 	void setName(string);
 	string getName() const;
 	void setMinLevel(int);
@@ -19,9 +20,12 @@ public:
 	int getManaCost() const;
 	void setGoldCost(int);
 	int getGoldCost() const;
+	int getDuration() const;	
+
 
 private:
 	string spellName;
+	int duration;
 	int manaCost;
 	int goldCost;
 	int minLevel;
