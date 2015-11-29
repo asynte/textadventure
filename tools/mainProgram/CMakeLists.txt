@@ -37,6 +37,7 @@ target_link_libraries(alphaversion Extended)
 target_link_libraries(alphaversion Spell)
 target_link_libraries(alphaversion OffSpell)
 target_link_libraries(alphaversion DefSpell)
+target_link_libraries(alphaversion SpellShop)
 
 #userAccount Libraries
 target_link_libraries(alphaversion Login)

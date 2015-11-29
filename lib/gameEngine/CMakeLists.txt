@@ -14,6 +14,7 @@ add_library(GameEngine GameEngine.cpp)
 add_library(Spell Spell.cpp)
 add_library(OffSpell OffSpell.cpp)
 add_library(DefSpell DefSpell.cpp)
+add_library(SpellShop SpellShop.cpp)
 
 
 target_link_libraries(World ${CMAKE_SOURCE_DIR}/lib/yaml/libyaml-cpp.a)
@@ -32,6 +33,13 @@ target_link_libraries(Widget Character)
 
 target_link_libraries(OffSpell Spell)
 target_link_libraries(DefSpell Spell)
+
+
+target_link_libraries(SpellShop Spell)
+target_link_libraries(SpellShop OffSpell)
+target_link_libraries(SpellShop DefSpell)
+target_link_libraries(SpellShop spellDataInterface)
+
 
 
 #target_link_libraries(Character Widget)

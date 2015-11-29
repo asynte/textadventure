@@ -7,6 +7,7 @@
 #include "gameEngineHeaders/Widget.h"
 #include "gameEngineHeaders/World.h"
 #include "gameEngineHeaders/GameEngine.h"
+#include "gameEngineHeaders/SpellShop.h"
 #include "userAccountHeaders/Login.h"
 #include "networkingHeaders/TCPClient.h"
 #include "networkingHeaders/TCPDataflow.h"
@@ -27,44 +28,23 @@
 
 using namespace std;
 int init(){
-	roomDataInterface roomParser("data/smurf.yml");
-	objDataInterface objParser("data/smurf.yml");
-	npcDataInterface npcParser("data/smurf.yml");
+	// roomDataInterface roomParser("data/smurf.yml");
+	// objDataInterface objParser("data/smurf.yml");
+	// npcDataInterface npcParser("data/smurf.yml");
 	spellDataInterface spellParser("data/spellstest.yml");
 }
 
 
 int main() {
-	spellDataInterface spellParser("data/spellstest.yml");
-	spellParser.loadAllDefenseSpell();
-	spellParser.loadAllOffenseSpell();
-	//spellParser.printAll();
-	for(int i = 0 ; i < spellParser.getDefVector().size() ; i++ ){
-		cout << spellParser.getDefVector().at(i).getName() << endl;
-	}
 
-
-
-
-
-
-
-
-
-
-
-	// objDataInterface objParser{"data/smurf.yml"};
-	// objParser.loadAll();
-	// //objParser.printAll();
-	// Character player("Dude",101);
-	// for (auto obj : objParser.getObjVector()) {
-	// 	cout << obj.getName() << endl;
-	// 	cout << obj.isWearable() << endl;
-	// 	if (obj.isWearable()) {
-	// 		cout << obj.getEquipArea() << endl;
-	// 	}
-	// }
-
+	Character player("Donald Trump", 3002);
+	player.setLevel(99);
+	SpellShop shop("Welcome to the Spell Shop", 10000);
+	//cout << shop.getDescription() << endl;
+	//cout << shop.getShopLocationID() << endl << endl;
+	// shop.loadSpells();
+	// shop.displaySpells();
+	shop.shopMenu(player);
 
 	return 0;
 }

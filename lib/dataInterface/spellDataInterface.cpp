@@ -129,7 +129,7 @@ using namespace std;
 		// for the five offense spells
 		if (offenseNode[index]["Name"].as<string>() == "cause critical" ||
 			offenseNode[index]["Name"].as<string>() == "cause serious" ||
-			offenseNode[index]["Name"].as<string>() == "cause serious" ||
+			offenseNode[index]["Name"].as<string>() == "cause light" ||
 			offenseNode[index]["Name"].as<string>() == "lightning breath" ||
 			offenseNode[index]["Name"].as<string>() == "flamestrike") {
 
