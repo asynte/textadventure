@@ -48,6 +48,47 @@ void testSpellShop() {
 	shop.shopMenu(player);
 }
 
+void testFight() {
+	Character player("Kid with no arms", 3002);
+    cout << "Current room ID: " + to_string(player.getLocation()) << endl;
+    player.increaseExp(300);
+    player.updateLevel();
+    player.printStatus();
+    Character player2("Downy", 3002);
+    NPC smurf;
+    smurf.setName("Smurfy Timmeh");
+    smurf.setLongDesc("An orphan smurf with no friends.");
+    player.examine(player2);
+    player.examine(smurf);
+    player.attack(smurf);
+}
+
+void testEquip() {
+	Character player("Kid with no arms", 3002);
+    player.increaseExp(300);
+    player.updateLevel();
+    player.printStatus();
+    player.togglePVP();
+    Object rock(69, "shiny rock");
+    Object sword(100, "Excalibur");
+    sword.setLongDesc("A legendary sword.");
+    sword.setWearable(true);
+    sword.setEquipArea(Widget::WEAPON);
+    player.interact(sword);
+    player.interact(rock);
+    player.equip(sword);
+    player.updateStats();
+    cout << "Char attack: " + to_string(player.getAtk()) << endl;
+    player.examine(sword);
+    player.showInventory();
+    player.printStatus();
+    player.unequip(sword);
+    player.printStatus();
+    player.removeFromInventory(rock);
+    player.removeFromInventory(sword);
+    player.showInventory();
+}
+
 void testSpellCast() {
 	npcDataInterface npcParser("data/smurf.yml");
 	npcParser.loadAll();

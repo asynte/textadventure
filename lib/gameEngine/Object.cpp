@@ -7,11 +7,11 @@ Object::Object() {
     
 }
 
-// Object::Object(int id, string name) { // for testing use only
-//     widgetName = name;
-//     widgetId = id;
-//     wearable = false;
-// }
+Object::Object(int id, string name) { // for testing use only
+    widgetName = name;
+    widgetId = id;
+    wearable = false;
+}
 
 Object::Object(int id, vector<string> keywords){ //testing
     widgetId = id;
