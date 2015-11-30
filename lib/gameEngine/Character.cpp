@@ -29,6 +29,7 @@ Character::Character(string name,int currentLocation) {
     this->setName(name);
     this->setLevel(1);
     this->setHealth(CHAR_DEFAULTHEALTH);
+    this->setMaxHealth(CHAR_DEFAULTHEALTH);
     this->setMana(CHAR_DEFAULTMANA);
     this->setGold(CHAR_DEFAULTGOLD);
     this->setExp(0);
@@ -50,7 +51,7 @@ bool Character::equals(const Character &other) {
 
 void Character::printStatus() { // print Character's stats
     cout << "\nName: " + this->getName();
-    cout << "\nHealth: " + to_string(this->getHealth());
+    cout << "\nHealth: " + to_string(this->getCurrentHealth());
     cout << "\nMana: " + to_string(this->getMana());
     cout << "\nLevel: " + to_string(this->getLevel());
     cout << "\nPVP: " + to_string(this->getPVP());
@@ -63,11 +64,19 @@ void Character::printStatus() { // print Character's stats
 }
 
 void Character::setHealth(int hp) {
+    this->currentHealth = hp;
+}
+
+void Character::setMaxHealth(int hp) {
     this->charHealth = hp;
 }
 
 int Character::getHealth() const {
     return this->charHealth;
+}
+
+int Character::getCurrentHealth() const {
+    return this->currentHealth;
 }
 
 void Character::setMana(int mp) {
@@ -187,14 +196,23 @@ string Character::getDirection(){
         return "Wrong";
     }
 }
-// void Character::addHealSpell(HealSpell sp) {
-//     this->charHealSpells.push_back(sp);
-//     cout << sp.getName() + " acquired!" << endl;
-// }
+void Character::addDefSpell(DefSpell sp) {
+    this->charDefSpells.push_back(sp);
+    cout << sp.getName() + " acquired!" << endl;
+}
 
-// vector<HealSpell> Character::getHealSpells() const {
-//     return this->charHealSpells;
-// }
+vector<DefSpell> Character::getDefSpells() const {
+    return this->charDefSpells;
+}
+
+void Character::addOffSpell(OffSpell sp) {
+    this->charOffSpells.push_back(sp);
+    cout << sp.getName() + " acquired!" << endl;
+}
+
+vector<OffSpell> Character::getOffSpells() const {
+    return this->charOffSpells;
+}
 
 void Character::setPVP(bool b) {
     this->wantsToPVP = b;
@@ -313,7 +331,7 @@ void Character::examine(Character &c) { // examine other character
 
 void Character::attack(NPC npc) { // fight NPC
     int round = 1;
-    while (this->getHealth() > 0 && npc.getHealth() > 0) {
+    while (this->getCurrentHealth() > 0 && npc.getHealth() > 0) {
         string userCmd;
         cout << "Round " + to_string(round) << endl;
         cout << "What would you like to do? \n\tFight\tFlee" << endl;
@@ -369,8 +387,8 @@ void Character::battleSequence(NPC &npc) {
         cout << npc.getName() + " takes " + to_string(this->getAtk()) + " damage and has no health remaining!" << endl;
     } else { // keep fighting
         cout << npc.getName() + " takes " + to_string(this->getAtk()) + " damage and has " + to_string(npc.getHealth()) + " health remaining!" << endl;
-        this->setHealth( this->getHealth() - npc.getAtk() ); // character takes damage equal to NPC's atk
-        cout << "You take " + to_string(npc.getAtk()) + " damage and have " + to_string(this->getHealth()) + " health remaining!" << endl;
+        this->setHealth( this->getCurrentHealth() - npc.getAtk() ); // character takes damage equal to NPC's atk
+        cout << "You take " + to_string(npc.getAtk()) + " damage and have " + to_string(this->getCurrentHealth()) + " health remaining!" << endl;
     }
 }
 

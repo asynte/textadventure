@@ -39,10 +39,30 @@ string DefSpell::getWearOff() const{
 // 	return this->healAmount;
 // }
 
-// void DefSpell::castSpell(Character &player) {
-// 	int newHealth = player.getHealth() + this->healAmount;
-// 	player.setHealth(newHealth);
-// 	cout << player.getName() + " has been healed by " + to_string(this->healAmount);
-// }
+void DefSpell::castSpell(Character &player) {
+	int healAmount = 0;
+	if (this->getName() == "cure critical") {
+		healAmount = rollD8(3) + player.getLevel() - 6;
+	}
+	else if (this->getName() == "cure light") {
+		healAmount = rollD8(1) + player.getLevel()/3;
+	}
+	else if (this->getName() == "cure serious") {
+		healAmount = rollD8(2) + player.getLevel()/2;
+	}
+	else if (this->getName() == "heal") {
+		healAmount = 100;
+	}
+	else if (this->getName() == "hezekiahs cure") {
+		healAmount = 5 * (player.getLevel()/3);
+	}
+	else { 
+		cout << "Spell does not exist." << endl;
+		return;
+	}
+	cout << this->getHitChar() << endl;
+	cout << this->getHitVict() << endl;
+	player.setHealth(min(player.getHealth(), player.getCurrentHealth()+healAmount));
+}
 
 #endif

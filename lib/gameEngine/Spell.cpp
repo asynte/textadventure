@@ -54,4 +54,12 @@ int Spell::getGoldCost() const {
 int Spell::getDuration() const{
 	return this->duration;
 }
+
+int Spell::rollD8(int times) {
+	int result = 0;
+	for (int i = 0; i < times; i++) {
+		result += rand()%8 + 1; //random number from 1 to 8
+	}
+	return result;
+}
 #endif

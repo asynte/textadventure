@@ -8,11 +8,10 @@ using namespace std;
 
 class DefSpell : public Spell {
 public:
-	//DefSpell(string name, int lvl, int manaCost, int gold);
 	DefSpell(int duration, string effect, string hitChar, string hitvict, int manaCost, int minLevel, string name);
 	//void setHealAmount(int);
 	//int getHealAmount() const;
-	//void castSpell(Character&);
+	void castSpell(Character&);
 	string getEffect() const;
 	string getHitChar() const;
 	string getHitVict() const;

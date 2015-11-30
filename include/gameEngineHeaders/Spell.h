@@ -1,5 +1,7 @@
 #include <string>
 #include "gameEngineHeaders/Character.h"
+#include <stdlib.h>
+#include <algorithm> 
 
 #ifndef SPELL_H
 #define SPELL_H
@@ -21,7 +23,7 @@ public:
 	void setGoldCost(int);
 	int getGoldCost() const;
 	int getDuration() const;	
-
+	int rollD8(int);
 
 private:
 	string spellName;

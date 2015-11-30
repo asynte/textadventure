@@ -33,8 +33,10 @@ public:
     Character();
     Character(string,int);
     void printStatus();
-    void setHealth(int);
+    void setMaxHealth(int);
     int getHealth() const;
+    void setHealth(int);
+    int getCurrentHealth() const;
     void setMana(int);
     int getMana() const;
     void setGold(int);
@@ -57,8 +59,10 @@ public:
     int getCha() const;
     void setPVP(bool);
     bool getPVP() const;
-    // void addHealSpell(HealSpell);
-    // vector<HealSpell> getHealSpells() const;
+    void addDefSpell(DefSpell);
+    vector<DefSpell> getDefSpells() const;
+    void addOffSpell(OffSpell);
+    vector<OffSpell> getOffSpells() const;
     void togglePVP();
     void updateStats();
     vector<Object> getInventory() const;
@@ -85,6 +89,7 @@ public:
 protected:
     int direction;
     int charHealth;
+    int currentHealth;
     int charMana;
     int charGold;
     int experience;

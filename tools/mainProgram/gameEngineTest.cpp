@@ -7,6 +7,9 @@
 #include "gameEngineHeaders/Widget.h"
 #include "gameEngineHeaders/World.h"
 #include "gameEngineHeaders/GameEngine.h"
+#include "gameEngineHeaders/Spell.h"
+#include "gameEngineHeaders/OffSpell.h"
+#include "gameEngineHeaders/DefSpell.h"
 #include "gameEngineHeaders/SpellShop.h"
 #include "userAccountHeaders/Login.h"
 #include "networkingHeaders/TCPClient.h"
@@ -27,16 +30,14 @@
 
 
 using namespace std;
-int init(){
+void init(){
 	// roomDataInterface roomParser("data/smurf.yml");
 	// objDataInterface objParser("data/smurf.yml");
 	// npcDataInterface npcParser("data/smurf.yml");
 	spellDataInterface spellParser("data/spellstest.yml");
 }
 
-
-int main() {
-
+void testSpellShop() {
 	Character player("Donald Trump", 3002);
 	player.setLevel(99);
 	SpellShop shop("Welcome to the Spell Shop", 10000);
@@ -45,7 +46,22 @@ int main() {
 	// shop.loadSpells();
 	// shop.displaySpells();
 	shop.shopMenu(player);
+}
 
+void testSpellCast() {
+	spellDataInterface spellParser("data/spellstest.yml");
+	spellParser.loadAllDefenseSpell();
+	Character player("Killua", 3002);
+	player.setHealth(player.getHealth() - 30);
+	player.printStatus();
+	player.addDefSpell(spellParser.getDefVector().at(3));
+	player.getDefSpells().at(0).castSpell(player);
+	player.printStatus();
+}
+
+
+int main() {
+	testSpellCast();
 	return 0;
 }
 
