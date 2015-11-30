@@ -7,6 +7,8 @@
 #include "gameEngineHeaders/Widget.h"
 #include "gameEngineHeaders/World.h"
 #include "gameEngineHeaders/GameEngine.h"
+#include "gameEngineHeaders/Reset.h"
+
 #include "userAccountHeaders/Login.h"
 #include "networkingHeaders/TCPClient.h"
 #include "networkingHeaders/TCPDataflow.h"
@@ -30,18 +32,31 @@ int init(){
 	roomDataInterface roomParser("data/midgaard.yml");
 	objDataInterface objParser("data/midgaard.yml");
 	npcDataInterface npcParser("data/midgaard.yml");
+	resetDataInterface resetParser("data/midgaard.yml");
 }
 
 
 int main() {
-	    World sfu("midgaard");
-   
-    Character player("Akame",3001);
+	World sfu("midgaard");
+   	vector <NPC> npcVector=sfu.getNPCsVector();
+   	for(int i=0;i<npcVector.size();i++){
+   		if(npcVector.at(i).getId()==3011){
+   			cout<<npcVector.at(i).getRoomID()<<endl;
+   		}
+   	}
+   	vector <Object> objectVector=sfu.getObjectsVector();
+   	for(int i=0;i<objectVector.size();i++){
+   		if(objectVector.at(i).getId()==3139){
+   			cout<<objectVector.at(i).getRoomID()<<endl;
+   		}
+   	}
+    // Character player("Akame",3001);
 
-    string direction;
-    cout<<"Enter direction: " << endl;
-    cin >> direction;
-    sfu.moveCharacter(player, direction);
+	   //  string direction;
+	   //  cout<<"Enter direction: " << endl;
+	   //  cin >> direction;
+	   //  sfu.moveCharacter(player, direction);
+
 
 	return 0;
 }

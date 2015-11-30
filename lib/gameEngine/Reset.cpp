@@ -1,5 +1,6 @@
 #ifndef RESET_CPP
 #define RESET_CPP
+#include "gameEngineHeaders/Reset.h"
 
 Reset::Reset(string action, string comment,int id,int limit ,int room,int slot,string state){
 	this->action=action;

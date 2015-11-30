@@ -20,6 +20,8 @@ public:
     int getHealth() const;
     void setAtk(int);
     int getAtk() const;
+    void setRoomID(int);
+    int getRoomID()const;
 
 protected:
     const int NPC_DEFAULTHEALTH = 20;
@@ -29,6 +31,7 @@ protected:
     string npcDesc;
     int npcHealth;
     int npcAtk;
+    int roomID;
 };
 
 #endif

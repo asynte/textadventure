@@ -22,7 +22,8 @@ public:
 	bool isWearable() const;
         void setEquipArea(equipmentArea);
         equipmentArea getEquipArea() const;
-
+    void setRoomID(int);
+    int getRoomID()const;
 protected:
 	string objLongDesc;
 	vector<string> objKeyWords;
@@ -31,6 +32,8 @@ protected:
         bool wearable;
         equipmentArea equippedOn;
         int objStats;
+    int roomID;
+
 };
 
 #endif

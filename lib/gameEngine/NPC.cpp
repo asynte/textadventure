@@ -16,8 +16,15 @@ NPC::NPC(int id, string desc, vector<string> keywords, string longDesc, string s
 	widgetName = shortDesc;
     this->setHealth(NPC_DEFAULTHEALTH);
     this->setAtk(NPC_DEFAULTATK);
-}
+    roomID=0;
 
+}
+void NPC::setRoomID(int roomID){
+    this->roomID=roomID;
+}
+int NPC::getRoomID()const{
+    return roomID;
+}
 string NPC::getLongDesc() const {
 	return npcLongDesc;
 }

@@ -1,20 +1,11 @@
 using namespace std;
-
 #ifndef RESET_H
 #define RESET_H
 
-
-#include <iostream>
-#include "gameEngineHeaders/Door.h"
-#include "gameEngineHeaders/Widget.h"
-#include "gameEngineHeaders/Object.h"
-#include "gameEngineHeaders/NPC.h"
-#include <vector>
-#include "gameEngineHeaders/Extended.h"
-
+#include <string>
 class Reset{
 public:
-	Reset(string, string,int,int,int,int,string);
+	Reset(string,string,int,int,int,int,string);
 	string getAction();
 	string getComment();
 	int getId();
@@ -32,3 +23,4 @@ private:
 	int slot;
 	string state;
 };
+#endif

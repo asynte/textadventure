@@ -3,6 +3,8 @@
 #include <vector>
 #include "yaml-cpp/yaml.h"
 #include "dataInterfaceHeaders/dataInterfaceBase.h"
+#include "gameEngineHeaders/Reset.h"
+
 
 using namespace std;
 
@@ -106,7 +108,7 @@ using namespace std;
 
 		// go through all RESET nodes in resetVector
 		int i = 0;
-		while (id != resetVector[i].id) {
+		while (id != resetVector[i].getId()) {
 			i++;
 		}	
 

@@ -109,7 +109,7 @@ public:
     // Post-condition:
     //    Returns the short description of NPC struct at specified index
 	string getShortDescription (const int& index);
-
+	vector<NPC> getNPCVector();
 	///////////////////////////////////
 	// 		  PRINT FUNCTIONS        //
 	///////////////////////////////////
@@ -183,6 +183,7 @@ public:
     //    0 <= index < objNode.size()
     // Post-condition:
     //    Returns the extra of OBJECTS struct at specified index
+	vector<Object> getObjVector();
 
 	string getExtraDescription (const int& objIndex);
 

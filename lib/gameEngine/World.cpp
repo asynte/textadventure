@@ -6,9 +6,7 @@
 #include <string>
 #include <vector>
 #include "gameEngineHeaders/World.h"
-#include "gameEngineHeaders/Character.h"
-#include "gameEngineHeaders/Widget.h"
-//#include "dataInterfaceHeaders/dataInterfaceBase.h"
+
 using namespace std;
 
 
@@ -28,21 +26,27 @@ void World::addCharacter(const Character &character) {
 void World::initializeWorld(string name){
  	string fileName="data/"+name+".yml";
 
- 	roomDataInterface room{fileName};
+ 	roomDataInterface room(fileName);
 	room.loadAll();
 	roomsVector=room.getRoomVector();
-	addObjectToRoom(fileName);
-	addNPCToRoom(fileName);
-
+	resetDataInterface reset(fileName);
+	reset.loadAll();
+	resetsVector=reset.getResetVector();
+	npcDataInterface npc(fileName);
+	npc.loadAll();
+	npcVector=npc.getNPCVector();
+	objDataInterface object(fileName);
+	object.loadAll();
+	objectVector=object.getObjVector();
+	addObjectToRoom();
+	addNPCToRoom();
+	
 }
 
 string World::getName(){
 	return name;
 }
 
-vector<Room> World:: getRoomsVector(){
-	return roomsVector;
-}
 Room World::getRoomFindById(int id){
 		return roomsVector.at(roomNowIndex);
 }
@@ -60,33 +64,60 @@ bool World::findRoomById(int roomId){
 }
 
 
-void World::addObjectToRoom(string fileName){
-	objDataInterface object(fileName);
-	object.loadAll();
-	objectVector=object.getObjVector();
-	for(int i=0;i<objectVector.size();i++){
-		int id=objectVector.at(i).getId();
-		for(int j=0;j<roomsVector.size();j++){
-			int roomId=roomsVector.at(j).getID();
-			if(roomId==id){
-				roomsVector.at(j).addObject(objectVector.at(i));
-			}
+
+int World::findRoomIndex(int roomID){
+	for(int i=0;i<roomsVector.size();i++){
+		if(roomsVector.at(i).getID()==roomID){
+			return i;
 		}
 	}
+	return -1;
 }
-void World::addNPCToRoom(string fileName){
-	npcDataInterface npc(fileName);
-	npc.loadAll();
-	npcVector=npc.getNPCVector();
+int World::findNPCIndex(int npcID){
 	for(int i=0;i<npcVector.size();i++){
-		int id=npcVector.at(i).getId();
-		for(int j=0;j<roomsVector.size();j++){
-			int roomId=roomsVector.at(j).getID();
-			if(roomId==id){
-				roomsVector.at(j).addNPC(npcVector.at(i));
+		if(npcVector.at(i).getId()==npcID){
+			return i;
+		}
+	}
+	return -1;
+}
+int World::findObjectIndex(int objectID){
+	for(int i=0;i<objectVector.size();i++){
+		if(objectVector.at(i).getId()==objectID){
+			return i;
+		}
+	}
+	return -1;
+}
+void World::addObjectToRoom(){
+	for(int i=0;i<resetsVector.size();i++){
+		if(resetsVector.at(i).getAction()=="object"){
+			int objRoomId=resetsVector.at(i).getRoom();
+			int objID=resetsVector.at(i).getId();
+			int roomIndex=findRoomIndex(objRoomId);
+			int objIndex=findObjectIndex(objID);
+			if(roomIndex!=-1 && objIndex!=-1){
+				roomsVector.at(roomIndex).addObject(objectVector.at(objIndex));
+				objectVector.at(objIndex).setRoomID(objRoomId);
 			}
 		}
 	}
+
+}
+void World::addNPCToRoom(){
+	for(int i=0;i<resetsVector.size();i++){
+		if(resetsVector.at(i).getAction()=="npc"){
+			int npcRoomId=resetsVector.at(i).getRoom();
+			int npcID=resetsVector.at(i).getId();
+			int roomIndex=findRoomIndex(npcRoomId);
+			int npcIndex=findNPCIndex(npcID);
+			if(roomIndex!=-1 && npcIndex!=-1){
+				roomsVector.at(roomIndex).addNPC(npcVector.at(npcIndex));
+				npcVector.at(npcIndex).setRoomID(npcRoomId);
+			}
+		}
+	}
+
 }
 
 
@@ -159,6 +190,16 @@ void World::moveCharacter(Character &player, string userCommand){
 
 vector<Character> World::getCharacters() {
 	return this->characters;
+}
+
+vector<Room> World:: getRoomsVector(){
+	return roomsVector;
+}
+vector<NPC> World::getNPCsVector(){
+	return npcVector;
+}
+vector<Object> World::getObjectsVector(){
+	return objectVector;
 }
 
 void World::setCharRoom(Character &c, int roomID, int moveDirection){

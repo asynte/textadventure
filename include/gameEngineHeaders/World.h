@@ -1,7 +1,4 @@
 using namespace std;
-
-
-
 #ifndef WORLD_H
 #define WORLD_H
 
@@ -13,6 +10,7 @@ using namespace std;
 #include "gameEngineHeaders/Widget.h"
 #include "dataInterfaceHeaders/dataInterfaceBase.h"
 #include "userInterfaceHeaders/UserInterface.h"
+#include "gameEngineHeaders/Reset.h"
 
 class World{
 
@@ -24,6 +22,8 @@ public:
 	string getName();
 	vector<Character> getCharacters();
 	vector<Room> getRoomsVector();
+	vector<NPC> getNPCsVector();
+	vector<Object> getObjectsVector();
 	Room getRoomFindById(int id);
 	bool findRoomById(int );
 	void addRoom(Room room);
@@ -40,13 +40,15 @@ private:
 	vector <Object> objectVector;
 	vector <NPC> npcVector;
 	vector<Character> characters;
-
+	vector <Reset> resetsVector;
 	string name;
 	int roomNowIndex;
 	string getCharacterMoveDirection(Character &player, string userCommand);
-	void addObjectToRoom(string fileName);
-	void addNPCToRoom(string fileName);
+	void addObjectToRoom();
+	void addNPCToRoom();
 	Room getCurrentRoom(Character &player);
-	
+	int findRoomIndex(int roomID);
+	int findNPCIndex(int npcID);
+	int findObjectIndex(int objectID);
 };
 #endif

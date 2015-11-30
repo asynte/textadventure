@@ -11,6 +11,7 @@ Object::Object(int id, string name) { // for testing use only
     widgetName = name;
     widgetId = id;
     wearable = false;
+    roomID=0;
 }
 
 Object::Object(int id, string extraDesc, vector<string> extraKeywords, vector<string> keywords, string longDesc, string shortDesc) {
@@ -22,8 +23,14 @@ Object::Object(int id, string extraDesc, vector<string> extraKeywords, vector<st
     widgetName = shortDesc;
     wearable = false;
     objStats = this->widgetName.length();
+    roomID=0;
 }
-
+void Object::setRoomID(int roomID){
+    this->roomID=roomID;
+}
+int Object::getRoomID()const{
+    return roomID;
+}
 string Object::getLongDesc() const {
     return objLongDesc;
 }
