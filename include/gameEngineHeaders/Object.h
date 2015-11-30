@@ -24,6 +24,8 @@ public:
         equipmentArea getEquipArea() const;
     void setRoomID(int);
     int getRoomID()const;
+    void setSlot(int );
+    int getSlot()const;
 protected:
 	string objLongDesc;
 	vector<string> objKeyWords;
@@ -33,6 +35,7 @@ protected:
         equipmentArea equippedOn;
         int objStats;
     int roomID;
+    int slot;
 
 };
 

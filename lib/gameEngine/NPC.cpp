@@ -16,7 +16,7 @@ NPC::NPC(int id, string desc, vector<string> keywords, string longDesc, string s
 	widgetName = shortDesc;
     this->setHealth(NPC_DEFAULTHEALTH);
     this->setAtk(NPC_DEFAULTATK);
-    roomID=0;
+    roomID=-1;
 
 }
 void NPC::setRoomID(int roomID){
@@ -55,6 +55,19 @@ void NPC::setAtk(int atk) {
 
 int NPC::getAtk() const {
     return this->npcAtk;
+}
+
+void NPC::addInventory(Object o){
+    inventory.push_back(o);
+}
+void NPC::addEquipment(Object o){
+    equipment.push_back(o);
+}
+vector<Object> NPC::getInventory(){
+    return inventory;
+}
+vector<Object> NPC::getEquipment(){
+    return equipment;
 }
 
 #endif

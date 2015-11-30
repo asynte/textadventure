@@ -42,6 +42,11 @@ int main() {
    	for(int i=0;i<npcVector.size();i++){
    		if(npcVector.at(i).getId()==3011){
    			cout<<npcVector.at(i).getRoomID()<<endl;
+            vector<Object> equip=npcVector.at(i).getEquipment();
+            cout<<"Equipment id"<<endl;
+            for(int i=0;i<equip.size();i++){
+               cout<<equip.at(i).getId()<<endl;
+            }
    		}
    	}
    	vector <Object> objectVector=sfu.getObjectsVector();

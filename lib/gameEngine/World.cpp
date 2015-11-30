@@ -104,6 +104,7 @@ void World::addObjectToRoom(){
 	}
 
 }
+
 void World::addNPCToRoom(){
 	for(int i=0;i<resetsVector.size();i++){
 		if(resetsVector.at(i).getAction()=="npc"){
@@ -115,9 +116,37 @@ void World::addNPCToRoom(){
 				roomsVector.at(roomIndex).addNPC(npcVector.at(npcIndex));
 				npcVector.at(npcIndex).setRoomID(npcRoomId);
 			}
+			int j=i+1;
+			if(j==resetsVector.size()){
+				break;
+			}
+			
+			while(resetsVector.at(j).getAction()=="equip" || resetsVector.at(j).getAction()=="give"){
+				
+				if(resetsVector.at(j).getAction()=="equip"){
+					int equipmentID=resetsVector.at(j).getId();
+					int equipmentIndex=findObjectIndex(equipmentID);
+					if(equipmentIndex!=-1){
+						objectVector.at(equipmentIndex).setWearable(true);
+						objectVector.at(equipmentIndex).setSlot(resetsVector.at(j).getSlot());
+						npcVector.at(npcIndex).addEquipment(objectVector.at(equipmentIndex));
+
+					}
+				}
+				if(resetsVector.at(j).getAction()=="give"){
+
+					int objectID=resetsVector.at(j).getId();
+					int objectIndex=findObjectIndex(objectID);
+					if(objectIndex!=-1){
+						
+						npcVector.at(npcIndex).addInventory(objectVector.at(objectIndex));
+
+					}
+				}
+				j++;
+			}
 		}
 	}
-
 }
 
 
