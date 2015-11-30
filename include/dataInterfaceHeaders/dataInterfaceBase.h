@@ -592,6 +592,7 @@ public:
 
 	virtual void loadAllDefenseSpell();
 	virtual void loadAllOffenseSpell();
+	virtual void loadAll();
 
 	///////////////////////////////////
 	// 		   GET FUNCTIONS         //

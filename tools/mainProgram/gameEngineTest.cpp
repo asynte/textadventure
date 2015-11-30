@@ -49,14 +49,21 @@ void testSpellShop() {
 }
 
 void testSpellCast() {
+	npcDataInterface npcParser("data/smurf.yml");
+	npcParser.loadAll();
 	spellDataInterface spellParser("data/spellstest.yml");
-	spellParser.loadAllDefenseSpell();
-	Character player("Killua", 3002);
+	spellParser.loadAll();
+	Character player("Killua", 101);
 	player.setHealth(player.getHealth() - 30);
 	player.printStatus();
 	player.addDefSpell(spellParser.getDefVector().at(3));
 	player.getDefSpells().at(0).castSpell(player);
 	player.printStatus();
+	player.addOffSpell(spellParser.getOffVector().at(0));
+	NPC loser = npcParser.getNPCVector().at(0);
+	cout << "Smurf health: " << loser.getHealth() << endl;
+	player.getOffSpells().at(0).castSpell(player, loser);
+	cout << "Smurf health: " << loser.getHealth() << endl;
 }
 
 

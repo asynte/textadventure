@@ -160,6 +160,11 @@ using namespace std;
 		}
 	}
 
+	void spellDataInterface::loadAll() {
+		loadAllDefenseSpell();
+		loadAllOffenseSpell();
+	}
+
 	///////////////////////////////////
 	// 		  GET FUNCTIONS	         //
 	///////////////////////////////////

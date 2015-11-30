@@ -62,7 +62,8 @@ void DefSpell::castSpell(Character &player) {
 	}
 	cout << this->getHitChar() << endl;
 	cout << this->getHitVict() << endl;
-	player.setHealth(min(player.getHealth(), player.getCurrentHealth()+healAmount));
+	player.setHealth(min(player.getHealth(), player.getCurrentHealth()+healAmount)); // spell casting
+	player.setMana(player.getMana() - this->getManaCost()); // subtract mana cost
 }
 
 #endif
