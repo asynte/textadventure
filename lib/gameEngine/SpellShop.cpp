@@ -3,6 +3,7 @@
 #ifndef SPELLSHOP_CPP
 #define SPELLSHOP_CPP
 
+
 SpellShop::SpellShop(string description, int locationID){
 	this->shopDescription = description;
 	this->shopLocationID = locationID;
@@ -85,8 +86,61 @@ void SpellShop::setSpellCost(){
 	}
 }
 
-void SpellShop::buySpell(Character &player){
-	cout<< "player level is : " << player.getLevel();
+void SpellShop::printMenu(){
+	cout << "What would you like to do?" << endl;
+	cout << "Menu: " << endl;
+	cout << "1. Show Spells" << endl;
+	cout << "2. Buy Spells" << endl;
+	cout << "3. Exit Shop" << endl;
+}
+
+bool SpellShop::buySpell(Character &player){
+	//cout<< "player level is : " << player.getLevel() << endl;
+	string spelltype;
+	cout << "Type of Spell would you like to buy:" << endl;
+	cout << "1. Offense \n2. Defense\n3. Exit" << endl;
+	getline(cin, spelltype);
+	if(spelltype == "1"){ //User chooses to buy offensive spell
+		string spellchoice; //Spell the user chooses to buy
+		cout << "What Offensive spell do you want to buy?" << endl;
+		getline(cin, spellchoice);
+		for(int i = 0 ; i < offShopVector.size() ; i++ ){
+			if(spellchoice == offShopVector.at(i).getName()){
+				cout << "you are about to buy: " << offShopVector.at(i).getName() << endl;
+				return false;
+			}
+			else{
+				cout << "Spell does not exist" << endl << endl;
+				return true;
+			}
+		}	
+	}
+	else if(spelltype == "2"){ //User chooses to buy defensive spell
+		string spellchoice; //Spell the user chooses to buy
+		cout << "What Offensive spell do you want to buy?" << endl;
+		getline(cin, spellchoice);
+		for(int i = 0 ; i < defShopVector.size() ; i++ ){
+			if(spellchoice == defShopVector.at(i).getName()){
+				cout << "you are about to buy: " << defShopVector.at(i).getName() << endl;
+				return false;
+			}
+			else{
+				cout << "Spell does not exist" << endl << endl;
+				return true;
+			}
+		}		
+	}
+	else if(spelltype == "3"){ //User chooses to exit
+		cout << "Exiting Buy Spell" << endl;
+		printMenu();
+		return false;
+	}
+	else{ //User has a typo or enters invalid input
+		cout << "incorrect input" << endl;
+		return true;
+	}
+
+
 	// FINISH BUY SPELL
 	// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	// 	check minlevel 
@@ -96,21 +150,13 @@ void SpellShop::buySpell(Character &player){
 	// 	tell player it is bought
 }
 
-void SpellShop::printMenu(){
-	cout << "What would you like to do?" << endl;
-	cout << "Menu: " << endl;
-	cout << "1. Show Spells" << endl;
-	cout << "2. Buy Spells" << endl;
-	cout << "3. Exit Shop" << endl;
-}
-
 void SpellShop::shopMenu(Character &player){
 	loadSpells();
 	cout << getDescription() << endl;
 	printMenu();
 
 	string choice;
-	while(cin >> choice){
+	while(getline(cin,choice)){
 		if(choice == "3"){
 			break;
 		}
@@ -121,37 +167,30 @@ void SpellShop::shopMenu(Character &player){
 		}
 		else if(choice == "2"){
 			string spellchoice;
-			cout << "What spell would you like to buy?" <<endl;
-			int spellNumber = 1;
+			cout << "Here are the spells you can buy:" <<endl;
+			cout << "\nDefensive Spells:" << endl;
 			for(int i = 0 ; i < defShopVector.size() ; i++ ){
-				cout << spellNumber + i << ". ";
 				cout << defShopVector.at(i).getName() << endl;
 			}
+			cout << "\nOffensive Spells:" << endl;
 			for(int i = 0 ; i < offShopVector.size() ; i++ ){
-				spellNumber = 6;
-				cout << spellNumber + i << ". ";
 				cout << offShopVector.at(i).getName() << endl;
 			}
-			cin >> spellchoice;
-			if(spellchoice == "1" || spellchoice == "2" || spellchoice == "3" || spellchoice == "4"
-				 || spellchoice == "5" || spellchoice == "6" || spellchoice == "7" || spellchoice == "8"
-				  || spellchoice == "9" || spellchoice == "10"){
-				buySpell(player);
+			// if(spellchoice == "cure critical" || spellchoice == "cure light" || spellchoice == "cure serious"
+			// 	 || spellchoice == "heal" || spellchoice == "hezekiahs cure" || spellchoice == "cause critical"
+			// 	 || spellchoice == "cause light" || spellchoice == "cause serious" || spellchoice == "flamestrike"
+			// 	 || spellchoice == "lightning breath"){
+			bool buyfail;
+			do{
+				buyfail = buySpell(player);
+			}while(buyfail);
 				// NOT DONE!!!!!!!!!!!!!!!!!!!!!!!!!
 				// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 				//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-
-
-				printMenu();			
-			}else{
-				cin.clear();
-				cout << "Incorrect input" << endl << endl;
-				printMenu();
-			}
+			//printMenu();			
 		}
 		else {
-			cin.clear();
 			cout << "Please enter the correct command." << endl << endl;
 			printMenu();
 		}

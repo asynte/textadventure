@@ -6,6 +6,7 @@
 #ifndef SPELLSHOP_H
 #define SPELLSHOP_H
 
+
 using namespace std;
 
 class SpellShop {
@@ -26,10 +27,11 @@ private:
 	void loadSpells();
 	void displaySpells();	
 	void setSpellCost();
-	void buySpell(Character &player);
+	bool buySpell(Character &player);
 	void printMenu();
 	vector <DefSpell> defShopVector;
 	vector <OffSpell> offShopVector;
+
 
 
 };
