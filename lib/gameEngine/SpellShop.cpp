@@ -7,6 +7,7 @@
 SpellShop::SpellShop(string description, int locationID){
 	this->shopDescription = description;
 	this->shopLocationID = locationID;
+	loadSpells();
 }
 
 string SpellShop::getDescription(){
@@ -23,8 +24,7 @@ void SpellShop::cinClear(){
 
 void SpellShop::loadSpells(){ //Private function to parse YAML file 
 	spellDataInterface spellParser("data/spellstest.yml");
-	spellParser.loadAllDefenseSpell();
-	spellParser.loadAllOffenseSpell();
+	spellParser.loadAll();
 	defShopVector = spellParser.getDefVector();
 	offShopVector = spellParser.getOffVector();
 	setSpellCost();
@@ -37,15 +37,15 @@ void SpellShop::displaySpells(){ //Loop the vector and display spells
 		cout << "Spell Name: " << defShopVector.at(i).getName() << endl;
 		cout << "Gold Cost: " << defShopVector.at(i).getGoldCost() << endl;
 		cout << "Minimum Level: " << defShopVector.at(i).getMinLevel() << endl;
-		cout << "Mana Cost: " << defShopVector.at(i).getManaCost() << endl;
-		cout << "Spell Duration: " << defShopVector.at(i).getDuration() << endl << endl;
+		cout << "Mana Cost: " << defShopVector.at(i).getManaCost() << endl << endl;
+		//cout << "Spell Duration: " << defShopVector.at(i).getDuration() << endl << endl;
 	}
 	for(int i = 0 ; i < offShopVector.size() ; i++ ){
 		cout << "Spell Name: " << offShopVector.at(i).getName() << endl;
 		cout << "Gold Cost: " << offShopVector.at(i).getGoldCost() << endl;
 		cout << "Minimum Level: " << offShopVector.at(i).getMinLevel() << endl;
-		cout << "Mana Cost: " << offShopVector.at(i).getManaCost() << endl;
-		cout << "Spell Duration: " << offShopVector.at(i).getDuration() << endl << endl;
+		cout << "Mana Cost: " << offShopVector.at(i).getManaCost() << endl << endl;
+		//cout << "Spell Duration: " << offShopVector.at(i).getDuration() << endl << endl;
 	}
 
 }
@@ -97,6 +97,7 @@ void SpellShop::printMenu(){
 	cout << "3. Exit Shop" << endl;
 }
 
+
 bool SpellShop::buySpell(Character &player){
 	//cout<< "player level is : " << player.getLevel() << endl;
 	string spelltype;
@@ -141,8 +142,8 @@ bool SpellShop::buySpell(Character &player){
 		}
 		player.setGold(player.getGold() - offShopVector.at(spellIndex).getGoldCost());
 		cout << "You have successfully bought " << spellchoice << endl;
-		//Call AddSpell to the players spells
-		//Call remove spell from vector function
+		player.addOffSpell(offShopVector.at(spellIndex)); // Adding bought spell to player's spells
+		offShopVector.erase(offShopVector.begin() + spellIndex); //Removing spell from vector because it's bought
 		cout << "Amount of gold you have now is " << player.getGold() << endl;
 		cinClear(); //clear spellchoice
 		printMenu();
@@ -186,8 +187,8 @@ bool SpellShop::buySpell(Character &player){
 		}
 		player.setGold(player.getGold() - defShopVector.at(spellIndex).getGoldCost());
 		cout << "You have successfully bought " << spellchoice << endl;
-		//Call AddSpell to the players spells
-		//Call remove spell from vector function
+		player.addDefSpell(defShopVector.at(spellIndex)); // Adding bought spell to player's spells
+		defShopVector.erase(defShopVector.begin() + spellIndex); //Removing spell from vector because it's bought
 		cout << "Amount of gold you have now is " << player.getGold() << endl;
 		cinClear(); //clear spellchoice
 		printMenu();
@@ -207,16 +208,14 @@ bool SpellShop::buySpell(Character &player){
 }
 
 void SpellShop::shopMenu(Character &player){
-	loadSpells();
 	cout << getDescription() << endl;
 	printMenu();
-
-	string choice;
+	string choice; 
 	while(getline(cin,choice)){
-		if(choice == "3"){
+		if(choice == "3"){ //Exit Spell Shop
 			break;
 		}
-		else if(choice == "1"){
+		else if(choice == "1"){ //See Spells
 			cout<< "Available Spells:" << endl << endl;
 			displaySpells();
 			cinClear();
@@ -227,12 +226,7 @@ void SpellShop::shopMenu(Character &player){
 			do{
 				buyfail = buySpell(player);
 			}while(buyfail);
-			cinClear();
-				// NOT DONE!!!!!!!!!!!!!!!!!!!!!!!!!
-				// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-				//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-			//printMenu();			
+			cinClear();		
 		}
 		else {
 			cout << "Please enter the correct command." << endl << endl;
@@ -241,5 +235,4 @@ void SpellShop::shopMenu(Character &player){
 		}
 	}
 }
-
 #endif
