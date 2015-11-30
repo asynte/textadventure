@@ -109,7 +109,8 @@ void testSpellCast() {
 
 
 int main() {
-	testSpellCast();
+	//testSpellCast();
+    testSpellShop();
 	return 0;
 }
 

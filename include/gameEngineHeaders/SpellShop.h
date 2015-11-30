@@ -17,7 +17,7 @@ public:
 
 	string getDescription();
 	int getShopLocationID();
-
+	void cinClear();
 	void shopMenu(Character &player);
 	
 private:

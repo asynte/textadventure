@@ -17,6 +17,9 @@ int SpellShop::getShopLocationID(){
 	return this->shopLocationID;
 }
 
+void SpellShop::cinClear(){
+	cin.clear();
+}
 
 void SpellShop::loadSpells(){ //Private function to parse YAML file 
 	spellDataInterface spellParser("data/spellstest.yml");
@@ -51,37 +54,37 @@ void SpellShop::setSpellCost(){
 
 	for(int i = 0 ; i < defShopVector.size() ; i++ ){
 		if (defShopVector.at(i).getName() == "cure critical"){
-			defShopVector.at(i).setGoldCost(500);
+			defShopVector.at(i).setGoldCost(10);
 		}
 		else if (defShopVector.at(i).getName() == "cure light"){
-			defShopVector.at(i).setGoldCost(500);
+			defShopVector.at(i).setGoldCost(10);
 		}
 		else if (defShopVector.at(i).getName() == "cure serious"){
-			defShopVector.at(i).setGoldCost(500);
+			defShopVector.at(i).setGoldCost(10);
 		}
 		else if (defShopVector.at(i).getName() == "heal"){
-			defShopVector.at(i).setGoldCost(1000);
+			defShopVector.at(i).setGoldCost(20);
 		}
 		else if (defShopVector.at(i).getName() == "hezekiahs cure"){
-			defShopVector.at(i).setGoldCost(2000);
+			defShopVector.at(i).setGoldCost(30);
 		}				
 	}
 
 	for(int i = 0 ; i < offShopVector.size() ; i++ ){
 		if (offShopVector.at(i).getName() == "cause critical"){
-			offShopVector.at(i).setGoldCost(800);
+			offShopVector.at(i).setGoldCost(10);
 		}
 		else if (offShopVector.at(i).getName() == "cause light"){
-			offShopVector.at(i).setGoldCost(800);
+			offShopVector.at(i).setGoldCost(10);
 		}
 		else if (offShopVector.at(i).getName() == "cause serious"){
-			offShopVector.at(i).setGoldCost(800);
+			offShopVector.at(i).setGoldCost(10);
 		}
 		else if (offShopVector.at(i).getName() == "flamestrike"){
-			offShopVector.at(i).setGoldCost(2000);
+			offShopVector.at(i).setGoldCost(30);
 		}
 		else if (offShopVector.at(i).getName() == "lightning breath"){
-			offShopVector.at(i).setGoldCost(5000);
+			offShopVector.at(i).setGoldCost(20);
 		}				
 	}
 }
@@ -101,53 +104,106 @@ bool SpellShop::buySpell(Character &player){
 	cout << "1. Offense \n2. Defense\n3. Exit" << endl;
 	getline(cin, spelltype);
 	if(spelltype == "1"){ //User chooses to buy offensive spell
+		cinClear(); //Clear spelltype
 		string spellchoice; //Spell the user chooses to buy
 		cout << "What Offensive spell do you want to buy?" << endl;
+		cout << "\nOffensive Spells:" << endl;
+		for(int i = 0 ; i < offShopVector.size() ; i++ ){
+			cout << offShopVector.at(i).getName() << endl;
+		}
 		getline(cin, spellchoice);
+		//Check if spell is valid
+		if(spellchoice != "cause critical" && spellchoice != "cause light"
+			&& spellchoice != "cause serious" && spellchoice != "flamestrike" && spellchoice != "lightning breath"){
+			cout << "Spell does not exist" << endl << endl;
+			cinClear(); //clear spellchoice
+			return true;
+		}
+		int spellIndex; // Used to find the specific spell
 		for(int i = 0 ; i < offShopVector.size() ; i++ ){
 			if(spellchoice == offShopVector.at(i).getName()){
-				cout << "you are about to buy: " << offShopVector.at(i).getName() << endl;
-				return false;
+				spellIndex = i;
+				break;
 			}
-			else{
-				cout << "Spell does not exist" << endl << endl;
-				return true;
-			}
-		}	
+		}
+		if(player.getLevel() < offShopVector.at(spellIndex).getMinLevel()){ //Check player level requirement
+			cout << "You do not meet the level requirement!" << endl;
+			cout << "Required level is: " << offShopVector.at(spellIndex).getMinLevel() << endl;
+			cinClear(); //clear spellchoice
+			return true;
+		}
+		if(player.getGold() < offShopVector.at(spellIndex).getGoldCost()){ //Check player has enough gold
+			cout << "You don't have enough gold to buy this spell!" << endl;
+			cout << "The spell costs " << offShopVector.at(spellIndex).getGoldCost() << endl;
+			cout << "Amount of gold you have is " << player.getGold() << endl;
+			cinClear();//clear spellchoice
+			return true;
+		}
+		player.setGold(player.getGold() - offShopVector.at(spellIndex).getGoldCost());
+		cout << "You have successfully bought " << spellchoice << endl;
+		//Call AddSpell to the players spells
+		//Call remove spell from vector function
+		cout << "Amount of gold you have now is " << player.getGold() << endl;
+		cinClear(); //clear spellchoice
+		printMenu();
+		return false;	
 	}
 	else if(spelltype == "2"){ //User chooses to buy defensive spell
+		cinClear(); //Clear spelltype
 		string spellchoice; //Spell the user chooses to buy
-		cout << "What Offensive spell do you want to buy?" << endl;
+		cout << "What Defensive spell do you want to buy?" << endl;
+		cout << "\nDefensive Spells:" << endl;
+		for(int i = 0 ; i < defShopVector.size() ; i++ ){
+			cout << defShopVector.at(i).getName() << endl;
+		}
 		getline(cin, spellchoice);
+		//Check if spell is valid
+		if(spellchoice != "cure critical" && spellchoice != "cure light" && spellchoice != "cure serious" 
+			&& spellchoice != "heal" && spellchoice != "hezekiahs cure"){
+			cout << "Spell does not exist" << endl << endl;
+			cinClear(); //clear spellchoice
+			return true;
+		}
+		int spellIndex; //Used to find the specific spell
 		for(int i = 0 ; i < defShopVector.size() ; i++ ){
 			if(spellchoice == defShopVector.at(i).getName()){
-				cout << "you are about to buy: " << defShopVector.at(i).getName() << endl;
-				return false;
+				spellIndex = i;
+				break;
 			}
-			else{
-				cout << "Spell does not exist" << endl << endl;
-				return true;
-			}
-		}		
+		}
+		if(player.getLevel() < defShopVector.at(spellIndex).getMinLevel()){ //Check player level requirement
+			cout << "You do not meet the level requirement!" << endl;
+			cout << "Required level is: " << defShopVector.at(spellIndex).getMinLevel() << endl;
+			cinClear(); //clear spellchoice
+			return true;
+		}
+		if(player.getGold() < defShopVector.at(spellIndex).getGoldCost()){ //Check player has enough gold
+			cout << "You don't have enough gold to buy this spell!" << endl;
+			cout << "The spell costs " << defShopVector.at(spellIndex).getGoldCost() << endl;
+			cout << "Amount of gold you have is " << player.getGold() << endl;
+			cinClear();//clear spellchoice
+			return true;
+		}
+		player.setGold(player.getGold() - defShopVector.at(spellIndex).getGoldCost());
+		cout << "You have successfully bought " << spellchoice << endl;
+		//Call AddSpell to the players spells
+		//Call remove spell from vector function
+		cout << "Amount of gold you have now is " << player.getGold() << endl;
+		cinClear(); //clear spellchoice
+		printMenu();
+		return false;
 	}
 	else if(spelltype == "3"){ //User chooses to exit
 		cout << "Exiting Buy Spell" << endl;
 		printMenu();
+		cinClear();
 		return false;
 	}
 	else{ //User has a typo or enters invalid input
 		cout << "incorrect input" << endl;
+		cinClear();
 		return true;
 	}
-
-
-	// FINISH BUY SPELL
-	// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-	// 	check minlevel 
-	//	check gold
-	// 	deduct gold
-	// 	remove spell from vector
-	// 	tell player it is bought
 }
 
 void SpellShop::shopMenu(Character &player){
@@ -163,27 +219,15 @@ void SpellShop::shopMenu(Character &player){
 		else if(choice == "1"){
 			cout<< "Available Spells:" << endl << endl;
 			displaySpells();
+			cinClear();
 			printMenu();
 		}
 		else if(choice == "2"){
-			string spellchoice;
-			cout << "Here are the spells you can buy:" <<endl;
-			cout << "\nDefensive Spells:" << endl;
-			for(int i = 0 ; i < defShopVector.size() ; i++ ){
-				cout << defShopVector.at(i).getName() << endl;
-			}
-			cout << "\nOffensive Spells:" << endl;
-			for(int i = 0 ; i < offShopVector.size() ; i++ ){
-				cout << offShopVector.at(i).getName() << endl;
-			}
-			// if(spellchoice == "cure critical" || spellchoice == "cure light" || spellchoice == "cure serious"
-			// 	 || spellchoice == "heal" || spellchoice == "hezekiahs cure" || spellchoice == "cause critical"
-			// 	 || spellchoice == "cause light" || spellchoice == "cause serious" || spellchoice == "flamestrike"
-			// 	 || spellchoice == "lightning breath"){
 			bool buyfail;
 			do{
 				buyfail = buySpell(player);
 			}while(buyfail);
+			cinClear();
 				// NOT DONE!!!!!!!!!!!!!!!!!!!!!!!!!
 				// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 				//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -192,6 +236,7 @@ void SpellShop::shopMenu(Character &player){
 		}
 		else {
 			cout << "Please enter the correct command." << endl << endl;
+			cinClear();
 			printMenu();
 		}
 	}
