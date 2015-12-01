@@ -1,4 +1,5 @@
 #include <string>
+#include <vector>
 #include "gameEngineHeaders/Spell.h"
 #include "gameEngineHeaders/Character.h"
 #include "dataInterfaceHeaders/dataInterfaceBase.h"
@@ -17,7 +18,7 @@ public:
 
 	string getDescription();
 	int getShopLocationID();
-
+	void cinClear();
 	void shopMenu(Character &player);
 	
 private:

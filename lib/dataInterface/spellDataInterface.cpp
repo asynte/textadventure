@@ -64,7 +64,7 @@ using namespace std;
 	}
 
 	void spellDataInterface::printAtIndexDefense (const int& index) {
-		printDefDuration(index);
+		//printDefDuration(index);
 		printEffect(index);	
 		printHitChar(index);
 		printHitVict(index);
@@ -76,7 +76,7 @@ using namespace std;
 
 	void spellDataInterface::printAtIndexOffense (const int& index) {
 		printDamMsg(index);
-		printOffDuration(index);	
+		//printOffDuration(index);	
 		printOffMana(index);
 		printOffMinLevel(index);
 		printOffName(index);
