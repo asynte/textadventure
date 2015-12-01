@@ -35,7 +35,6 @@ protected:
         bool wearable;
         equipmentArea equippedOn;
         int objStats;
-
     int roomID;
     int slot;
 };

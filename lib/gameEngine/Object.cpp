@@ -17,7 +17,8 @@ Object::Object(int id, string name) { // for testing use only
 Object::Object(int id, vector<string> keywords){ //testing
     widgetId = id;
     objKeyWords = keywords;
-    wearable = this->isWearable();
+    wearable = false;
+    equippedOn = Widget::ERROR;
 }
 
 Object::Object(int id, string extraDesc, vector<string> extraKeywords, vector<string> keywords, string longDesc, string shortDesc) {
@@ -31,10 +32,12 @@ Object::Object(int id, string extraDesc, vector<string> extraKeywords, vector<st
     objStats = this->widgetName.length();
     roomID=-1;
     slot=-1;
+    equippedOn = Widget::ERROR;
 }
 void Object::setRoomID(int roomID){
     this->roomID=roomID;
 }
+
 int Object::getRoomID()const{
     return roomID;
 
@@ -64,21 +67,22 @@ void Object::setWearable(bool w) {
 }
 
 bool Object::isWearable() {
-    for(int i = 0; i < this->objKeyWords.size(); i++){
-        if(this->objKeyWords[i] == "axe" || this->objKeyWords[i] == "wand"){
-            this->setEquipArea(Widget::WEAPON);
-            return true;
-        } 
-        else if(this->objKeyWords[i] == "glasses" || this->objKeyWords[i] == "necklace"){
-            this->setEquipArea(Widget::ACCESSORY);
-            return true;
-        } 
-        else if(this->objKeyWords[i] == "hat"){
-            this->setEquipArea(Widget::HEAD);
-            return true;
-        }
-    }
-    return false;
+    // for(int i = 0; i < this->objKeyWords.size(); i++){
+    //     if(this->objKeyWords[i] == "axe" || this->objKeyWords[i] == "wand"){
+    //         this->setEquipArea(Widget::WEAPON);
+    //         return true;
+    //     } 
+    //     else if(this->objKeyWords[i] == "glasses" || this->objKeyWords[i] == "necklace"){
+    //         this->setEquipArea(Widget::ACCESSORY);
+    //         return true;
+    //     } 
+    //     else if(this->objKeyWords[i] == "hat"){
+    //         this->setEquipArea(Widget::HEAD);
+    //         return true;
+    //     }
+    // }
+    // return false;
+    return this->wearable;
 }
 
 void Object::setEquipArea(equipmentArea ea) {
@@ -90,6 +94,7 @@ Widget::equipmentArea Object::getEquipArea() const {
 }
 void Object::setSlot(int slot) {
     this->slot = slot;
+    this->equippedOn = (Widget::equipmentArea)slot;
 }
 int Object::getSlot()const{
     return slot;
