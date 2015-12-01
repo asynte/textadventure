@@ -14,6 +14,12 @@ Object::Object(int id, string name) { // for testing use only
     roomID=-1;
 }
 
+Object::Object(int id, vector<string> keywords){ //testing
+    widgetId = id;
+    objKeyWords = keywords;
+    wearable = this->isWearable();
+}
+
 Object::Object(int id, string extraDesc, vector<string> extraKeywords, vector<string> keywords, string longDesc, string shortDesc) {
     objExtraDesc = extraDesc;
     objExtraKeyWords = extraKeywords;
@@ -31,6 +37,7 @@ void Object::setRoomID(int roomID){
 }
 int Object::getRoomID()const{
     return roomID;
+
 }
 string Object::getLongDesc() const {
     return objLongDesc;
@@ -56,8 +63,22 @@ void Object::setWearable(bool w) {
     this->wearable = w;
 }
 
-bool Object::isWearable() const {
-    return this->wearable;
+bool Object::isWearable() {
+    for(int i = 0; i < this->objKeyWords.size(); i++){
+        if(this->objKeyWords[i] == "axe" || this->objKeyWords[i] == "wand"){
+            this->setEquipArea(Widget::WEAPON);
+            return true;
+        } 
+        else if(this->objKeyWords[i] == "glasses" || this->objKeyWords[i] == "necklace"){
+            this->setEquipArea(Widget::ACCESSORY);
+            return true;
+        } 
+        else if(this->objKeyWords[i] == "hat"){
+            this->setEquipArea(Widget::HEAD);
+            return true;
+        }
+    }
+    return false;
 }
 
 void Object::setEquipArea(equipmentArea ea) {

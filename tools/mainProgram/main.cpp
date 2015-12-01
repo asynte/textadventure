@@ -33,10 +33,12 @@ int init(){
 	objDataInterface objParser("data/midgaard.yml");
 	npcDataInterface npcParser("data/midgaard.yml");
 	resetDataInterface resetParser("data/midgaard.yml");
+
 }
 
 
 int main() {
+
 	World sfu("midgaard");
    	vector <NPC> npcVector=sfu.getNPCsVector();
    	for(int i=0;i<npcVector.size();i++){

@@ -14,9 +14,8 @@
 #include "gameEngineHeaders/NPC.h"
 #include "gameEngineHeaders/Object.h"
 #include "gameEngineHeaders/Spell.h"
-#include "gameEngineHeaders/HealSpell.h"
-
-//class HealSpell;
+#include "gameEngineHeaders/DefSpell.h"
+#include "gameEngineHeaders/OffSpell.h"
 
 using namespace std;
 
@@ -34,8 +33,10 @@ public:
     Character();
     Character(string,int);
     void printStatus();
-    void setHealth(int);
+    void setMaxHealth(int);
     int getHealth() const;
+    void setHealth(int);
+    int getCurrentHealth() const;
     void setMana(int);
     int getMana() const;
     void setGold(int);
@@ -58,8 +59,10 @@ public:
     int getCha() const;
     void setPVP(bool);
     bool getPVP() const;
-    // void addHealSpell(HealSpell);
-    // vector<HealSpell> getHealSpells() const;
+    void addDefSpell(DefSpell);
+    vector<DefSpell> getDefSpells() const;
+    void addOffSpell(OffSpell);
+    vector<OffSpell> getOffSpells() const;
     void togglePVP();
     void updateStats();
     vector<Object> getInventory() const;
@@ -86,6 +89,7 @@ public:
 protected:
     int direction;
     int charHealth;
+    int currentHealth;
     int charMana;
     int charGold;
     int experience;
@@ -96,7 +100,8 @@ protected:
     int charDexterity;
     int charCharisma;
     vector<Object> charInventory;
-    vector<HealSpell> charHealSpells;
+    vector<DefSpell> charDefSpells;
+    vector<OffSpell> charOffSpells;
     int currentLocation;
     bool wantsToPVP;
 };

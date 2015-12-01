@@ -10,8 +10,8 @@ using namespace std;
 class Widget {
 
 public:
-    enum equipmentArea { HEAD, TORSO, HANDS, LEGS, FEET, WEAPON, SHIELD };
-    const static int NUMEQUIP = 7;
+    enum equipmentArea { HEAD, ACCESSORY, TORSO, HANDS, LEGS, FEET, WEAPON, SHIELD };
+    const static int NUMEQUIP = 8;
     
     Widget();
     Widget(int, vector<string>, string, string);

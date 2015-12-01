@@ -12,6 +12,10 @@ add_library(Widget Widget.cpp)
 add_library(World World.cpp)
 add_library(Extended Extended.cpp)
 add_library(GameEngine GameEngine.cpp)
+add_library(Spell Spell.cpp)
+add_library(OffSpell OffSpell.cpp)
+add_library(DefSpell DefSpell.cpp)
+add_library(SpellShop SpellShop.cpp)
 
 
 
@@ -28,6 +32,18 @@ target_link_libraries(Door Extended)
 target_link_libraries(Widget NPC)
 target_link_libraries(Widget Object)
 target_link_libraries(Widget Character)
+
+
+target_link_libraries(OffSpell Spell)
+target_link_libraries(DefSpell Spell)
+
+
+target_link_libraries(SpellShop Spell)
+target_link_libraries(SpellShop OffSpell)
+target_link_libraries(SpellShop DefSpell)
+target_link_libraries(SpellShop spellDataInterface)
+
+
 
 
 #target_link_libraries(Character Widget)
