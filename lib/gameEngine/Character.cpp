@@ -239,10 +239,10 @@ void Character::updateStats() {
     this->charCharisma = CHAR_DEFAULTSTAT;
     this->charIntelligence = CHAR_DEFAULTSTAT;
     for (it = this->charEquipment.begin(); it != this->charEquipment.end(); it++) {
-        if (it->first == 5) { //weapon
+        if (it->first == 16 || it->first == 17) { //weapon
             this->charStrength += (it->second.getName()).length();
         }
-        else if (it->first == 6) { //shield
+        else if (it->first == 11) { //shield
             this->charDexterity += (it->second.getName()).length();
         }
     }

@@ -79,7 +79,7 @@ void testEquip() {
     player.equip(sword);
     player.updateStats();
     cout << "Char attack: " + to_string(player.getAtk()) << endl;
-    player.examine(sword);
+    player.examine(sword);	
     player.showInventory();
     player.printStatus();
     player.unequip(sword);
@@ -87,6 +87,15 @@ void testEquip() {
     player.removeFromInventory(rock);
     player.removeFromInventory(sword);
     player.showInventory();
+}
+
+void testNPCEquip() {
+	NPC AI("Loser");
+    Object sword(100, "Excalibur");
+    sword.setWearable(true);
+    sword.setEquipArea(Widget::WEAPON);
+    AI.equip(sword);
+    AI.showEquipment();
 }
 
 void testSpellCast() {
@@ -109,7 +118,8 @@ void testSpellCast() {
 
 
 int main() {
-	testSpellCast();
+	//testSpellCast();
+	testNPCEquip();
 	return 0;
 }
 
