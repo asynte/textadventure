@@ -101,7 +101,7 @@ void NPC::equip(Object &item) {
 void NPC::showEquipment() {
     cout << "Equipment: " << endl;
     for (auto wornItem : this->npcEquipment) {
-        cout << "\t" + wornItem.second.getName() << endl;
+        cout << "\t" << wornItem.second.getId() << ": " << wornItem.second.getName() << endl;
     }
 }
 

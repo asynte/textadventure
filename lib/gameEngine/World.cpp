@@ -129,7 +129,7 @@ void World::addNPCToRoom(){
 					if(equipmentIndex!=-1){
 						objectVector.at(equipmentIndex).setWearable(true);
 						objectVector.at(equipmentIndex).setSlot(resetsVector.at(j).getSlot());
-						npcVector.at(npcIndex).addEquipment(objectVector.at(equipmentIndex));
+						npcVector.at(npcIndex).equip(objectVector.at(equipmentIndex));
 
 					}
 				}
