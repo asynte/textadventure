@@ -173,6 +173,7 @@ string chooseWorld(){
       cout<<"1. Go to an existing world"<<endl;
       cout<<"2. Create a new world"<<endl;
       cin>>input;
+      
       if(input=="1" || input=="2"){
          break;
       }
