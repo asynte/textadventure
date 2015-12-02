@@ -37,6 +37,7 @@ string inputKeyWords(){
    cin>>keywords;
    return keywords;
 }
+
 int init(){
 	roomDataInterface roomParser("data/midgaard.yml");
 	objDataInterface objParser("data/midgaard.yml");
@@ -44,6 +45,7 @@ int init(){
 	resetDataInterface resetParser("data/midgaard.yml");
    spellDataInterface spellParser("data/spellstest.yml");
 }
+
 string convertToLower(string input){
    string result;
    for(int i=0;i<input.length();i++){
@@ -51,6 +53,7 @@ string convertToLower(string input){
    }
    return result;
 }
+
 void testSpellShop(Character player, int currentLocation) {
    player.setLevel(99);
    SpellShop shop("Welcome to the Spell Shop", currentLocation);
@@ -81,6 +84,7 @@ void moveLocation(Character &player, World &world){
    }
 
 }
+
 void attackNPC(Character &player,Room &room){
    cout << "Current room ID: " + to_string(player.getLocation()) << endl;
    player.increaseExp(300);
@@ -90,7 +94,7 @@ void attackNPC(Character &player,Room &room){
    string name;
    if(room.getNPCList().size()==1){
       index=0;
-   }else{
+   }else if(room.getNPCList().size()>1){
       cout<<"Who you want to attack?"<<endl;
       for(NPC n:room.getNPCList()){
          cout<<n.getName()<<endl;
@@ -103,18 +107,19 @@ void attackNPC(Character &player,Room &room){
          }
       }
       
+   }else{
+      cout<<"There is no NPC"<<endl;
    }
    if(index<room.getNPCList().size()){
          player.examine(room.getNPCList().at(index));
          player.attack(room.getNPCList().at(index));
-   }else{
-      cout<<"There is no NPC "<< name << " in this room" << endl;
    }
 }
+
 void printAllkeywordInRoom(Room room){
    vector<string> keyword=room.getAllKeyWords();
    for(string s:keyword){
-      cout<<s<<", ";
+      cout<<s<<" ";
    }
    cout<<endl;
 }
@@ -130,6 +135,7 @@ void printAllObjectNameKeyword(Room room){
       cout<<"Sorry, there is no Object " << keyword << " in this room"<<endl;
    }
 }
+
 void printAllNPCNameKeyword(Room room){
    string keyword=inputKeyWords();
    cout<<"Keyword: "<<keyword<<" associated npc name:"<<endl;
@@ -166,6 +172,22 @@ string playerName(){
    cin>>input;
    return input; 
 }
+
+string worldCreation(){
+
+   string worldName = "";
+   cout << "Welcome to World Creation!" << endl;
+   cout << "Please enter your world name: " << endl;
+   
+   cin >> worldName;
+   dataEmitter emit{worldName};
+   cin.clear();
+
+   emit.startEmittingToYamlFile(worldName);
+
+   return worldName;
+}
+
 string chooseWorld(){
    string input = "";
    while(true){
@@ -190,9 +212,10 @@ string chooseWorld(){
          }
       }
    }else if(input == "2"){
-   		cout << "Creating World" << endl;
-   		cout << "Not integrated" << endl;
-      //Sonny's , you should return your world name
+      input = worldCreation();
+   	// cout << "Creating World" << endl;
+   	// cout << "Not integrated" << endl;
+   
    }
    return input;
 }
@@ -213,43 +236,48 @@ void mainMenu(){
 }
 
 int main() {
+
    string playName=playerName();
    string worldName=chooseWorld();
    World world(worldName);
-   Character player(playName, world.getRoomsVector().at(0).getID());
+   while( world.getRoomsVector().size()==0){
+      string worldName=chooseWorld();
+   }
+      Character player(playName, world.getRoomsVector().at(0).getID());
+   
    // World world("midgaard");
    // Character player("gfd", 3001);
    while(true){
       Room room=world.getCurrentRoom(player);
-      mainMenu();
-      cin>>input;
-      if(input=="1"){
-      	 cin.clear();
-         testSpellShop(player, world.getRoomsVector().at(0).getID());
-      }else if(input=="2"){
-         showPlayerInformation(player);
-      }else if(input=="3"){
-         moveLocation(player,world);
-      }else if(input=="4"){
-         turnDirection(player);
-      }else if(input=="5"){
-         player.showInventory();
-      }else if(input=="6"){
-         printAllkeywordInRoom(room);
-      }else if(input=="7"){
-         printAllObjectNameKeyword(room);
-      }else if(input=="8"){
-         printAllNPCNameKeyword(room);
-      }else if(input=="9"){
-         attackNPC(player,room);
-      }else if(input=="10"){
-         break;
-      }else{
-         cout<<"Incorrect Input, Please enter a number between 1 and 10"<<endl;
-      }
+         mainMenu();
+         cin>>input;
+         if(input=="1"){
+         	 cin.clear();
+            testSpellShop(player, world.getRoomsVector().at(0).getID());
+         }else if(input=="2"){
+            showPlayerInformation(player);
+         }else if(input=="3"){
+            moveLocation(player,world);
+         }else if(input=="4"){
+            turnDirection(player);
+         }else if(input=="5"){
+            player.showInventory();
+         }else if(input=="6"){
+            printAllkeywordInRoom(room);
+         }else if(input=="7"){
+            printAllObjectNameKeyword(room);
+         }else if(input=="8"){
+            printAllNPCNameKeyword(room);
+         }else if(input=="9"){
+            attackNPC(player,room);
+         }else if(input=="10"){
+            break;
+         }else{
+            cout<<"Incorrect Input, Please enter a number between 1 and 10"<<endl;
+         }
+}
 
-   }
-
+   
 
 	return 0;
 }

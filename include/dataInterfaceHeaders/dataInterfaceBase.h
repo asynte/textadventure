@@ -447,73 +447,114 @@ private:
 	vector<string> resets;
 	vector<string> rooms;
 
+	int npcID = 3000;
+	int objID = 3000;
+	int resetID = 3000;
+	int roomID = 3000;
+
 	string yamlFileName;
 
 	ofstream outFile;
 
 	YAML::Emitter emitter;
+
+
 public:
 
 	dataEmitter(const string& file)
-	: yamlFileName(file  + ".yml") {
+	: yamlFileName(file  + ".yml"), outFile("data/" + yamlFileName) {
+
+		emitter << YAML::BeginMap;
 
 		std::ifstream inFile(yamlFileName);
 
-		if (inFile.peek() == std::ifstream::traits_type::eof()) {
-			// area.push_back("AREA:\n");
-			// npcs.push_back("NPCS:\n");
-			// objects.push_back("OBJECTS:\n");
-			// resets.push_back("RESETS:\n");
-			// rooms.push_back("ROOMS:\n");
+		// string line;
 
-		}
+		// while (getline (inFile, line) != "NPCS:") {
+		// 	area.push_back(line + "\n");
+		// }
 
-		else {
-			string line;
-			int count = 0;
+		// while (getline (inFile, line) != "OBJECTS:") {
+		// 	npcs.push_back(line + "\n");
+		// }
 
-			while (getline (inFile, line)) {
+		// while (getline (inFile, line) != "RESETS:") {
+		// 	objects.push_back(line + "\n");
+		// }	
 
-				if (line == "NPCS:") {
-					count = 1;
-				}	
+		// while (getline (inFile, line) != "ROOMS:") {
+		// 	resets.push_back(line + "\n");
+		// }
 
-				if (line == "OBJECTS:") {
-					count = 2;
-				}
-
-				if (count == 0) {
-					area.push_back(line + "\n");
-				}
+		// while (getline (inFile, line)) {
+		// 	rooms.push_back(line + "\n");
+		// }			
 		
-
-				if (count == 1) {
-					npcs.push_back(line + "\n");
-				}
-
-				if (count == 2) {
-					objects.push_back(line + "\n");
-				}
-			}
-		}
-
-		outFile.open(yamlFileName);
-
 	}
 
 	~dataEmitter() {
 		outFile.close();
 	}
 
+	virtual void const getLineWhile ();
+
 	virtual void searchLine (const string& s);
 
 	virtual void printToFile ();
 
-	virtual void emitArea ();
+	virtual void emitMapValue () ;
 
+	virtual void emitOneSequenceValue () ;
+
+	virtual void emitSequenceValues () ;
+
+	virtual void setID ( int& ID ) ;
+
+	virtual void loopEmit ( int & loopCount, void (*setFunction)() ) ;
+
+
+	virtual void startArea ();
+	virtual void setAreaName (string s);
+	virtual void endArea ();
+
+	virtual void startSequence ( const string& s ) ;
+	virtual void endSequence ();
+
+	virtual void setNPCDescription () ;
+	virtual void setNPCKeyWords () ;
+	virtual void setNPCLongDescription() ;
+	virtual void setNPCShortDescription() ;
 	virtual void emitNPC ();
 
+	virtual void setObjectExtra () ;
+	virtual void setObjectExtraDescription () ;
+	virtual void objectExtraLoop();
+	virtual void setObjectKeyWords () ;
+	virtual void setObjectLongDescription () ;
+	virtual void setObjectShortDescription () ;
+	virtual void emitObject ();
 
+	virtual void setResetAction ();
+	virtual void setResetComment ();
+	virtual void setResetLimit ();
+	virtual void setResetRoom ();
+	virtual void emitReset ();
+
+	virtual void setRoomDescription ();
+	virtual void setDoorDescription ();
+	virtual void setDoorDirection ();
+	virtual void setDoorKeyWords ();
+	virtual void setDoorTo ();
+	virtual void roomDoorLoop ();
+	virtual void setRoomDoor ();
+	virtual void setExtendedDescription ();
+	virtual void setExtendedKeyWords ();
+	virtual void setRoomExtended ();
+	virtual void roomExtendedLoop() ;
+	virtual void setRoomName ();
+	virtual void emitRoom ();
+
+	virtual void startEmittingToYamlFile (string s);
 };
 
 
