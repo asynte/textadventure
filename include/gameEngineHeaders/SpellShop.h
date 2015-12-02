@@ -20,6 +20,7 @@ public:
 	int getShopLocationID();
 	void cinClear();
 	void shopMenu(Character &player);
+	string toLower(string &str);
 	
 private:
 

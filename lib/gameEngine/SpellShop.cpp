@@ -97,6 +97,10 @@ void SpellShop::printMenu(){
 	cout << "3. Exit Shop" << endl;
 }
 
+string SpellShop::toLower(string &str){
+	transform(str.begin(), str.end(), str.begin(), ::tolower);
+	return str;
+}
 
 bool SpellShop::buySpell(Character &player){
 	//cout<< "player level is : " << player.getLevel() << endl;
@@ -110,9 +114,17 @@ bool SpellShop::buySpell(Character &player){
 		cout << "What Offensive spell do you want to buy?" << endl;
 		cout << "\nOffensive Spells:" << endl;
 		for(int i = 0 ; i < offShopVector.size() ; i++ ){
-			cout << offShopVector.at(i).getName() << endl;
+			cout << offShopVector.at(i).getName() << "  (" << offShopVector.at(i).getGoldCost() << " Gold)" << endl;
 		}
+		cout << "Exit" << endl;
 		getline(cin, spellchoice);
+		toLower(spellchoice);
+		//Exit
+		if(spellchoice == "exit"){
+			cout << "Returning to main menu" << endl;
+			cinClear();
+			return true;
+		}
 		//Check if spell is valid
 		if(spellchoice != "cause critical" && spellchoice != "cause light"
 			&& spellchoice != "cause serious" && spellchoice != "flamestrike" && spellchoice != "lightning breath"){
@@ -155,9 +167,17 @@ bool SpellShop::buySpell(Character &player){
 		cout << "What Defensive spell do you want to buy?" << endl;
 		cout << "\nDefensive Spells:" << endl;
 		for(int i = 0 ; i < defShopVector.size() ; i++ ){
-			cout << defShopVector.at(i).getName() << endl;
+			cout << defShopVector.at(i).getName() << "  (" << defShopVector.at(i).getGoldCost() << " Gold)" << endl;
 		}
+		cout << "Exit" << endl;
 		getline(cin, spellchoice);
+		toLower(spellchoice);
+		//Exit
+		if(spellchoice == "exit"){
+			cout << "Returning to main menu" << endl;
+			cinClear();
+			return true;
+		}
 		//Check if spell is valid
 		if(spellchoice != "cure critical" && spellchoice != "cure light" && spellchoice != "cure serious" 
 			&& spellchoice != "heal" && spellchoice != "hezekiahs cure"){
@@ -201,7 +221,7 @@ bool SpellShop::buySpell(Character &player){
 		return false;
 	}
 	else{ //User has a typo or enters invalid input
-		cout << "incorrect input" << endl;
+		cout << "Incorrect Input" << endl;
 		cinClear();
 		return true;
 	}
@@ -210,7 +230,8 @@ bool SpellShop::buySpell(Character &player){
 void SpellShop::shopMenu(Character &player){
 	cout << getDescription() << endl;
 	printMenu();
-	string choice; 
+	string choice;
+	cin.clear();
 	while(getline(cin,choice)){
 		if(choice == "3"){ //Exit Spell Shop
 			break;
@@ -228,8 +249,8 @@ void SpellShop::shopMenu(Character &player){
 			}while(buyfail);
 			cinClear();		
 		}
-		else {
-			cout << "Please enter the correct command." << endl << endl;
+		else if(choice.length() > 0){
+			cout << "Please enter the correct command. " << endl << endl;
 			cinClear();
 			printMenu();
 		}

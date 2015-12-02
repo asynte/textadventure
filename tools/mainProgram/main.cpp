@@ -51,9 +51,9 @@ string convertToLower(string input){
    }
    return result;
 }
-void testSpellShop(Character player) {
+void testSpellShop(Character player, int currentLocation) {
    player.setLevel(99);
-   SpellShop shop("Welcome to the Spell Shop", 10000);
+   SpellShop shop("Welcome to the Spell Shop", currentLocation);
    shop.shopMenu(player);
 }
 
@@ -64,8 +64,8 @@ void showPlayerInformation(Character player){
 
 void moveLocation(Character &player, World &world){
    string input;
-   cout<<"Which direction you want to move."<<endl;
-   cout<<" Left, right, forward, back, up,down or exit"<<endl;
+   cout<<"Which direction you want to move?"<<endl;
+   cout<<"left, right, forward, back, up, down or exit"<<endl;
    
    while(true){
       cin>>input;
@@ -76,7 +76,7 @@ void moveLocation(Character &player, World &world){
       }else if(input=="exit"){
          break;
       }else{
-         cout<<"Please input Left, right, forward, back, up,down or exit"<<endl;
+         cout<<"Please input left, right, forward, back, up, down or exit"<<endl;
       }
    }
 
@@ -87,14 +87,14 @@ void attackNPC(Character &player,Room &room){
    player.updateLevel();
    player.printStatus();
    int index=0;
+   string name;
    if(room.getNPCList().size()==1){
       index=0;
    }else{
-      cout<<"Who you want to attack"<<endl;
+      cout<<"Who you want to attack?"<<endl;
       for(NPC n:room.getNPCList()){
          cout<<n.getName()<<endl;
       }
-      string name;
       cin>>name;
       for(int i=0; i<room.getNPCList().size();i++){
          if(room.getNPCList().at(i).getName()==name){
@@ -108,13 +108,13 @@ void attackNPC(Character &player,Room &room){
          player.examine(room.getNPCList().at(index));
          player.attack(room.getNPCList().at(index));
    }else{
-      cout<<"the name of npc does not exist!!!!!"<<endl;
+      cout<<"There is no NPC "<< name << " in this room" << endl;
    }
 }
 void printAllkeywordInRoom(Room room){
    vector<string> keyword=room.getAllKeyWords();
    for(string s:keyword){
-      cout<<s<<" ";
+      cout<<s<<", ";
    }
    cout<<endl;
 }
@@ -127,7 +127,7 @@ void printAllObjectNameKeyword(Room room){
       cout<<o.getName()<<endl;
    }
    if(objects.size()==0){
-      cout<<"Sorry, there is no keyword "<<keyword<<" in this room Object."<<endl;
+      cout<<"Sorry, there is no Object " << keyword << " in this room"<<endl;
    }
 }
 void printAllNPCNameKeyword(Room room){
@@ -138,14 +138,14 @@ void printAllNPCNameKeyword(Room room){
       cout<<npc.getName()<<endl;
    }
    if(NPCs.size()==0){
-      cout<<"Sorry, there is no keyword "<<keyword<<" in this room NPC."<<endl;
+      cout<<"Sorry, there is no NPC " << keyword << " in this room"<<endl;
    }
 }
 
 void turnDirection(Character &player){
    string input;
-   cout<<"Which direction you want to turn."<<endl;
-   cout<<" Left, right, back or exit"<<endl;
+   cout<<"Which direction you want to face?"<<endl;
+   cout<<"left, right, back or exit"<<endl;
    cin>>input;
    input=convertToLower(input);
    while(true){
@@ -155,57 +155,59 @@ void turnDirection(Character &player){
       }else if(input=="exit"){
          break;
       }else{
-         cout<<"Please input Left, right, back or exit"<<endl;
+         cout<<"Please input left, right, back or exit"<<endl;
       }
    }
 }
 
 string playerName(){
    string input;
-   cout<<"Please input your name"<<endl;
+   cout<<"Enter character name:"<<endl;
    cin>>input;
    return input; 
 }
 string chooseWorld(){
-   string input;
+   string input = "";
    while(true){
-      cout<<"Input the choice."<<endl;
-      cout<<"1.go to exist world"<<endl;
-      cout<<"2.create a new world"<<endl;
+      cout<<"What would you like to do?"<<endl;
+      cout<<"1. Go to an existing world"<<endl;
+      cout<<"2. Create a new world"<<endl;
       cin>>input;
       if(input=="1" || input=="2"){
          break;
       }
    }
    if(input=="1"){
-      cout<<"which world you want to go. midgaard or smurf"<<endl;
+      cout<<"What world do you want to play in? \nPossible options are: midgaard or smurf"<<endl;
       while(true){
          cin>>input;
          input=convertToLower(input);
          if(input=="midgaard" || input=="smurf"){
-            return input;
+            break;
          }else{
             cout<<"Please input midgaard or smurf"<<endl;
          }
       }
-   }else{
-
+   }else if(input == "2"){
+   		cout << "Creating World" << endl;
+   		cout << "Not integrated" << endl;
       //Sonny's , you should return your world name
    }
+   return input;
 }
 
 void mainMenu(){
-   cout<<"\n\n\nYou can choose below action"<<endl;
-   cout<<"1.Shop"<<endl;
-   cout<<"2.My information."<<endl;
-   cout<<"3.Move"<<endl;
-   cout<<"4.Turn"<<endl;
-   cout<<"5.Look At my inventory"<<endl;
-   cout<<"6.Look at all keyword  in this room"<<endl;
-   cout<<"7.Search keyword of object in this room"<<endl;
-   cout<<"8.Search keyword of NPC in this room"<<endl;
-   cout<<"9.Attack Npc"<<endl;
-   cout<<"10.Exit"<<endl;
+   cout<<"\n\n\nChoose an action:"<<endl;
+   cout<<"1. Spell Shop"<<endl;
+   cout<<"2. Player Information"<<endl;
+   cout<<"3. Move"<<endl;
+   cout<<"4. Turn"<<endl;
+   cout<<"5. Check Inventory"<<endl;
+   cout<<"6. Examine Room"<<endl;
+   cout<<"7. Search Objects"<<endl;
+   cout<<"8. Search NPC"<<endl;
+   cout<<"9. Attack NPC"<<endl;
+   cout<<"10. Exit Game"<<endl;
    cout<<"\n\n";
 }
 
@@ -221,7 +223,8 @@ int main() {
       mainMenu();
       cin>>input;
       if(input=="1"){
-         testSpellShop(player);
+      	 cin.clear();
+         testSpellShop(player, world.getRoomsVector().at(0).getID());
       }else if(input=="2"){
          showPlayerInformation(player);
       }else if(input=="3"){
@@ -241,7 +244,7 @@ int main() {
       }else if(input=="10"){
          break;
       }else{
-         cout<<"You input wrong. You should input 1-10 interger"<<endl;
+         cout<<"Incorrect Input, Please enter a number between 1 and 10"<<endl;
       }
 
    }
