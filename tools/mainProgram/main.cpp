@@ -240,6 +240,8 @@ int main() {
          attackNPC(player,room);
       }else if(input=="10"){
          break;
+      }else{
+         cout<<"You input wrong. You should input 1-10 interger"<<endl;
       }
 
    }
