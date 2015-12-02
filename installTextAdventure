@@ -1,0 +1,10 @@
+mkdir textAdventure
+cd textAdventure
+mkdir source
+mkdir build
+cd source
+git init
+git pull git@csil-git1.cs.surrey.sfu.ca:373-15-3-mellorine/textadventure.git it3gameEngine
+cd ../build
+cmake ../source
+make
