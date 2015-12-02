@@ -477,28 +477,75 @@ void dataEmitter::emitRoom () {
 
 void dataEmitter::startEmittingToYamlFile (string inputName) {
 
-	bool done = false;
+
 
 	startArea();
 	setAreaName(inputName);
 	endArea();
 
-	cout << "\nWorld Name: " << inputName << endl;
+	bool creationDone = false;
 
-	cout << "Please select your next creation: " << endl;
-	cout << "1.NPC Creation \n2.Object Creation \n3.Room Creation \n4.Exit World Creation" << endl;
+	while (!creationDone){
+		cout << "\nWorld Name: " << inputName << endl;
 
-	cout << "\nEmitting NPC \nPress Enter to Start";
-	getLine<string>();
-	startSequence("NPCS");
-	while (!done)  {
-		emitNPC();
+		cout << "Please select your next creation: " << endl;
+		cout << "1.NPC Creation \n2.Object Creation \n3.Room Creation \n4.Exit World Creation\n" << endl;
 
-		cout << "Add another NPC (y/n)? "; 
-		if (getLine<string>() == "n" )
-			done = true;
+		string creationChoice;
+		cin >> creationChoice;
+
+		bool done = false;
+
+		if (creationChoice == "1"){
+			startSequence("NPCS");
+			while (!done)  {
+				emitNPC();
+
+				cout << "Add another NPC (y/n)? "; 
+				if (getLine<string>() == "n" )
+					done = true;
+				}
+			endSequence();		
 		}
-	endSequence();
+		else if (creationChoice == "2"){
+			startSequence("OBJECTS");
+			while (!done)  {
+				emitObject();
+
+				cout << "Add another Object (y/n)? "; 
+				if (getLine<string>() == "n" ) {
+					done = true;
+				}		
+			}
+			endSequence();	
+		}
+		else if (creationChoice == "3"){
+			startSequence("ROOMS");
+			while (!done)  {
+				emitRoom();
+				cout << "Add another Room (y/n)? "; 
+				if (getLine<string>() == "n" ) {
+					done = true;
+				}	
+			}
+			endSequence();
+		}
+		else if (creationChoice == "4"){
+			creationDone = true;
+			printToFile();
+		}
+	}
+	// cout << "\nEmitting NPC \nPress Enter to Start";
+	// getLine<string>();
+	// startSequence("NPCS");
+	// while (!done)  {
+	// 	emitNPC();
+
+	// 	cout << "Add another NPC (y/n)? "; 
+	// 	if (getLine<string>() == "n" )
+	// 		done = true;
+	// 	}
+	// endSequence();
 
 
 
@@ -546,6 +593,6 @@ void dataEmitter::startEmittingToYamlFile (string inputName) {
 	// }
 	// endSequence();
 
-	printToFile();
+	
 
 }
