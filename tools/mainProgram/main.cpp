@@ -87,7 +87,7 @@ void attackNPC(Character &player,Room &room){
    player.updateLevel();
    player.printStatus();
    int index=0;
-   if(room.getNPCList.size()==1){
+   if(room.getNPCList().size()==1){
       index=0;
    }else{
       cout<<"Who you want to attack"<<endl;
