@@ -19,7 +19,7 @@ Room::Room(string description,vector<Door> doorsList,vector<Extended> extendedLi
 }
 vector<string> Room::getObjectAllKeyWords(){
 	vector<string> objectAllKeywords;
-	//objectAllKeywords.push_back("\nObjects keyword: ");
+	objectAllKeywords.push_back("\nObjects keyword: ");
 	for(Object o:objectList){
 		vector<string> objectKeywords=o.getKeyWords();
 		for(string s:objectKeywords){
@@ -30,7 +30,7 @@ vector<string> Room::getObjectAllKeyWords(){
 }
 vector<string> Room::getNPCAllKeyWords(){
 	vector<string> npcAllKeywords;
-	//npcAllKeywords.push_back("\nNPC keyword: ");
+	npcAllKeywords.push_back("\nNPC keyword: ");
 	for(NPC n:npcList){
 		vector<string> npcKeywords=n.getKeyWords();
 		for(string s:npcKeywords){
@@ -41,7 +41,7 @@ vector<string> Room::getNPCAllKeyWords(){
 }
 vector<string> Room::getDoorAllKeywords(){
 	vector<string> doorAllKeywords;
-	//doorAllKeywords.push_back("\nDoor keyword: ");
+	doorAllKeywords.push_back("\nDoor keyword: ");
 	for(Door d:doorsList){
 		vector<string> doorKeywords=d.getKeywords();
 		for(string s:doorKeywords){
@@ -83,12 +83,13 @@ vector<string>Room::getAllKeyWords(){
 	return allKeywords;
 }
 vector <Object> Room::getObjectAssociatedKeyword(string keyword){
+	cout<<"keyword:"<<keyword<<endl;
 	vector <Object> objectKey;
 	for(int i=0;i<objectList.size();i++){
 		vector <string> objKeyword=objectList.at(i).getKeyWords();
 
 		for(string s:objKeyword){
-			if(s==keyword){
+			if(s.compare(keyword)==0){
 				objectKey.push_back(objectList.at(i));
 			}
 		}
@@ -97,11 +98,11 @@ vector <Object> Room::getObjectAssociatedKeyword(string keyword){
 }
 vector <NPC> Room::getNPCAssociatedKeyword(string keyword){
 	vector <NPC> NPCkey;
-	for(int i=0;i<objectList.size();i++){
+	for(int i=0;i<npcList.size();i++){
 		vector <string> npcKeyword=npcList.at(i).getKeyWords();
 
 		for(string s:npcKeyword){
-			if(s==keyword){
+			if(s.compare(keyword)==0){
 				NPCkey.push_back(npcList.at(i));
 			}
 		}

@@ -32,6 +32,7 @@ public:
 	void moveCharacter(Character &player, string userCommand);
 	void setCharRoom(Character &c, int roomID, int moveDirection);
 	void addCharacter(const Character &character);
+		Room getCurrentRoom(Character &player);
 
 	vector<string> getAllDirections(Character &player); // Used for UserInterface
 	vector<string> getAllKeywords(Character &player); // Used for UserInterface
@@ -46,7 +47,6 @@ private:
 	string getCharacterMoveDirection(Character &player, string userCommand);
 	void addObjectToRoom();
 	void addNPCToRoom();
-	Room getCurrentRoom(Character &player);
 	int findRoomIndex(int roomID);
 	int findNPCIndex(int npcID);
 	int findObjectIndex(int objectID);

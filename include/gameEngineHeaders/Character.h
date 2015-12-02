@@ -86,6 +86,8 @@ public:
     void turnRight();
     void turnBack();
     string getDirection();
+    void turn(string command);
+
 protected:
     int direction;
     int charHealth;
@@ -104,6 +106,7 @@ protected:
     vector<OffSpell> charOffSpells;
     int currentLocation;
     bool wantsToPVP;
+    
 };
 
 #endif

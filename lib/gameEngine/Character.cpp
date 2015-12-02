@@ -55,12 +55,14 @@ void Character::printStatus() { // print Character's stats
     cout << "\nMana: " + to_string(this->getMana());
     cout << "\nLevel: " + to_string(this->getLevel());
     cout << "\nPVP: " + to_string(this->getPVP());
-    cout <<"\n Direction: "+ getDirection();
+    cout << "\nDirection: "+ getDirection();
+    cout << "\nLocation: Room "+to_string(getLocation());
     cout << "\nEquipment: \n";
 
     for (auto wornItem : this->charEquipment) {
         cout << "\t" + wornItem.second.getName() << endl;
     }
+    cout<<endl<<endl;
 }
 
 void Character::setHealth(int hp) {
@@ -169,6 +171,15 @@ void Character::setLocation(int roomID){
 
 int Character::getLocation() const {
     return this->currentLocation;
+}
+void Character::turn(string command){
+    if(command=="left"){
+        turnLeft();
+    }else if(command=="right"){
+        turnRight();
+    }else if(command=="back"){
+        turnBack();
+    }
 }
 void Character::turnLeft(){
     direction++;

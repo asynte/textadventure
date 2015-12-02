@@ -168,9 +168,6 @@ int World::getRoom(int roomID) {
 
 Room World::getCurrentRoom(Character &player) {
 	int currentRoomIndex = this->getRoom(player.getLocation()); // get index of player's current room
-
-	cout << "index: " << currentRoomIndex << endl;
-
 	if (currentRoomIndex == -1) {
 		cout << "Room does not exist!" << endl;
 		exit(0);
@@ -187,7 +184,7 @@ string World::getCharacterMoveDirection(Character &player, string userCommand){
 	}else if(userCommand=="back"){
 		player.turnBack();
 		return player.getDirection();
-	}else if(userCommand=="forward"){
+	}else if(userCommand=="forward"||userCommand=="up"||userCommand=="down"){
 		return player.getDirection();
 	}
 	return "Wrong command";
@@ -198,7 +195,7 @@ void World::moveCharacter(Character &player, string userCommand){
 	Room currentRoom = this->getCurrentRoom(player);
 
 	string direction = getCharacterMoveDirection(player,userCommand);
-	if(direction!="Wrong command"){
+	
 		int moveDirection = currentRoom.getDoorsList()[0].getDirectionAsInt(direction);
 		if (currentRoom.isRoomAvailable(moveDirection)) {
 		// above line checks whether the command to move is a movable direction
@@ -212,9 +209,7 @@ void World::moveCharacter(Character &player, string userCommand){
 		else{
 			cout<<"You cannot go in this direction because this direction does not exist"<<endl; 
 		}
-	}else{
-		cout<<"Wrong dirction"<<endl;
-	}
+	
 }
 
 vector<Character> World::getCharacters() {
