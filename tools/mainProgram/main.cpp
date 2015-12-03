@@ -244,7 +244,7 @@ string playerName(){
 
 string worldCreation(){
 
-   string worldName = "";
+   string worldName;
    cout << "Welcome to World Creation!" << endl;
    cout << "Please enter your world name: " << endl;
    
@@ -272,19 +272,19 @@ string chooseWorld(){
    if(input=="1"){
       cout<<"What world do you want to play in? \nPossible options are: midgaard or smurf"<<endl;
       while(true){
-         cin>>input;
-         input=convertToLower(input);
-         if(input=="midgaard" || input=="smurf"){
+         cin >> input;
+         input = convertToLower(input);
+         if(input == "midgaard" || input == "smurf"){
             break;
-         }else{
-            cout<<"Please input midgaard or smurf"<<endl;
+         }
+         else{
+            cout << "Please input midgaard or smurf" <<endl;
          }
       }
-   }else if(input == "2"){
+   }
+   else if(input == "2"){
       input = worldCreation();
-   	// cout << "Creating World" << endl;
-   	// cout << "Not integrated" << endl;
-   
+      cin.clear();
    }
    return input;
 }
@@ -309,13 +309,13 @@ void mainMenu(){
 
 int main() {
 
-   string playName=playerName();
-   string worldName=chooseWorld();
+   string playName = playerName();
+   string worldName = chooseWorld();
    World world(worldName);
-   while( world.getRoomsVector().size()==0){
-      string worldName=chooseWorld();
+   while(world.getRoomsVector().size() == 0){
+      string worldName = chooseWorld();
    }
-      Character player(playName, world.getRoomsVector().at(0).getID());
+   Character player(playName, world.getRoomsVector().at(0).getID());
    
    // World world("midgaard");
    // Character player("gfd", 3001);
@@ -353,7 +353,7 @@ int main() {
          }else{
             cout<<"Incorrect Input, Please enter a number between 1 and 13"<<endl;
          }
-}
+   }
 
    
 
