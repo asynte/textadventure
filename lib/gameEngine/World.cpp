@@ -24,6 +24,7 @@ void World::addCharacter(const Character &character) {
 
 //function to replace the commented build() function, this is to call all of louie's yaml parsing
 void World::initializeWorld(string name){
+	
  	string fileName="data/"+name+".yml";
 
  	roomDataInterface room(fileName);

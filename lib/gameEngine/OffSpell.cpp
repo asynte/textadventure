@@ -45,7 +45,7 @@ void OffSpell::castSpell(Character &player, NPC &target) {
 	else if (this->getName() == "flamestrike") {
 		damage = rollD8(6);
 	}
-	else if (this->getName() == "hezekiahs cure") {
+	else if (this->getName() == "lightning breath") {
 		damage = rand() % (player.getLevel()/8 - player.getLevel()/16 - 1) + player.getLevel()/16 + 1;
 	}
 	else { 
@@ -55,6 +55,13 @@ void OffSpell::castSpell(Character &player, NPC &target) {
 	cout << player.getName() + " casts " + this->getDamMsg() + " on " + target.getName() << endl;
 	target.setHealth(max(target.getHealth() - damage, 0)); // NPC takes damage
 	player.setMana(player.getMana() - this->getManaCost()); // subtract mana cost
+	if (target.getHealth() <= 0) { 
+        cout << target.getName() + " takes " + to_string(damage) + " damage and has no health remaining!" << endl;
+    } else { // keep fighting
+        cout << target.getName() + " takes " + to_string(damage) + " damage and has " + to_string(target.getHealth()) + " health remaining!" << endl;
+        player.setHealth( player.getCurrentHealth() - target.getAtk() ); // character takes damage equal to NPC's atk
+        cout << "You take " + to_string(target.getAtk()) + " damage and have " + to_string(player.getCurrentHealth()) + " health remaining!" << endl;
+    }
 }
 
 #endif
