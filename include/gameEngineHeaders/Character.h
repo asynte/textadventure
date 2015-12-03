@@ -59,6 +59,7 @@ public:
     int getCha() const;
     void setPVP(bool);
     bool getPVP() const;
+    void printSpells();
     void addDefSpell(DefSpell);
     vector<DefSpell> getDefSpells() const;
     void addOffSpell(OffSpell);
@@ -81,6 +82,8 @@ public:
     void attack(NPC);
     void attack(Character&);
     void battleSequence(NPC&);
+    void spellSequence(NPC&);
+    void toLower(string&);
     bool equals(const Character &);
     void turnLeft();
     void turnRight();

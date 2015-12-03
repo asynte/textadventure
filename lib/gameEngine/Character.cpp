@@ -54,7 +54,9 @@ void Character::printStatus() { // print Character's stats
     cout << "\nHealth: " + to_string(this->getCurrentHealth());
     cout << "\nMana: " + to_string(this->getMana());
     cout << "\nLevel: " + to_string(this->getLevel());
-    cout << "\nPVP: " + to_string(this->getPVP());
+    cout << "\nGold: " << this->getGold();
+    string pvpOn = this->getPVP() ? "On" : "Off";
+    cout << "\nPVP: " + pvpOn;
     cout << "\nDirection: "+ getDirection();
     cout << "\nLocation: Room "+to_string(getLocation());
     cout << "\nEquipment: \n";
@@ -62,6 +64,7 @@ void Character::printStatus() { // print Character's stats
     for (auto wornItem : this->charEquipment) {
         cout << "\t" + wornItem.second.getName() << endl;
     }
+    this->printSpells();
     cout<<endl<<endl;
 }
 
@@ -211,14 +214,18 @@ string Character::getDirection(){
     }
 }
 
-// void Character::addHealSpell(HealSpell sp) {
-//     this->charHealSpells.push_back(sp);
-//     cout << sp.getName() + " acquired!" << endl;
-// }
+void Character::printSpells() {
+    cout << "Spells: " << endl;
+    for (auto offspell : this->getOffSpells()) {
+        cout  << "\t" << offspell.getName();
+    }
+    cout << endl;
+    for (auto defspell : this->getDefSpells()) {
+        cout  << "\t" << defspell.getName();
+    }
+    cout << endl;
+}
 
-// vector<HealSpell> Character::getHealSpells() const {
-//     return this->charHealSpells;
-// }
 void Character::addDefSpell(DefSpell sp) {
     this->charDefSpells.push_back(sp);
     cout << sp.getName() + " acquired!" << endl;
@@ -231,6 +238,7 @@ vector<DefSpell> Character::getDefSpells() const {
 void Character::addOffSpell(OffSpell sp) {
     this->charOffSpells.push_back(sp);
     cout << sp.getName() + " acquired!" << endl;
+    //this->printSpells();
 }
 
 vector<OffSpell> Character::getOffSpells() const {
@@ -355,16 +363,16 @@ void Character::examine(Character &c) { // examine other character
 void Character::attack(NPC npc) { // fight NPC
     int round = 1;
     while (this->getCurrentHealth() > 0 && npc.getHealth() > 0) {
+        cin.clear();
         string userCmd;
         cout << "Round " + to_string(round) << endl;
-        cout << "What would you like to do? \n\tFight\tFlee" << endl;
+        cout << "What would you like to do? \n\tFight\tFlee\tSpell" << endl;
         cin >> userCmd;
-        //if ( regex_search(userCmd, regex("Fight*", regex_constants::basic)) ) { //fight
-        if (userCmd == "Fight") {
+        toLower(userCmd);
+        if (userCmd == "fight") {
             this->battleSequence(npc);
             round++;
-        //} else if ( regex_search(userCmd, regex("Flee*", regex_constants::basic)) ) { //flee
-        } else if (userCmd == "Flee") {
+        } else if (userCmd == "flee") {
             int fleeChance = (rand()*10)%4;
             if (fleeChance > 0) { // flee success, 75%
                 cout << "You have fled the battle. Coward!" << endl;
@@ -373,6 +381,10 @@ void Character::attack(NPC npc) { // fight NPC
                 cout << "Fleeing failed!" << endl;
                 this->battleSequence(npc);
             }
+        } else if (userCmd == "spell") {
+            cin.clear();
+            this->spellSequence(npc);
+            round++;
         } else {
             cout << "Incorrect command entered!" << endl;
         }
@@ -385,24 +397,24 @@ void Character::attack(NPC npc) { // fight NPC
     }   
 }
 // !!! UNFINISHED !!! FUCK PVP FUNCTION
-void Character::attack(Character &c) { // fight NPC
-    int round = 0;
-    while (this->getHealth() > 0 || c.getHealth() > 0) { // both chararacters alive
-        cout << "Round " + to_string(round) << endl;
-        c.setHealth( c.getHealth() - this->getAtk() ); // c takes damage equal to character's atk
-        if (c.getHealth() <= 0) { // c is dead
-            cout << "\nYou have defeated " + c.getName();
-        } else { // keep fighting
-            cout << "\n" + c.getName() + " takes " + to_string(this->getAtk()) + " damage and has " + to_string(c.getHealth()) + " health remaining!";
-            this->setHealth( this->getHealth() - c.getAtk() ); // character takes damage equal to c's atk
-            cout << "\nYou take " + to_string(c.getAtk()) + " damage and have " + to_string(this->getHealth()) + " health remaining!";
-            if (this->getHealth() <= 0) { // player is dead
-                cout << "\nYou have died.";
-            }        
-        }
-        round++;
-    }
-}
+// void Character::attack(Character &c) { // fight NPC
+//     int round = 0;
+//     while (this->getHealth() > 0 || c.getHealth() > 0) { // both chararacters alive
+//         cout << "Round " + to_string(round) << endl;
+//         c.setHealth( c.getHealth() - this->getAtk() ); // c takes damage equal to character's atk
+//         if (c.getHealth() <= 0) { // c is dead
+//             cout << "\nYou have defeated " + c.getName();
+//         } else { // keep fighting
+//             cout << "\n" + c.getName() + " takes " + to_string(this->getAtk()) + " damage and has " + to_string(c.getHealth()) + " health remaining!";
+//             this->setHealth( this->getHealth() - c.getAtk() ); // character takes damage equal to c's atk
+//             cout << "\nYou take " + to_string(c.getAtk()) + " damage and have " + to_string(this->getHealth()) + " health remaining!";
+//             if (this->getHealth() <= 0) { // player is dead
+//                 cout << "\nYou have died.";
+//             }        
+//         }
+//         round++;
+//     }
+// }
 
 void Character::battleSequence(NPC &npc) {
     npc.setHealth( npc.getHealth() - this->getAtk() ); // NPC takes damage equal to character's atk
@@ -413,6 +425,36 @@ void Character::battleSequence(NPC &npc) {
         this->setHealth( this->getCurrentHealth() - npc.getAtk() ); // character takes damage equal to NPC's atk
         cout << "You take " + to_string(npc.getAtk()) + " damage and have " + to_string(this->getCurrentHealth()) + " health remaining!" << endl;
     }
+}
+
+void Character::spellSequence(NPC &npc) {
+    cout << "What spell would you like to cast? " << endl;
+    this->printSpells();
+    string spellcmd1;
+    string spellcmd2;
+    cin >> spellcmd1;
+    cin >> spellcmd2;
+    string spellcmd = spellcmd1 + " " + spellcmd2;
+    toLower(spellcmd);
+    for (auto charSpell : this->getOffSpells()) {
+        if (charSpell.getName() == spellcmd) {
+            //cout << "Offense Spell found!" << endl;
+            charSpell.castSpell(*this, npc);
+            return;
+        }
+    }
+    for (auto charSpell : this->getDefSpells()) {
+        if (charSpell.getName() == spellcmd) {
+            //cout << "Defense Spell found!" << endl;
+            charSpell.castSpell(*this);
+            return;
+        }
+    }
+    cout << "Spell not found!" << endl;
+}
+
+void Character::toLower(string &str){
+    transform(str.begin(), str.end(), str.begin(), ::tolower);
 }
 
 #endif

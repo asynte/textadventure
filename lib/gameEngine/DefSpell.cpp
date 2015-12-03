@@ -60,9 +60,10 @@ void DefSpell::castSpell(Character &player) {
 		cout << "Spell does not exist." << endl;
 		return;
 	}
-	cout << this->getHitChar() << endl;
+	//cout << this->getHitChar() << endl;
 	cout << this->getHitVict() << endl;
 	player.setHealth(min(player.getHealth(), player.getCurrentHealth()+healAmount)); // spell casting
+	cout << "You heal " << healAmount << " health." << endl;
 	player.setMana(player.getMana() - this->getManaCost()); // subtract mana cost
 }
 
