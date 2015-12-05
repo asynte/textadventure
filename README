@@ -1,0 +1,37 @@
+
+This project demonstrates how to use Sphinx in order to generate documentation.
+The documentation can be generated in the form of HTML or, using LaTeX, in the
+form of a PDF. The project should compile in our labs or in any Ubuntu
+installation with the packages `python3` and `python3-sphinx`.
+
+Structure
+=========
+The `cmake/` directory contains modules for detecting whether sphinx or make
+are present on the system.
+
+The `docs/` directory contains the data and configuration files for sphinx
+along with a CMakeLists.txt that will generate documentation based on the
+data and configuration files.
+
+The contents of documentation are stored in reST, or reStructured Text, files.
+The main reST file is called `index.rst`. This file contains a list of all
+other reST files that need to be examined in order to build the documentation.
+reST is a markup format similar to Markdown or HTML. You can read more about
+the features of reST at http://sphinx-doc.org/rest.html, although you do not
+need to understand or use these features for the project documentation.
+
+Basic configuration of the project is stored in `conf.py`. This includes such
+information as the name of the project, the names of the authors, and extra
+information for formatting the documentation.
+
+Building Documentation
+======================
+If python3 and sphinx are installed, then configuring with cmake and building
+with make will generate a `docs/` subdirectory of the build directory. The
+`html/` subdirectory contains the generated HTML documentation. If LaTeX is
+also detected on the building machine, then a file called `manual.pdf` will
+be generated and copied into the `html/` subdirecory.
+
+You can examine the provided reST files in this example project to see the
+basic reST files that may be useful for providing user documentation.
+
